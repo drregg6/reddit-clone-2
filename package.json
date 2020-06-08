@@ -1,5 +1,6 @@
 {
   "name": "cra-redux",
+  "description": "create-react-app with redux and example boilerplate",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -36,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "12.3.1"
   }
 }
