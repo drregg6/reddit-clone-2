@@ -1,9 +1,8 @@
 {
-  "name": "cra-museum",
-  "description": "An app that connects with the Rijksmuseum API",
+  "name": "cra-redux",
+  "description": "create-react-app with redux and example boilerplate",
   "version": "0.1.0",
   "private": true,
-  "author": "Dave Regg <dave.r.regg@gmail.com>",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
