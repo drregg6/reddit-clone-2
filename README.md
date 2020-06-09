@@ -1,4 +1,4 @@
-# TItle
+# Title
 > A quick blurb of the purpose of this app. Who was it built by, who was it built for, why was it built, and what does it use?
 
 ## Table of contents
