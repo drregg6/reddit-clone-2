@@ -1,16 +1,23 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const Index = () => {
+import { connect } from 'react-redux';
+import { login } from '../../actions/user';
+
+const Index = ({ login }) => {
   return (
     <div>
       <h1>Welcome to the Homepage</h1>
+      <button className="button is-primary" onClick={() => login()}>Login</button>
     </div>
   )
 }
 
-// Index.propTypes = {
+Index.propTypes = {
+  login: PropTypes.func.isRequired,
+}
 
-// }
-
-export default Index;
+export default connect(
+  null,
+{ login }
+)(Index);

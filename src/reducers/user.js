@@ -1,19 +1,21 @@
 import {
-  GET_USERS
+  GET_USER
 } from '../actions/types';
 
 const initialState = {
-  users: [],
+  user: {},
+  isLoggedIn: false,
   isLoading: true
 }
 
 export default function(state = initialState, action) {
   const { type, payload } = action;
   switch(type) {
-    case GET_USERS:
+    case GET_USER:
       return {
         ...state,
-        users: [...payload],
+        user: {...payload},
+        isLoggedIn: true,
         isLoading: false
       };
     default:
