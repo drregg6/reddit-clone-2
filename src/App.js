@@ -22,6 +22,7 @@ import Users from './components/users/Users';
 
 function App() {
   useEffect(() => {
+    // check for user in firebase auth on each page
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log(user);

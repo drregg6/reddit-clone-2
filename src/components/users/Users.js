@@ -12,7 +12,7 @@ const Users = ({
 }) => {
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
   
   const render = isLoading ? (
     'Still loading'

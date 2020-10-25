@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { login, logout } from '../../actions/user';
+import { login, logout } from '../../actions/auth';
 
 const Nav = ({
   login,
@@ -17,7 +17,7 @@ const Nav = ({
           One Kickass Site
         </Link>
 
-        <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -39,15 +39,15 @@ const Nav = ({
             {
               !isLoggedIn ? (
                 <div className="navbar-item">
-                  <a className="button is-primary" onClick={() => login()}>
+                  <button className="button is-primary" onClick={() => login()}>
                     <strong>Login with Google</strong>
-                  </a>
+                  </button>
                 </div>
               ) : (
                 <div className="navbar-item">
-                  <a className="button is-light" onClick={() => logout()}>
+                  <button className="button is-light" onClick={() => logout()}>
                     Logout
-                  </a>
+                  </button>
                 </div>
               )
             }

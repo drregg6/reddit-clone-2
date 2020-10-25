@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { login } from '../../actions/user';
+import { login } from '../../actions/auth';
 
 const Index = ({ login }) => {
   return (
