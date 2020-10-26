@@ -74,8 +74,8 @@ Project Link: [Title goes here](URL goes here)
   * pics
   * funny
 * [x] Show Subreddits on Home Page
-* [ ] Show Single Subreddit
-* [ ] New Post Form
+* [x] Show Single Subreddit
+* [x] New Post Form
   * Update Rules
 * [ ] Display Posts on Subreddit Page
   * Types: Image/Text/Url
