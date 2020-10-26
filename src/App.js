@@ -1,6 +1,7 @@
 /*
 
-
+User login does not persist within store
+Although user remains loaded
 
 */
 
@@ -19,6 +20,7 @@ import Footer from './components/layout/Footer';
 
 import Index from './components/homepage/Index';
 import Users from './components/users/Users';
+import Subreddit from './components/subreddit/Subreddit';
 
 function App() {
   useEffect(() => {
@@ -38,6 +40,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={Index} />
           <Route exact path='/users' component={Users} />
+          <Route exact path ='/r/:name' component={Subreddit} />
         </Switch>
         <Footer />
       </div>

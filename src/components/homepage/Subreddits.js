@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -15,7 +16,13 @@ const Subreddits = ({
     <ol>
       { subreddits.map((sub) => {
         return (
-        <li key={sub.id}>{ sub.name }</li>
+          <>
+            <li key={sub.id}>
+              <Link to={`/r/${sub.name}`}>
+                { sub.name }
+              </Link>
+            </li>
+          </>
         )
       }) }
     </ol>

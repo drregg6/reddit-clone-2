@@ -68,13 +68,12 @@ Project Link: [Title goes here](URL goes here)
   * https://firebase.google.com/docs/auth/web/manage-users
 * [x] Save user on login
       * [x] Update Rules
-* [ ] Add a few subreddits in Firestore
-  * general
-  * javascript
-  * learn-programming
+* [x] Add a few subreddits in Firestore
+  * philadelphia
+  * programming
   * pics
   * funny
-* [ ] Show Subreddits on Home Page
+* [x] Show Subreddits on Home Page
 * [ ] Show Single Subreddit
 * [ ] New Post Form
   * Update Rules
