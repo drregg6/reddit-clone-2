@@ -8,7 +8,7 @@ import { login, logout } from '../../actions/auth';
 const Nav = ({
   login,
   logout,
-  user: { isLoggedIn }
+  auth: { isLoggedIn }
 }) => {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -45,7 +45,7 @@ const Nav = ({
                 </div>
               ) : (
                 <div className="navbar-item">
-                  <button className="button is-light" onClick={() => logout()}>
+                  <button className="button is-danger" onClick={() => logout()}>
                     Logout
                   </button>
                 </div>
@@ -58,13 +58,13 @@ const Nav = ({
 }
 
 Nav.propTypes = {
-  user: PropTypes.object,
+  auth: PropTypes.object,
   login: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.user
+  auth: state.auth
 });
 
 export default connect(

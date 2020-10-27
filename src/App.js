@@ -22,14 +22,21 @@ import Index from './components/homepage/Index';
 import Users from './components/users/Users';
 import Subreddit from './components/subreddit/Subreddit';
 
+import store from './store';
+import { getUser, userError } from './actions/auth';
+
 function App() {
   useEffect(() => {
-    // check for user in firebase auth on each page
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log(user);
+        let setUser = {
+          name: user.displayName,
+          id: user.uid,
+          image: user.photoURL
+        }
+        store.dispatch(getUser(setUser));
       } else {
-        console.log('No user available')
+        store.dispatch(userError());
       }
     });
   });
