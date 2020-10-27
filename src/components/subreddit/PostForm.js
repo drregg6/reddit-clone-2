@@ -1,7 +1,13 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-const PostForm = props => {
+import { connect } from 'react-redux';
+import { createPost } from '../../actions/posts';
+
+const PostForm = ({
+  createPost,
+  subreddit
+}) => {
   const [input, setInput] = useState({
     title: '',
     desc: '',
@@ -18,7 +24,12 @@ const PostForm = props => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(input);
+    let newPost = {
+      ...input,
+      subreddit_id: subreddit
+    }
+    
+    createPost(newPost);
     setInput({
       title: '',
       desc: '',
@@ -73,7 +84,12 @@ const PostForm = props => {
 }
 
 PostForm.propTypes = {
-
+  createPost: PropTypes.func.isRequired,
+  subreddit: PropTypes.string.isRequired
 }
 
-export default PostForm;
+// will need to know if user is authorized
+export default connect(
+  null,
+  { createPost }
+)(PostForm);

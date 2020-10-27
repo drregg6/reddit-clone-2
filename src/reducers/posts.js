@@ -1,28 +1,26 @@
 import {
-  GET_SUBREDDIT,
-  CLEAR_SUBREDDIT
+  GET_POSTS,
+  GET_POST,
+  CREATE_POST,
+  UPDATE_POST,
+  DELETE_POST,
+  CLEAR_POST
 } from '../actions/types';
 
 const initialState = {
-  subreddit: null,
+  posts: [],
+  post: null,
   isLoading: true
 }
 
 export default function(state = initialState, action) {
   const { type, payload } = action;
-
   switch(type) {
-    case GET_SUBREDDIT:
+    case GET_POSTS:
       return {
         ...state,
-        subreddit: payload,
-        isLoading: false
-      }
-    case CLEAR_SUBREDDIT:
-      return {
-        ...state,
-        subreddit: null,
-        isLoading: false
+        isLoading: false,
+        posts: [...payload]
       }
     default:
       return state;

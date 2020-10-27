@@ -5,11 +5,11 @@ import PropTypes from 'prop-types';
 import PostForm from './PostForm';
 
 import { connect } from 'react-redux';
-import { fetchSubreddit } from '../../actions/subreddit';
+import { fetchSubreddit } from '../../actions/subreddits';
 
 const Subreddit = ({
   fetchSubreddit,
-  subreddit: { subreddit, isLoading }
+  subreddits: { subreddit, isLoading }
 }) => {
   let name = useParams();
   useEffect(() => {
@@ -25,7 +25,7 @@ const Subreddit = ({
         { showForm ? ('Hide Form') : ('Show Form') }
       </button>
       {
-        showForm && <PostForm />
+        showForm && <PostForm subreddit={subreddit.id} />
       }
       {
         (isLoading || subreddit === null) ? (
@@ -42,11 +42,11 @@ const Subreddit = ({
 
 Subreddit.propTypes = {
   fetchSubreddit: PropTypes.func.isRequired,
-  subreddit: PropTypes.object,
+  subreddits: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  subreddit: state.subreddit
+  subreddits: state.subreddits
 })
 
 export default connect(
