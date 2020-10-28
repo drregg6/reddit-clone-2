@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import Posts from './Posts';
 import PostForm from './PostForm';
 
 import { connect } from 'react-redux';
@@ -35,6 +36,9 @@ const Subreddit = ({
         ) : (
           <h1>{ subreddit.name }</h1>
         )
+      }
+      {
+        subreddit && <Posts subreddit={subreddit.id} />
       }
     </div>
   )

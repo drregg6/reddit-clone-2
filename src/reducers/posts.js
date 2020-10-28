@@ -22,6 +22,12 @@ export default function(state = initialState, action) {
         isLoading: false,
         posts: [...payload]
       }
+    case CREATE_POST:
+      return {
+        ...state,
+        isLoading: false,
+        posts: [...state.posts, payload]
+      }
     default:
       return state;
   }
