@@ -28,10 +28,10 @@ const Subreddits = ({
     </ol>
   )
   return (
-    <div>
+    <section className="section">
       <h1>Subreddits</h1>
       { render }
-    </div>
+    </section>
   )
 }
 

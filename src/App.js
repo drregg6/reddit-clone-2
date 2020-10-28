@@ -44,12 +44,16 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <Header />
-        <Switch>
-          <Route exact path='/' component={Index} />
-          <Route exact path='/users' component={Users} />
-          <Route exact path ='/r/:name' component={Subreddit} />
-        </Switch>
+        <div className="content">
+          <Header />
+          <div className="container">
+            <Switch>
+              <Route exact path='/' component={Index} />
+              <Route exact path='/users' component={Users} />
+              <Route exact path ='/r/:name' component={Subreddit} />
+            </Switch>
+          </div>
+        </div>
         <Footer />
       </div>
     </Router>

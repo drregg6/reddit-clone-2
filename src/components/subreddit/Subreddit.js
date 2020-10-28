@@ -18,7 +18,7 @@ const Subreddit = ({
   }, [fetchSubreddit, name]);
   let [showForm, toggleShowForm] = useState(false);
   return (
-    <div>
+    <section className="section">
       <button
         className="button is-primary"
         onClick={() => toggleShowForm(!showForm)}
@@ -40,7 +40,7 @@ const Subreddit = ({
       {
         subreddit && <Posts subreddit={subreddit.id} />
       }
-    </div>
+    </section>
   )
 }
 

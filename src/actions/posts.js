@@ -14,7 +14,6 @@ export const fetchPosts = (subreddit) => async dispatch => {
     let payload = [];
     const res = await db.collection('posts').where('subreddit_id', '==', subreddit).get();
     res.forEach(post => {
-      console.log(post)
       payload.push(post.data());
     });
     dispatch({

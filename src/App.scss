@@ -1,1 +1,24 @@
 /* Homepage styles */
+.App {
+  min-height: 100vh;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+}
+.content {
+  flex: 2 1 auto;
+}
+
+.section {
+  padding: 2.5rem 0;
+}
+
+.posts {
+  margin: 2rem auto;
+}
+
+.card {
+  margin: .25rem;
+  height: 100%;
+}
