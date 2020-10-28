@@ -1,7 +1,6 @@
 /*
 
-User login does not persist within store
-Although user remains loaded
+
 
 */
 
@@ -26,8 +25,10 @@ import store from './store';
 import { getUser, userError } from './actions/auth';
 
 function App() {
+  // check if a user is logged in throughout
   useEffect(() => {
     firebase.auth().onAuthStateChanged(user => {
+      // if a user exists, update the store with user information
       if (user) {
         let setUser = {
           name: user.displayName,

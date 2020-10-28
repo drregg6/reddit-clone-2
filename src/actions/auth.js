@@ -7,15 +7,12 @@ import {
 import firebase from '../firebase';
 import db from '../db';
 
+// update the store with user information
 export const getUser = (user) => async dispatch => {
   dispatch({
     type: GET_USER,
     payload: user
   });
-}
-
-export const userError = () => dispatch => {
-  dispatch({ type: LOGIN_FAIL })
 }
 
 export const login = () => async dispatch => {
@@ -34,10 +31,11 @@ export const login = () => async dispatch => {
       ...payload,
       created_at: firebase.firestore.FieldValue.serverTimestamp()
     }
+
     // POST the db
     db.collection('users').doc(newUser.id).set(newUser);
 
-    // Then send it to Redux
+    // Then send it to Redux store
     dispatch({
       type: LOGIN_USER,
       payload
@@ -56,4 +54,9 @@ export const logout = () => async dispatch => {
   } catch (error) {
     console.error(error.message);
   }
+}
+
+// login failure
+export const userError = () => dispatch => {
+  dispatch({ type: LOGIN_FAIL })
 }
