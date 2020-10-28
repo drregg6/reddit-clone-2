@@ -6,6 +6,7 @@ import {
   DELETE_POST,
   CLEAR_POST
 } from './types';
+// import getUserById from '../utils/getUserById';
 import db from '../db';
 import firebase from '../firebase';
 

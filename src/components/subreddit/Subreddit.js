@@ -10,7 +10,8 @@ import { fetchSubreddit } from '../../actions/subreddits';
 
 const Subreddit = ({
   fetchSubreddit,
-  subreddits: { subreddit, isLoading }
+  subreddits: { subreddit, isLoading },
+  auth: { isLoggedIn }
 }) => {
   let name = useParams();
   useEffect(() => {
@@ -19,12 +20,16 @@ const Subreddit = ({
   let [showForm, toggleShowForm] = useState(false);
   return (
     <section className="section">
-      <button
-        className="button is-primary"
-        onClick={() => toggleShowForm(!showForm)}
-      >
-        { showForm ? ('Hide Form') : ('Show Form') }
-      </button>
+      {
+        isLoggedIn && (
+          <button
+            className="button is-primary"
+            onClick={() => toggleShowForm(!showForm)}
+          >
+            { showForm ? ('Hide Form') : ('Show Form') }
+          </button>
+        )
+      }
       {
         showForm && <PostForm subreddit={subreddit.id} />
       }
@@ -50,7 +55,8 @@ Subreddit.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  subreddits: state.subreddits
+  subreddits: state.subreddits,
+  auth: state.auth
 })
 
 export default connect(

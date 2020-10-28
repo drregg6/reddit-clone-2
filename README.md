@@ -77,12 +77,12 @@ Project Link: [Title goes here](URL goes here)
 * [x] Show Single Subreddit
 * [x] New Post Form
   * Update Rules
-* [ ] Display Posts on Subreddit Page
+* [x] Display Posts on Subreddit Page
   * Types: Image/Text/Url
 
 
 ## Extra
-* [ ] Hide submit form if not logged in
+* [x] Hide submit form if not logged in
 * [ ] Show Usernames
 * [ ] Show User Images
 * [ ] Format Dates

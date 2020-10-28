@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
+// import getUserById from '../../utils/getUserById';
 
 import { connect } from 'react-redux';
 import { fetchPosts } from '../../actions/posts';
@@ -12,7 +13,7 @@ const Posts = ({
 }) => {
   useEffect(() => {
     fetchPosts(subreddit);
-  }, [fetchPosts]);
+  }, [fetchPosts, subreddit]);
   return (
     <div>
       <h1>Posts</h1>
@@ -20,9 +21,8 @@ const Posts = ({
         {
           (posts && !isLoading) ? (
             posts.map(post => {
-              console.log(post.updated_at);
               return (
-                <div className="column is-4">
+                <div className="column is-4" key={post.id}>
                   <div className="card">
                     <div className="card-image">
                       <figure className="image is-4by3">
@@ -37,8 +37,8 @@ const Posts = ({
                           </figure>
                         </div>
                         <div className="media-content">
-                          <p className="title is-4">John Smith</p>
-                          <p className="subtitle is-6">@johnsmith</p>
+                          <p className="title is-4">{ post.title }</p>
+                          <p className="subtitle is-6">{ post.user }</p>
                         </div>
                       </div>
 

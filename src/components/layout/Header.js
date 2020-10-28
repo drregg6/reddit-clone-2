@@ -7,9 +7,6 @@ const Header = () => {
   return (
     <header>
       <Nav />
-      <p>
-        This is the header.
-      </p>
     </header>
   )
 }
