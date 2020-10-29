@@ -26,8 +26,7 @@ const Posts = ({
     return posts;
   }
   return (
-    <div>
-      <h1>Posts</h1>
+    <section>
       <div className="columns is-multiline is-4 posts">
         {
           (posts && !isLoading) ? (
@@ -74,7 +73,7 @@ const Posts = ({
           )
         }
       </div>
-    </div>
+    </section>
   )
 }
 

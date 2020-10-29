@@ -38,7 +38,7 @@ const PostForm = ({
   }
 
   return (
-    <form onSubmit={event => handleSubmit(event)}>
+    <form className="post-form" onSubmit={event => handleSubmit(event)}>
       <div className="field">
         <div className="control">
           <input

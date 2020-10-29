@@ -51,7 +51,7 @@ const Subreddit = ({
         <div className="control">
           <input
             type="text"
-            className="input"
+            className="input search-box"
             placeholder="Search"
             value={search}
             onChange={event => handleChange(event)}

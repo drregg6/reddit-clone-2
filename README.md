@@ -87,7 +87,7 @@ Project Link: [Title goes here](URL goes here)
 * [ ] Show User Images
 * [x] Format Dates
 * [x] Fix card formatting
-* [ ] Search/Filter Posts
+* [x] Search/Filter Posts
 * [ ] UpVote/DownVote Posts
   * Update Rules
   * [ ] Order by total score
