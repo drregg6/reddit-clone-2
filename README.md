@@ -85,8 +85,8 @@ Project Link: [Title goes here](URL goes here)
 * [x] Hide submit form if not logged in
 * [ ] Show Usernames
 * [ ] Show User Images
-* [ ] Format Dates
-* [ ] Fix card formatting
+* [x] Format Dates
+* [x] Fix card formatting
 * [ ] Search/Filter Posts
 * [ ] UpVote/DownVote Posts
   * Update Rules

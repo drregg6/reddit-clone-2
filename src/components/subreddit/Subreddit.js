@@ -18,6 +18,11 @@ const Subreddit = ({
     fetchSubreddit(name);
   }, [fetchSubreddit, name]);
   let [showForm, toggleShowForm] = useState(false);
+  let [search, setSearch] = useState('');
+
+  const handleChange = (event) => {
+    setSearch(event.target.value);
+  }
   return (
     <section className="section">
       {
@@ -42,9 +47,24 @@ const Subreddit = ({
           <h1>{ subreddit.name }</h1>
         )
       }
+      <form className="form">
+        <div className="control">
+          <input
+            type="text"
+            className="input"
+            placeholder="Search"
+            value={search}
+            onChange={event => handleChange(event)}
+          />
+        </div>
+      </form>
       {
-        subreddit && <Posts subreddit={subreddit.id} />
-      }
+        subreddit && (
+        <Posts
+          search={search}
+          subreddit={subreddit.id}
+        />
+      )}
     </section>
   )
 }
