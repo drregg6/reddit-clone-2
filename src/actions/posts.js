@@ -51,3 +51,15 @@ export const createPost = (newPost) => async dispatch => {
     console.error(error.message);
   }
 }
+
+export const deletePost = (id) => async dispatch => {
+  try {
+    await db.collection('posts').doc(id).delete();
+    dispatch({
+      type: DELETE_POST,
+      payload: id
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}

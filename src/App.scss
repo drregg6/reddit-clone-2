@@ -35,3 +35,14 @@
   margin-left: 0;
   margin-right: 0;
 }
+
+.post-column {
+  position: relative;
+}
+
+.delete-button {
+  z-index: 100;
+  position: absolute;
+  top: 5%;
+  right: 10%;
+}

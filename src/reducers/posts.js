@@ -28,6 +28,15 @@ export default function(state = initialState, action) {
         isLoading: false,
         posts: [...state.posts, payload]
       }
+    case DELETE_POST:
+      // go through state.posts and filter out the posts with post.id === payload
+      let newPosts = state.posts.filter(post => post.id !== payload);
+
+      return {
+        ...state,
+        isLoading: false,
+        posts: [...newPosts]
+      }
     default:
       return state;
   }

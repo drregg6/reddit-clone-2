@@ -1,16 +1,20 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
-// import getUserById from '../../utils/getUserById';
 
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../actions/posts';
+import {
+  fetchPosts,
+  deletePost
+} from '../../actions/posts';
 
 const Posts = ({
   search,
   subreddit,
   fetchPosts,
-  posts: { posts, isLoading }
+  deletePost,
+  posts: { posts, isLoading },
+  auth: { user }
 }) => {
   useEffect(() => {
     fetchPosts(subreddit);
@@ -31,8 +35,18 @@ const Posts = ({
         {
           (posts && !isLoading) ? (
             filterPosts(posts).map(post => {
+              console.log(post.user_id);
               return (
-                <div className="column is-4" key={post.id}>
+                <div className="column is-4 post-column" key={post.id}>
+                  {
+                    post.user_id === user.id && (
+                    <button
+                      className="button is-danger delete-button"
+                      onClick={() => (deletePost(post.id))}
+                    >
+                      X
+                    </button>
+                  )}
                   <div className="card">
                     <div className="card-image">
                       <figure className="image">
@@ -79,15 +93,20 @@ const Posts = ({
 
 Posts.propTypes = {
   fetchPosts: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
   search: PropTypes.string,
   subreddit: PropTypes.string,
 }
 
 const mapStateToProps = state => ({
-  posts: state.posts
+  posts: state.posts,
+  auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { fetchPosts }
+  {
+    fetchPosts,
+    deletePost
+  }
 )(Posts);
