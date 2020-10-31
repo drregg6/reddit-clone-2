@@ -4,11 +4,11 @@ import React, {
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { fetchUsers } from '../../actions/user';
+import { fetchUsers } from '../../actions/users';
 
 const Users = ({
   fetchUsers,
-  user: { users, isLoading }
+  users: { users, isLoading }
 }) => {
   useEffect(() => {
     fetchUsers();
@@ -42,7 +42,7 @@ Users.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  user: state.user
+  users: state.users
 });
 
 export default connect(

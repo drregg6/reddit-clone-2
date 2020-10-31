@@ -1,14 +1,18 @@
 import {
   GET_USERS
 } from './types';
-import axios from 'axios';
+import db from '../db';
 
 export const fetchUsers = () => async dispatch => {
+  let payload = [];
   try {
-    const res = await axios.get(`https://jsonplaceholder.typicode.com/users`)
+    const res = await db.collection('users').get();
+    res.forEach(doc => {
+      payload.push(doc.data());
+    });
     dispatch({
       type: GET_USERS,
-      payload: res.data
+      payload
     });
   } catch (error) {
     console.error(error);

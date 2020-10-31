@@ -5,7 +5,9 @@ import dateFormatter from '../../utils/dateFormatter';
 import { connect } from 'react-redux';
 import {
   fetchPosts,
-  deletePost
+  deletePost,
+  upvote,
+  downvote
 } from '../../actions/posts';
 
 const Posts = ({
@@ -13,6 +15,8 @@ const Posts = ({
   subreddit,
   fetchPosts,
   deletePost,
+  upvote,
+  downvote,
   posts: { posts, isLoading },
   auth: { user }
 }) => {
@@ -35,7 +39,6 @@ const Posts = ({
         {
           (posts && !isLoading) ? (
             filterPosts(posts).map(post => {
-              console.log(post.user_id);
               return (
                 <div className="column is-4 post-column" key={post.id}>
                   {
@@ -77,6 +80,21 @@ const Posts = ({
                         <br />
                         <time>{ post.updated_at && dateFormatter(post.updated_at.seconds) }</time>
                       </div>
+                      <div className="votes" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <button
+                          className="button is-success"
+                          onClick={() => upvote(post.user_id, post.id)}
+                        >
+                          Upvote
+                        </button>
+                        <span className="vote-amount" style={{ margin: '0 1rem' }}>0</span>
+                        <button
+                          className="button is-danger"
+                          onClick={() => downvote(post.user_id, post.id)}
+                        >
+                          Downvote
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -94,6 +112,8 @@ const Posts = ({
 Posts.propTypes = {
   fetchPosts: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
+  upvote: PropTypes.func.isRequired,
+  downvote: PropTypes.func.isRequired,
   search: PropTypes.string,
   subreddit: PropTypes.string,
 }
@@ -107,6 +127,8 @@ export default connect(
   mapStateToProps,
   {
     fetchPosts,
-    deletePost
+    deletePost,
+    upvote,
+    downvote
   }
 )(Posts);

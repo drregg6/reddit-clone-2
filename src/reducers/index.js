@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux';
 
-import user from './user';
+import users from './users';
 import auth from './auth';
 import posts from './posts';
 import subreddits from './subreddits';
+import votes from './votes';
 
 /* root reducer */
 export default combineReducers({
-  user,
+  users,
   auth,
   posts,
-  subreddits
+  subreddits,
+  votes
 });
