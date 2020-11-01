@@ -83,8 +83,8 @@ Project Link: [Title goes here](URL goes here)
 
 ## Extra
 * [x] Hide submit form if not logged in
-* [ ] Show Usernames
-* [ ] Show User Images
+* [x] Show Usernames
+* [x] Show User Images
 * [x] Format Dates
 * [x] Fix card formatting
 * [x] Search/Filter Posts

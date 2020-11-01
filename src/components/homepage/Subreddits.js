@@ -40,9 +40,12 @@ Subreddits.propTypes = {
   subreddits: PropTypes.object,
 }
 
-const mapStateToProps = state => ({
-  subreddits: state.subreddits
-})
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    subreddits: state.subreddits
+  }
+}
 
 export default connect(
   mapStateToProps,
