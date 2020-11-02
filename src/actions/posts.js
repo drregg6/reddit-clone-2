@@ -6,7 +6,6 @@ import {
   DELETE_POST,
   CLEAR_POST
 } from './types';
-// import getUserById from '../utils/getUserById';
 import db from '../db';
 import firebase from '../firebase';
 
@@ -77,36 +76,6 @@ export const deletePost = (id) => async dispatch => {
       type: DELETE_POST,
       payload: id
     });
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
-
-// update the vote doc when user clicks upvote
-export const upvote = (user_id, post_id) => async dispatch => {
-  try {
-    console.log(`user_id: ${user_id}`);
-    console.log(`post_id: ${post_id}`);
-    // let users = [];
-    await db.collection.where('post_id', '==', post_id).get(query => {
-      query.forEach(post => {
-        console.log(post.data());
-      });
-    });
-
-    // user_id should push into the user_id array and vote should be go up by one
-    // const res = await db.collection('votes').doc(post_id).update()
-  } catch (error) {
-    console.error(error.message);
-  }
-}
-
-
-export const downvote = (user_id, post_id) => async dispatch => {
-  try {
-    console.log(`user_id: ${user_id}`);
-    console.log(`post_id: ${post_id}`);
   } catch (error) {
     console.error(error.message);
   }

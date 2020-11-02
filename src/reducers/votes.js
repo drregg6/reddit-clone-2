@@ -15,6 +15,7 @@ export default function(state = initialState, action) {
     case GET_VOTES:
       return {
         ...state,
+        votes: [...payload],
         isLoading: false
       }
       case ADD_VOTE:

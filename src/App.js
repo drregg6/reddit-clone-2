@@ -1,6 +1,12 @@
 /*
 
-
+TODOS:
+= Break Posts into smaller Components
+    - Post content
+    - Update / Downvote
+= Votes doc is created when a new post is created
+    - Should start with one upvote
+    - user_ids should start with creator's id
 
 */
 

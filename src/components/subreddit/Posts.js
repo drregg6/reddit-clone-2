@@ -2,34 +2,45 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
 
+import Votes from './Votes';
+
 import { connect } from 'react-redux';
 import {
   fetchPosts,
-  deletePost,
-  upvote,
-  downvote
+  deletePost
 } from '../../actions/posts';
 import { fetchUsers } from '../../actions/users';
+import { fetchVotes } from '../../actions/votes';
 
 const Posts = ({
   search,
   subreddit,
   fetchPosts,
   fetchUsers,
+  fetchVotes,
   deletePost,
-  upvote,
-  downvote,
   posts: { posts, isLoading },
   users: { users },
-  auth: { user }
+  auth: { user },
+  votes: { votes }
 }) => {
   useEffect(() => {
     fetchPosts(subreddit);
     fetchUsers();
-  }, [fetchUsers, fetchPosts, subreddit]);
+    fetchVotes();
+  }, [
+    fetchUsers,
+    fetchPosts,
+    fetchVotes,
+    subreddit
+  ]);
 
   const getUser = (id) => {
     return users.filter(user => user.id === id)[0];
+  }
+
+  const getVoteCount = (post_id) => {
+    return votes.filter(doc => doc.post_id === post_id)[0];
   }
 
   const filterPosts = posts => {
@@ -48,7 +59,8 @@ const Posts = ({
         {
           (posts && !isLoading) ? (
             filterPosts(posts).map(post => {
-              console.log(getUser(post.user_id));
+              const postVotes = getVoteCount(post.id) !== undefined ? getVoteCount(post.id).votes : '0';
+              console.log(postVotes);
               return (
                 <div className="column is-4 post-column" key={post.id}>
                   {
@@ -93,21 +105,10 @@ const Posts = ({
                         <br />
                         <time>{ post.updated_at && dateFormatter(post.updated_at.seconds) }</time>
                       </div>
-                      <div className="votes" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <button
-                          className="button is-success"
-                          onClick={() => upvote(post.user_id, post.id)}
-                        >
-                          Upvote
-                        </button>
-                        <span className="vote-amount" style={{ margin: '0 1rem' }}>0</span>
-                        <button
-                          className="button is-danger"
-                          onClick={() => downvote(post.user_id, post.id)}
-                        >
-                          Downvote
-                        </button>
-                      </div>
+                      <Votes
+                        post={post}
+                        votes={postVotes}
+                      />
                     </div>
                   </div>
                 </div>
@@ -125,9 +126,8 @@ const Posts = ({
 Posts.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   fetchPosts: PropTypes.func.isRequired,
+  fetchVotes: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
-  upvote: PropTypes.func.isRequired,
-  downvote: PropTypes.func.isRequired,
   search: PropTypes.string,
   subreddit: PropTypes.string,
 }
@@ -135,6 +135,7 @@ Posts.propTypes = {
 const mapStateToProps = state => ({
   posts: state.posts,
   users: state.users,
+  votes: state.votes,
   auth: state.auth
 });
 
@@ -143,8 +144,7 @@ export default connect(
   {
     fetchUsers,
     fetchPosts,
-    deletePost,
-    upvote,
-    downvote
+    fetchVotes,
+    deletePost
   }
 )(Posts);
