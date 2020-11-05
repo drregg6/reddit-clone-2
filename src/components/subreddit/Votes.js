@@ -34,7 +34,7 @@ const Votes = ({
 
 Votes.propTypes = {
   post: PropTypes.object.isRequired,
-  votes: PropTypes.string.isRequired
+  votes: PropTypes.number.isRequired
 }
 
 export default connect(

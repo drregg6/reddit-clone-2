@@ -23,4 +23,5 @@ export const CLEAR_POST = 'CLEAR_POST';
 // Votes
 export const GET_VOTES = 'GET_VOTES';
 export const ADD_VOTE = 'ADD_VOTE';
+export const ADD_VOTES = 'ADD_VOTES';
 export const REMOVE_VOTE = 'REMOVE_VOTE';

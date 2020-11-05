@@ -4,7 +4,8 @@ import {
   CREATE_POST,
   UPDATE_POST,
   DELETE_POST,
-  CLEAR_POST
+  CLEAR_POST,
+  ADD_VOTES
 } from './types';
 import db from '../db';
 import firebase from '../firebase';
@@ -31,7 +32,7 @@ export const fetchPosts = (subreddit) => async dispatch => {
 
 export const createPost = (newPost) => async dispatch => {
   // generate an auto id
-  let postsDoc = db.collection('posts').postsD();
+  let postsDoc = db.collection('posts').doc();
   let votesDoc = db.collection('votes').doc();
   console.log(votesDoc.id);
 
@@ -43,12 +44,14 @@ export const createPost = (newPost) => async dispatch => {
   postsPayload.user_id = firebase.auth().currentUser.uid;
 
   // create votes collection when a post is created
-  let votesPayload = { vote: 1 };
+  let votesPayload = { votes: 1 };
+  votesPayload.user_ids = [];
   votesPayload.id = votesDoc.id;
-  votesPayload.created_at = firebase.firestore.FieldValue.serverTimestamp();
+  votesPayload.subreddit_id = postsPayload.subreddit_id;
   votesPayload.updated_at = firebase.firestore.FieldValue.serverTimestamp();
-  votesPayload.user_id = [...firebase.auth().currentUser.uid];
+  votesPayload.user_ids.push(firebase.auth().currentUser.uid);
   votesPayload.post_id = postsPayload.id;
+  console.log(votesPayload);
 
   try {
     // create a post in firebase with the id created
@@ -62,6 +65,11 @@ export const createPost = (newPost) => async dispatch => {
       type: CREATE_POST,
       payload: postsPayload
     });
+    dispatch({
+      type: ADD_VOTES,
+      payload: votesPayload
+    })
+    dispatch({})
   } catch (error) {
     console.error(error.message);
   }

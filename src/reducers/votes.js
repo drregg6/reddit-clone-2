@@ -1,6 +1,7 @@
 import {
   GET_VOTES,
   ADD_VOTE,
+  ADD_VOTES,
   REMOVE_VOTE
 } from '../actions/types';
 
@@ -18,16 +19,22 @@ export default function(state = initialState, action) {
         votes: [...payload],
         isLoading: false
       }
-      case ADD_VOTE:
-        return {
-          ...state,
-          isLoading: false
-        }
-        case REMOVE_VOTE:
-          return {
-            ...state,
-            isLoading: false
-          }
+    case ADD_VOTES:
+      return {
+        ...state,
+        votes: [...state.votes, payload],
+        isLoading: false
+      }
+    case ADD_VOTE:
+      return {
+        ...state,
+        isLoading: false
+      }
+    case REMOVE_VOTE:
+      return {
+        ...state,
+        isLoading: false
+      }
     default:
       return state;
   }
