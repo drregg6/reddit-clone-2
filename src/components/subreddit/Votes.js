@@ -13,23 +13,24 @@ const Votes = ({
   downvote,
   votes,
   userUpvotes,
-  userDownvotes
+  userDownvotes,
+  currentUser
 }) => {
-  
+  console.log(currentUser.id)
   return (
     <div className="votes" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       {
-        userUpvotes.indexOf(user_id) === -1 ? (
+        userUpvotes.indexOf(currentUser.id) !== -1 || Object.entries(currentUser).length === 0 ? (
           <button
             className="button is-success"
-            onClick={() => upvote(id, user_id)}
+            disabled
           >
             Upvote
           </button>
         ) : (
           <button
             className="button is-success"
-            disabled
+            onClick={() => upvote(id, user_id)}
           >
             Upvote
           </button>
@@ -37,17 +38,17 @@ const Votes = ({
       }
       <span className="vote-amount" style={{ margin: '0 1rem' }}>{ votes }</span>
       {
-        userDownvotes.indexOf(user_id) === -1 ? (
+        userDownvotes.indexOf(currentUser.id) !== -1 || Object.entries(currentUser).length === 0 ? (
           <button
             className="button is-danger"
-            onClick={() => downvote(id, user_id)}
+            disabled
           >
             Downvote
           </button>
         ) : (
           <button
             className="button is-danger"
-            disabled
+            onClick={() => downvote(id, user_id)}
           >
             Downvote
           </button>
@@ -62,6 +63,7 @@ Votes.propTypes = {
   votes: PropTypes.number.isRequired,
   userUpvotes: PropTypes.array,
   userDownvotes: PropTypes.array,
+  currentUser: PropTypes.object.isRequired,
 }
 
 export default connect(

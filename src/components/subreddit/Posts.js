@@ -119,6 +119,7 @@ const Posts = ({
                         votes={postVotes}
                         userUpvotes={userUpvotes}
                         userDownvotes={userDownvotes}
+                        currentUser={user}
                       />
                     </div>
                   </div>
