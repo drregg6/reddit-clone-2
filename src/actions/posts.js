@@ -5,7 +5,8 @@ import {
   UPDATE_POST,
   DELETE_POST,
   CLEAR_POST,
-  ADD_VOTES
+  ADD_VOTES,
+  DELETE_VOTE
 } from './types';
 import db from '../db';
 import firebase from '../firebase';
@@ -77,15 +78,20 @@ export const createPost = (newPost) => async dispatch => {
 
 
 
-export const deletePost = (id) => async dispatch => {
+export const deletePost = (post_id, vote_id) => async dispatch => {
   try {
-    // delete the Votes doc associated with posts
-    await db.collection('votes').where('post_id', '==', id).delete();
-
-    await db.collection('posts').doc(id).delete();
+    // delete the Post doc associated with the id
+    await db.collection('posts').doc(post_id).delete();
     dispatch({
       type: DELETE_POST,
-      payload: id
+      payload: post_id
+    });
+
+    // delete the Votes doc associated with posts
+    await db.collection('votes').doc(vote_id).delete();
+    dispatch({
+      type: DELETE_VOTE,
+      payload: vote_id
     });
   } catch (error) {
     console.error(error.message);

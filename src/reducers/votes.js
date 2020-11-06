@@ -2,7 +2,8 @@ import {
   GET_VOTES,
   ADD_VOTE,
   ADD_VOTES,
-  REMOVE_VOTE
+  REMOVE_VOTE,
+  DELETE_VOTE
 } from '../actions/types';
 
 const initialState = {
@@ -26,14 +27,26 @@ export default function(state = initialState, action) {
         isLoading: false
       }
     case ADD_VOTE:
+      // filter out the vote object that contains matching post_id
+      // then insert the payload object
       return {
         ...state,
         isLoading: false
       }
     case REMOVE_VOTE:
+      // filter out the vote object that contains matching post_id
+      // then insert the payload object
       return {
         ...state,
         isLoading: false
+      }
+    case DELETE_VOTE:
+      let newVotes = state.votes.filter(vote => vote.id !== payload);
+
+      return {
+        ...state,
+        isLoading: false,
+        votes: [...newVotes]
       }
     default:
       return state;

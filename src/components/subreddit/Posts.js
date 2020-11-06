@@ -59,6 +59,7 @@ const Posts = ({
         {
           (posts && !isLoading) ? (
             filterPosts(posts).map(post => {
+              const voteId = getVoteByPostId(post.id) !== undefined && getVoteByPostId(post.id).id;
               const postVotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).votes : '0';
 
               let userUpvotes;
@@ -72,7 +73,7 @@ const Posts = ({
                     post.user_id === user.id && (
                     <button
                       className="button is-danger delete-button"
-                      onClick={() => (deletePost(post.id))}
+                      onClick={() => (deletePost(post.id, voteId))}
                     >
                       X
                     </button>
