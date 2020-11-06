@@ -22,7 +22,7 @@ const Posts = ({
   posts: { posts, isLoading },
   users: { users },
   auth: { user },
-  votes: { votes, user_upvotes, user_downvotes }
+  votes: { votes }
 }) => {
   useEffect(() => {
     fetchPosts(subreddit);
