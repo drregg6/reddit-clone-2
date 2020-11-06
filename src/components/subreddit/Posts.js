@@ -22,7 +22,7 @@ const Posts = ({
   posts: { posts, isLoading },
   users: { users },
   auth: { user },
-  votes: { votes }
+  votes: { votes, user_upvotes, user_downvotes }
 }) => {
   useEffect(() => {
     fetchPosts(subreddit);
@@ -39,7 +39,7 @@ const Posts = ({
     return users.filter(user => user.id === id)[0];
   }
 
-  const getVoteCount = (post_id) => {
+  const getVoteByPostId = (post_id) => {
     return votes.filter(doc => doc.post_id === post_id)[0];
   }
 
@@ -59,8 +59,13 @@ const Posts = ({
         {
           (posts && !isLoading) ? (
             filterPosts(posts).map(post => {
-              const postVotes = getVoteCount(post.id) !== undefined ? getVoteCount(post.id).votes : '0';
-              console.log(postVotes);
+              const postVotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).votes : '0';
+
+              let userUpvotes;
+              let userDownvotes;
+              userUpvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_upvotes : [];
+              userDownvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_downvotes : [];
+
               return (
                 <div className="column is-4 post-column" key={post.id}>
                   {
@@ -73,25 +78,29 @@ const Posts = ({
                     </button>
                   )}
                   <div className="card">
-                    <div className="card-image">
-                      <figure className="image">
-                        <img src={ post.url !== '' ? post.url : 'https://bulma.io/images/placeholders/96x96.png' } alt="Post image" />
-                      </figure>
-                    </div>
+                    {
+                      (post.url !== '') && (
+                        <div className="card-image">
+                          <figure className="image">
+                            <img src={ post.url !== '' ? post.url : 'https://bulma.io/images/placeholders/96x96.png' } alt={ post.title } />
+                          </figure>
+                        </div>
+                      )
+                    }
                     <div className="card-content">
                       <div className="media">
                         <div className="media-left">
                           <figure className="image is-48x48">
                             <img
                               src={ getUser(post.user_id) !== undefined ? getUser(post.user_id).image : 'https://bulma.io/images/placeholders/96x96.png' }
-                              alt="User image"
+                              alt="user avatar"
                             />
                           </figure>
                         </div>
                         <div className="media-content">
                           {
                             post.url !== '' ? (
-                              <p className="title is-4"><a href={`${ post.url }`} target="_blank">{ post.title }</a></p>
+                              <p className="title is-4"><a href={`${ post.url }`} target="_blank" rel="noopener noreferrer">{ post.title }</a></p>
                             ) : (
                               <p className="title is-4">{ post.title }</p>
                             )
@@ -108,6 +117,8 @@ const Posts = ({
                       <Votes
                         post={post}
                         votes={postVotes}
+                        userUpvotes={userUpvotes}
+                        userDownvotes={userDownvotes}
                       />
                     </div>
                   </div>

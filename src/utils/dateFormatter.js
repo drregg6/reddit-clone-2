@@ -17,7 +17,5 @@ export default function(date) {
   interval = Math.floor(seconds / 60);
   if (interval > 1) return `${interval} minutes`;
 
-  console.log(Math.floor(seconds));
-
   return `${isNaN(Math.floor(seconds)) ? '0' : Math.floor(seconds)} seconds`;
 }

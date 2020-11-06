@@ -45,13 +45,13 @@ export const createPost = (newPost) => async dispatch => {
 
   // create votes collection when a post is created
   let votesPayload = { votes: 1 };
-  votesPayload.user_ids = [];
+  votesPayload.user_upvotes = [];
+  votesPayload.user_downvotes = [];
   votesPayload.id = votesDoc.id;
   votesPayload.subreddit_id = postsPayload.subreddit_id;
   votesPayload.updated_at = firebase.firestore.FieldValue.serverTimestamp();
-  votesPayload.user_ids.push(firebase.auth().currentUser.uid);
+  votesPayload.user_upvotes.push(firebase.auth().currentUser.uid);
   votesPayload.post_id = postsPayload.id;
-  console.log(votesPayload);
 
   try {
     // create a post in firebase with the id created
@@ -79,6 +79,9 @@ export const createPost = (newPost) => async dispatch => {
 
 export const deletePost = (id) => async dispatch => {
   try {
+    // delete the Votes doc associated with posts
+    await db.collection('votes').where('post_id', '==', id).delete();
+
     await db.collection('posts').doc(id).delete();
     dispatch({
       type: DELETE_POST,
