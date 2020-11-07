@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PostCard from './PostCard';
 
@@ -32,12 +32,18 @@ const Posts = ({
     subreddit_id
   ]);
 
+  const [ byVote, toggleByVote ] = useState(false);
+
   const getUser = (id) => {
     return users.filter(user => user.id === id)[0];
   }
 
-  const getVoteByPostId = (post_id) => {
+  const getVoteByPostId = post_id => {
     return votes.filter(doc => doc.post_id === post_id)[0];
+  }
+
+  const getPostByVoteId = post_id => {
+    return posts.filter(doc => doc.id === post_id)[0];
   }
 
   const filterPosts = posts => {
@@ -50,11 +56,63 @@ const Posts = ({
     return posts;
   }
 
+  const orderByVotes = posts => {
+    let postVotes = posts.map(post => getVoteByPostId(post.id));
+    let orderedVotes = postVotes.sort((a, b) => {
+      return b.votes - a.votes;
+    });
+    return orderedVotes.map(vote => {
+      if (vote) {
+        return getPostByVoteId(vote.post_id);
+      } else {
+        return null;
+      }
+    });
+  }
+
   return (
     <section>
+      <button
+        className="button is-primary"
+        onClick={() => toggleByVote(!byVote)}
+      >
+        By Vote
+      </button>
       <div className="columns is-multiline is-4 posts">
         {
-          (posts && !isLoading) ? (
+          (posts && !isLoading) ? byVote ? (
+            orderByVotes(posts).map(post => {
+              // vote information
+              let postVotes = {
+                voteId: '',
+                userUpvotes: [],
+                userDownvotes: [],
+                votes: 0
+              }
+              postVotes.voteId = getVoteByPostId(post.id) !== undefined && getVoteByPostId(post.id).id;
+              postVotes.votes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).votes : '0';
+              postVotes.userUpvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_upvotes : [];
+              postVotes.userDownvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_downvotes : [];
+
+              // author information
+              let author = getUser(post.user_id) !== undefined ? getUser(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png' }
+
+              return (
+                <PostCard
+                  currentUser={user}
+                  post_id={post.id}
+                  user_id={post.user_id}
+                  subreddit={subreddit}
+                  url={post.url}
+                  title={post.title}
+                  desc={post.desc}
+                  updated_at={post.updated_at}
+                  author={author}
+                  postVotes={postVotes}
+                />
+              )
+            })
+          ) : (
             filterPosts(posts).map(post => {
               // vote information
               let postVotes = {
