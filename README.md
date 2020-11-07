@@ -88,7 +88,7 @@ Project Link: [Title goes here](URL goes here)
 * [x] Format Dates
 * [x] Fix card formatting
 * [x] Search/Filter Posts
-* [ ] UpVote/DownVote Posts
+* [x] UpVote/DownVote Posts
   * Update Rules
   * [ ] Order by total score
   * [ ] Order by created
@@ -106,7 +106,7 @@ Project Link: [Title goes here](URL goes here)
 * [ ] Cloud Function Score Aggregator
   * https://firebase.google.com/docs/firestore/solutions/aggregation#solution_cloud_functions
 * [x] Delete Post
-  * [ ] Cloud Function "Cascade Delete" comments
+  * [x] Cloud Function "Cascade Delete" comments
 * [ ] Upload Images to Firebase storage
 
 ## Resources

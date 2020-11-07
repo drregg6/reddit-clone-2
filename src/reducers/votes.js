@@ -38,9 +38,12 @@ export default function(state = initialState, action) {
       }
     case REMOVE_VOTE:
       // filter out the vote object that contains matching post_id
+      let removeVote = state.votes.filter(vote => vote.id !== payload.id);
+
       // then insert the payload object
       return {
         ...state,
+        votes: [...removeVote, payload],
         isLoading: false
       }
     case DELETE_VOTE:

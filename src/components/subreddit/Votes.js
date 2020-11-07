@@ -8,7 +8,7 @@ import {
 } from '../../actions/votes';
 
 const Votes = ({
-  post: { id, user_id },
+  post: { id },
   voteId,
   upvote,
   downvote,
@@ -17,6 +17,9 @@ const Votes = ({
   userDownvotes,
   currentUser
 }) => {
+  let vote_id = voteId;
+  let post_id = id;
+  let user_id = currentUser.id;
   return (
     <div className="votes" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       {
@@ -30,14 +33,14 @@ const Votes = ({
         ) : userUpvotes.indexOf(currentUser.id) !== -1 ? ( // If the User has upvoted the post, make the button light
           <button
             className="button is-success is-light"
-            onClick={() => upvote(voteId, id, user_id)}
+            onClick={() => upvote(vote_id, post_id, user_id)}
           >
             Upvote
           </button>
         ) : ( // Else make it a normal button
           <button
             className="button is-success"
-            onClick={() => upvote(voteId, id, user_id)}
+            onClick={() => upvote(vote_id, post_id, user_id)}
           >
             Upvote
           </button>
@@ -55,14 +58,14 @@ const Votes = ({
         ) : userDownvotes.indexOf(currentUser.id) !== -1 ? (
           <button
             className="button is-danger is-light"
-            onClick={() => downvote(id, user_id)}
+            onClick={() => downvote(vote_id, post_id, user_id)}
           >
             Downvote
           </button>
         ) : (
           <button
             className="button is-danger"
-            onClick={() => downvote(id, user_id)}
+            onClick={() => downvote(vote_id, post_id, user_id)}
           >
             Downvote
           </button>
