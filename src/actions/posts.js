@@ -31,6 +31,25 @@ export const fetchPosts = (subreddit) => async dispatch => {
 
 
 
+export const fetchPost = (post_id) => async dispatch => {
+  dispatch({ type: CLEAR_POST });
+  try {
+    let payload = {};
+    await db.collection('posts').doc(post_id).get().then(doc => {
+      payload = doc.data();
+    });
+
+    dispatch({
+      type: GET_POST,
+      payload
+    })
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
+
 export const createPost = (newPost) => async dispatch => {
   // generate an auto id
   let postsDoc = db.collection('posts').doc();

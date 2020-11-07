@@ -41,7 +41,6 @@ Subreddits.propTypes = {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     subreddits: state.subreddits
   }

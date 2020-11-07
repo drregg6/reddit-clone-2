@@ -22,6 +22,12 @@ export default function(state = initialState, action) {
         isLoading: false,
         posts: [...payload]
       }
+    case GET_POST:
+      return {
+        ...state,
+        isLoading: false,
+        post: payload
+      }
     case CREATE_POST:
       return {
         ...state,
@@ -36,6 +42,12 @@ export default function(state = initialState, action) {
         ...state,
         isLoading: false,
         posts: [...newPosts]
+      }
+    case CLEAR_POST:
+      return {
+        ...state,
+        isLoading: false,
+        post: null
       }
     default:
       return state;

@@ -12,6 +12,7 @@ import { fetchVotes } from '../../actions/votes';
 const Posts = ({
   search,
   subreddit,
+  subreddit_id,
   fetchPosts,
   fetchUsers,
   fetchVotes,
@@ -21,14 +22,14 @@ const Posts = ({
   votes: { votes }
 }) => {
   useEffect(() => {
-    fetchPosts(subreddit);
+    fetchPosts(subreddit_id);
     fetchUsers();
     fetchVotes();
   }, [
     fetchUsers,
     fetchPosts,
     fetchVotes,
-    subreddit
+    subreddit_id
   ]);
 
   const getUser = (id) => {
@@ -75,6 +76,7 @@ const Posts = ({
                   currentUser={user}
                   post_id={post.id}
                   user_id={post.user_id}
+                  subreddit={subreddit}
                   url={post.url}
                   title={post.title}
                   desc={post.desc}
@@ -99,6 +101,7 @@ Posts.propTypes = {
   fetchVotes: PropTypes.func.isRequired,
   search: PropTypes.string,
   subreddit: PropTypes.string,
+  subreddit_id: PropTypes.string,
 }
 
 const mapStateToProps = state => ({

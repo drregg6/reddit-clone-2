@@ -62,7 +62,8 @@ const Subreddit = ({
         subreddit && (
         <Posts
           search={search}
-          subreddit={subreddit.id}
+          subreddit={subreddit.name}
+          subreddit_id={subreddit.id}
         />
       )}
     </section>

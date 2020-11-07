@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
 import Votes from './Votes';
@@ -9,6 +10,7 @@ import { deletePost } from '../../actions/posts';
 const PostCard = ({
   deletePost,
   currentUser,
+  subreddit,
   post_id,
   user_id,
   url,
@@ -41,7 +43,9 @@ const PostCard = ({
           (url !== '') && (
             <div className="card-image">
               <figure className="image">
+              <a href={`${ url }`} target="_blank" rel="noopener noreferrer">
                 <img src={ url !== '' ? url : 'https://bulma.io/images/placeholders/96x96.png' } alt={ title } />
+              </a>
               </figure>
             </div>
           )
@@ -59,7 +63,9 @@ const PostCard = ({
             <div className="media-content">
               {
                 url !== '' ? (
-                  <p className="title is-4"><a href={`${ url }`} target="_blank" rel="noopener noreferrer">{ title }</a></p>
+                  <p className="title is-4">
+                    <Link to={`/r/${subreddit}/${post_id}`}>{ title }</Link>
+                  </p>
                 ) : (
                   <p className="title is-4">{ title }</p>
                 )
@@ -91,6 +97,7 @@ PostCard.propTypes = {
   deletePost: PropTypes.func.isRequired,
   post_id: PropTypes.string.isRequired,
   user_id: PropTypes.string.isRequired,
+  subreddit: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   desc: PropTypes.string.isRequired,
