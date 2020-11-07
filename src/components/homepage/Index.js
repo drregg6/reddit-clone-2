@@ -12,12 +12,14 @@ const Index = ({
 }) => {
   return (
     <div>
-      <h1>Welcome to the Homepage</h1>
       {
         isLoggedIn ? (
           <Subreddits />
         ) : (
-          <button className="button is-primary" onClick={() => login()}>Login</button>
+          <>
+            <Subreddits />
+            <button className="button is-primary" onClick={() => login()}>Login</button>
+          </>
         )
       }
     </div>

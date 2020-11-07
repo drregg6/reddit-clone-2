@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
 import Votes from './Votes';
-import { auth } from 'firebase';
 
 import { connect } from 'react-redux';
 import { deletePost } from '../../actions/posts';
@@ -75,7 +74,7 @@ const PostCard = ({
             <time>{ updated_at && dateFormatter(updated_at.seconds) }</time>
           </div>
           <Votes
-            voteId={vote_id}
+            voteId={voteId}
             postId={post_id}
             votes={votes}
             userUpvotes={userUpvotes}
@@ -89,10 +88,17 @@ const PostCard = ({
 }
 
 PostCard.propTypes = {
-
+  deletePost: PropTypes.func.isRequired,
+  post_id: PropTypes.string.isRequired,
+  user_id: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  desc: PropTypes.string.isRequired,
+  author: PropTypes.object.isRequired,
+  postVotes: PropTypes.object.isRequired,
 }
 
 export default connect(
   null,
-  deletePost
+  { deletePost }
 )(PostCard);

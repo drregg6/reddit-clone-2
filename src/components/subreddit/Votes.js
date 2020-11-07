@@ -76,8 +76,7 @@ const Votes = ({
 }
 
 Votes.propTypes = {
-  voteId: PropTypes.string.isRequired,
-  post: PropTypes.object.isRequired,
+  postId: PropTypes.string.isRequired,
   userUpvotes: PropTypes.array,
   userDownvotes: PropTypes.array,
   currentUser: PropTypes.object.isRequired,
