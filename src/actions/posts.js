@@ -97,6 +97,20 @@ export const createPost = (newPost) => async dispatch => {
 
 
 
+export const updatePost = (body) => async dispatch => {
+  console.log(body);
+  try {
+    dispatch({
+      type: UPDATE_POST,
+      payload: 'Hello world!'
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
+
 export const deletePost = (post_id, vote_id) => async dispatch => {
   try {
     // delete the Post doc associated with the id
