@@ -116,6 +116,7 @@ const Posts = ({
                         <time>{ post.updated_at && dateFormatter(post.updated_at.seconds) }</time>
                       </div>
                       <Votes
+                        voteId={voteId}
                         post={post}
                         votes={postVotes}
                         userUpvotes={userUpvotes}

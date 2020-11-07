@@ -4,6 +4,7 @@ import {
   REMOVE_VOTE
 } from './types';
 import db from '../db';
+import firebase from '../firebase';
 
 
 export const fetchVotes = () => async dispatch => {
@@ -23,7 +24,12 @@ export const fetchVotes = () => async dispatch => {
 }
 
 
-export const upvote = (post_id, user_id) => async dispatch => {
+export const upvote = (vote_id, post_id, user_id) => async dispatch => {
+  let upvoteFlag = {
+    userUpvoted: false,
+    userDownvoted: false
+  }
+  let payload;
   // within all instances, updated_at time needs to be changed!!
 
   // IF user_id exists in user_upvotes, remove user_id and votes--
@@ -34,15 +40,53 @@ export const upvote = (post_id, user_id) => async dispatch => {
 
   // Payload should be the updated object
   try {
-    console.log(post_id);
-    console.log(user_id);
+    let upvoteQuery = await db.collection('votes').where('post_id', '==', post_id).where('user_upvotes', 'array-contains', user_id).get();
+    upvoteQuery.forEach(doc => {
+      if (doc) upvoteFlag.userUpvoted = true;
+    });
+
+    let downvoteQuery = await db.collection('votes').where('post_id', '==', post_id).where('user_downvotes', 'array-contains', user_id).get();
+    downvoteQuery.forEach(doc => {
+      if (doc) upvoteFlag.userDownvoted = true;
+    });
+
+
+    if (upvoteFlag.userUpvoted) {
+      await db.collection('votes').doc(vote_id).update({
+        user_upvotes: firebase.firestore.FieldValue.arrayRemove(user_id),
+        updated_at: firebase.firestore.FieldValue.serverTimestamp(),
+        votes: firebase.firestore.FieldValue.increment(-1)
+      });
+    } else if (upvoteFlag.userDownvoted) {
+      await db.collection('votes').doc(vote_id).update({
+        user_upvotes: firebase.firestore.FieldValue.arrayUnion(user_id),
+        user_downvotes: firebase.firestore.FieldValue.arrayRemove(user_id),
+        updated_at: firebase.firestore.FieldValue.serverTimestamp(),
+        votes: firebase.firestore.FieldValue.increment(2)
+      });
+    } else {
+      await db.collection('votes').doc(vote_id).update({
+        user_upvotes: firebase.firestore.FieldValue.arrayUnion(user_id),
+        updated_at: firebase.firestore.FieldValue.serverTimestamp(),
+        votes: firebase.firestore.FieldValue.increment(1)
+      });
+    }
+
+    await db.collection('votes').doc(vote_id).get().then(doc => {
+      payload = doc.data();
+    });
+    
+    dispatch({
+      type: ADD_VOTE,
+      payload
+    });
   } catch (error) {
     console.error(error.message);
   }
 }
 
 
-export const downvote = (post_id, user_id) => async dispatch => {
+export const downvote = (vote_id, user_id) => async dispatch => {
   // within all instances, updated_at time needs to be changed!!
 
   // IF user_id exists in user_downvotes, remove user_id and votes++
@@ -53,7 +97,6 @@ export const downvote = (post_id, user_id) => async dispatch => {
 
   // Payload should be the updated object
   try {
-    console.log(post_id);
     console.log(user_id);
   } catch (error) {
     console.error(error.message);

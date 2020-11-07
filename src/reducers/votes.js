@@ -28,9 +28,12 @@ export default function(state = initialState, action) {
       }
     case ADD_VOTE:
       // filter out the vote object that contains matching post_id
+      let addVote = state.votes.filter(vote => vote.id !== payload.id);
+
       // then insert the payload object
       return {
         ...state,
+        votes: [...addVote, payload],
         isLoading: false
       }
     case REMOVE_VOTE:
@@ -41,12 +44,12 @@ export default function(state = initialState, action) {
         isLoading: false
       }
     case DELETE_VOTE:
-      let newVotes = state.votes.filter(vote => vote.id !== payload);
+      let deleteVote = state.votes.filter(vote => vote.id !== payload);
 
       return {
         ...state,
         isLoading: false,
-        votes: [...newVotes]
+        votes: [...deleteVote]
       }
     default:
       return state;

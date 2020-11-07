@@ -8,7 +8,8 @@ import {
 } from '../../actions/votes';
 
 const Votes = ({
-  post: {id, user_id},
+  post: { id, user_id },
+  voteId,
   upvote,
   downvote,
   votes,
@@ -29,14 +30,14 @@ const Votes = ({
         ) : userUpvotes.indexOf(currentUser.id) !== -1 ? ( // If the User has upvoted the post, make the button light
           <button
             className="button is-success is-light"
-            onClick={() => upvote(id, user_id)}
+            onClick={() => upvote(voteId, id, user_id)}
           >
             Upvote
           </button>
         ) : ( // Else make it a normal button
           <button
             className="button is-success"
-            onClick={() => upvote(id, user_id)}
+            onClick={() => upvote(voteId, id, user_id)}
           >
             Upvote
           </button>
@@ -72,6 +73,7 @@ const Votes = ({
 }
 
 Votes.propTypes = {
+  voteId: PropTypes.string.isRequired,
   post: PropTypes.object.isRequired,
   userUpvotes: PropTypes.array,
   userDownvotes: PropTypes.array,
