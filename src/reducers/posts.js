@@ -32,7 +32,7 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: false,
-        posts: [...state.posts, payload]
+        posts: [payload, ...state.posts]
       }
     case UPDATE_POST:
       // go through state.posts and filter out the post with post.id === payload.id

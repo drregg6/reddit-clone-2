@@ -73,7 +73,7 @@ const Posts = ({
   return (
     <section>
       <button
-        className="button is-primary"
+        className={`button ${byVote ? `is-danger` : `is-primary`}`}
         onClick={() => toggleByVote(!byVote)}
       >
         By Vote

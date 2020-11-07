@@ -20,6 +20,9 @@ export const fetchPosts = (subreddit) => async dispatch => {
     res.forEach(post => {
       payload.push(post.data());
     });
+    payload = payload.sort((obj1, obj2) => {
+      return obj2.created_at - obj1.created_at
+    })
     dispatch({
       type: GET_POSTS,
       payload
