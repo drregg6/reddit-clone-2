@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import dateFormatter from '../../utils/dateFormatter';
-
-import Votes from './Votes';
+import PostCard from './PostCard';
 
 import { connect } from 'react-redux';
 import {
-  fetchPosts,
-  deletePost
+  fetchPosts
 } from '../../actions/posts';
 import { fetchUsers } from '../../actions/users';
 import { fetchVotes } from '../../actions/votes';
@@ -18,7 +15,6 @@ const Posts = ({
   fetchPosts,
   fetchUsers,
   fetchVotes,
-  deletePost,
   posts: { posts, isLoading },
   users: { users },
   auth: { user },
@@ -59,73 +55,33 @@ const Posts = ({
         {
           (posts && !isLoading) ? (
             filterPosts(posts).map(post => {
-              const voteId = getVoteByPostId(post.id) !== undefined && getVoteByPostId(post.id).id;
-              const postVotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).votes : '0';
+              // vote information
+              let postVotes = {
+                voteId: '',
+                userUpvotes: [],
+                userDownvotes: [],
+                votes: 0
+              }
+              postVotes.voteId = getVoteByPostId(post.id) !== undefined && getVoteByPostId(post.id).id;
+              postVotes.votes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).votes : '0';
+              postVotes.userUpvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_upvotes : [];
+              postVotes.userDownvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_downvotes : [];
 
-              let userUpvotes;
-              let userDownvotes;
-              userUpvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_upvotes : [];
-              userDownvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_downvotes : [];
+              // author information
+              let author = getUser(post.user_id) !== undefined ? getUser(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png' }
 
               return (
-                <div className="column is-4 post-column" key={post.id}>
-                  {
-                    post.user_id === user.id && (
-                    <button
-                      className="button is-danger delete-button"
-                      onClick={() => (deletePost(post.id, voteId))}
-                    >
-                      X
-                    </button>
-                  )}
-                  <div className="card">
-                    {
-                      (post.url !== '') && (
-                        <div className="card-image">
-                          <figure className="image">
-                            <img src={ post.url !== '' ? post.url : 'https://bulma.io/images/placeholders/96x96.png' } alt={ post.title } />
-                          </figure>
-                        </div>
-                      )
-                    }
-                    <div className="card-content">
-                      <div className="media">
-                        <div className="media-left">
-                          <figure className="image is-48x48">
-                            <img
-                              src={ getUser(post.user_id) !== undefined ? getUser(post.user_id).image : 'https://bulma.io/images/placeholders/96x96.png' }
-                              alt="user avatar"
-                            />
-                          </figure>
-                        </div>
-                        <div className="media-content">
-                          {
-                            post.url !== '' ? (
-                              <p className="title is-4"><a href={`${ post.url }`} target="_blank" rel="noopener noreferrer">{ post.title }</a></p>
-                            ) : (
-                              <p className="title is-4">{ post.title }</p>
-                            )
-                          }
-                          <p className="subtitle is-6">{ getUser(post.user_id) !== undefined ? getUser(post.user_id).name : 'Anonymous' }</p>
-                        </div>
-                      </div>
-
-                      <div className="content">
-                        { post.desc && post.desc }
-                        <br />
-                        <time>{ post.updated_at && dateFormatter(post.updated_at.seconds) }</time>
-                      </div>
-                      <Votes
-                        voteId={voteId}
-                        post={post}
-                        votes={postVotes}
-                        userUpvotes={userUpvotes}
-                        userDownvotes={userDownvotes}
-                        currentUser={user}
-                      />
-                    </div>
-                  </div>
-                </div>
+                <PostCard
+                  currentUser={user}
+                  post_id={post.id}
+                  user_id={post.user_id}
+                  url={post.url}
+                  title={post.title}
+                  desc={post.desc}
+                  updated_at={post.updated_at}
+                  author={author}
+                  postVotes={postVotes}
+                />
               )
             })
           ) : (
@@ -141,7 +97,6 @@ Posts.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   fetchPosts: PropTypes.func.isRequired,
   fetchVotes: PropTypes.func.isRequired,
-  deletePost: PropTypes.func.isRequired,
   search: PropTypes.string,
   subreddit: PropTypes.string,
 }
@@ -158,7 +113,6 @@ export default connect(
   {
     fetchUsers,
     fetchPosts,
-    fetchVotes,
-    deletePost
+    fetchVotes
   }
 )(Posts);

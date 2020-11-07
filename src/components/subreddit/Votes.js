@@ -8,7 +8,7 @@ import {
 } from '../../actions/votes';
 
 const Votes = ({
-  post: { id },
+  postId,
   voteId,
   upvote,
   downvote,
@@ -18,7 +18,7 @@ const Votes = ({
   currentUser
 }) => {
   let vote_id = voteId;
-  let post_id = id;
+  let post_id = postId;
   let user_id = currentUser.id;
   return (
     <div className="votes" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
