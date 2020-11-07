@@ -31,7 +31,7 @@ const Post = ({
         )
       }
       {
-        showForm && (
+        (showForm && post !== null) && (
           <UpdateForm
             oldTitle={post.title}
             oldDesc={post.desc}

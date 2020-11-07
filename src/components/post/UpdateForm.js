@@ -26,7 +26,7 @@ const UpdateForm = ({
   }
   const handleSubmit = event => {
     event.preventDefault();
-    console.log(input);
+    updatePost(post_id, input);
   }
 
   return (

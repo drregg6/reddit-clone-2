@@ -97,12 +97,21 @@ export const createPost = (newPost) => async dispatch => {
 
 
 
-export const updatePost = (body) => async dispatch => {
-  console.log(body);
+export const updatePost = (post_id, body) => async dispatch => {
   try {
+    let updatedPost = {...body};
+    let payload;
+    updatedPost.updated_at = firebase.firestore.FieldValue.serverTimestamp();
+    await db.collection('posts').doc(post_id).update(updatedPost);
+
+    await db.collection('posts').doc(post_id).get().then(doc => {
+      payload = doc.data();
+    });
+
+    dispatch({ type: CLEAR_POST });
     dispatch({
       type: UPDATE_POST,
-      payload: 'Hello world!'
+      payload
     });
   } catch (error) {
     console.error(error.message);
