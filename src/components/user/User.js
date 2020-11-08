@@ -1,36 +1,45 @@
-/*
-
-TODO
-= Need the subreddit ID
-= Need the vote ID
-
-*/
-
 import React, { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
+import { fetchVotes } from '../../actions/votes';
 import { fetchUser } from '../../actions/users';
+import { fetchSubreddits } from '../../actions/subreddits';
 import { deletePost, fetchUserPosts } from '../../actions/posts';
 
 const User = ({
   deletePost,
   fetchUser,
+  fetchVotes,
   fetchUserPosts,
+  fetchSubreddits,
   posts: { posts, isLoading },
   users: { user },
-  auth: { currentUser }
+  auth: { currentUser },
+  subreddits: { subreddits },
+  votes: { votes }
 }) => {
   const { user_id } = useParams();
   useEffect(() => {
     fetchUser(user_id);
     fetchUserPosts(user_id);
+    fetchSubreddits();
+    fetchVotes();
   }, [
     fetchUserPosts,
+    fetchSubreddits,
+    fetchVotes,
     fetchUser,
     user_id
   ]);
+
+  const getSubredditById = subreddit_id => {
+    return subreddits.filter(subreddit => subreddit.id === subreddit_id)[0];
+  }
+  const getVoteIdByPost = post_id => {
+    return votes.filter(vote => vote.post_id === post_id)[0];
+  }
 
   return (
     <div className="section">
@@ -55,6 +64,8 @@ const User = ({
         {
           (posts.length !== 0 && !isLoading) && (
             posts.map(post => {
+              let vote_id = getVoteIdByPost(post.id);
+              let subreddit = getSubredditById(post.subreddit_id);
               return (
                 <div key={post.id} className="box">
                   <div className="media">
@@ -72,7 +83,7 @@ const User = ({
                     }
                     <div className="media-content">
                       <p className="has-text-weight-bold">
-                        <Link to={`/`}>{post.title}</Link>
+                        { subreddit !== undefined && <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link> }
                       </p>
                       {
                         post.desc && (
@@ -87,7 +98,7 @@ const User = ({
                         <div className="media-right">
                           <button
                             className="delete"
-                            onClick={() => deletePost()}
+                            onClick={() => deletePost(post.id, vote_id)}
                           >
                             X
                           </button>
@@ -109,15 +120,21 @@ User.propTypes = {
   deletePost: PropTypes.func.isRequired,
   fetchUserPosts: PropTypes.func.isRequired,
   fetchUser: PropTypes.func.isRequired,
+  fetchVotes: PropTypes.func.isRequired,
+  fetchSubreddits: PropTypes.func.isRequired,
   users: PropTypes.object,
   auth: PropTypes.object,
   posts: PropTypes.object,
+  votes: PropTypes.object,
+  subreddits: PropTypes.object,
 }
 
 const mapStateToProps = state => ({
   users: state.users,
   auth: state.auth,
-  posts: state.posts
+  posts: state.posts,
+  votes: state.votes,
+  subreddits: state.subreddits
 });
 
 export default connect(
@@ -125,6 +142,8 @@ export default connect(
   {
     deletePost,
     fetchUser,
-    fetchUserPosts
+    fetchVotes,
+    fetchUserPosts,
+    fetchSubreddits,
   }
 )(User)

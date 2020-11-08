@@ -9,7 +9,7 @@ import { fetchPost } from '../../actions/posts';
 const Post = ({
   fetchPost,
   posts: { post },
-  auth: { user }
+  auth: { currentUser }
 }) => {
   const { post_id } = useParams();
   useEffect(() => {
@@ -23,7 +23,7 @@ const Post = ({
   return (
     <section className="section">
       {
-        (post !== null && user.id === post.user_id) && (
+        (post !== null && currentUser.id === post.user_id) && (
           <button
             className="button is-success"
             onClick={() => toggleShowForm(!showForm)}
