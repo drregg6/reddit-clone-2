@@ -32,7 +32,8 @@ const Posts = ({
     subreddit_id
   ]);
 
-  const [ byVote, toggleByVote ] = useState(false);
+  const [ sortByVote, toggleSortByVote ] = useState(false);
+  const [ sortByNew, toggleSortByNew ] = useState(true);
 
   const getUser = (id) => {
     return users.filter(user => user.id === id)[0];
@@ -70,17 +71,34 @@ const Posts = ({
     });
   }
 
+  const handleSortByVote = () => {
+    toggleSortByVote(true);
+    toggleSortByNew(false);
+  }
+  const handleSortByNew = () => {
+    toggleSortByNew(true);
+    toggleSortByVote(false);
+  }
+
   return (
     <section>
       <button
-        className={`button ${byVote ? `is-danger` : `is-primary`}`}
-        onClick={() => toggleByVote(!byVote)}
+        className={`button is-primary ${sortByVote && `is-light`}`}
+        onClick={() => handleSortByVote()}
+        disabled={sortByVote}
       >
-        By Vote
+        Sort By Most Votes
+      </button>
+      <button
+        className={`button is-info ${sortByNew && `is-light`}`}
+        onClick={() => handleSortByNew()}
+        disabled={sortByNew}
+      >
+        Sort By New
       </button>
       <div className="columns is-multiline is-4 posts">
         {
-          (posts && !isLoading) ? byVote ? (
+          (posts && !isLoading) ? sortByVote ? (
             orderByVotes(posts).map(post => {
               // vote information
               let postVotes = {
