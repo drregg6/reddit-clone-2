@@ -11,7 +11,7 @@ const Nav = ({
   auth: { currentUser, isLoggedIn }
 }) => {
   return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
+    <nav className="navbar is-light" role="navigation" aria-label="dropdown navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to="/">
           One Kickass Site
@@ -29,10 +29,18 @@ const Nav = ({
           <Link className="navbar-item" to="/">
             Home
           </Link>
-
-          <Link className="navbar-item" to="/users">
-            Users
-          </Link>
+          
+          <div className="navbar-item has-dropdown is-hoverable">
+            <a href="!#" className="navbar-link is-arrowless">
+              Subreddits
+            </a>
+            <div className="navbar-dropdown">
+              <Link className="navbar-item" to='/r/programming'>Programming</Link>
+              <Link className="navbar-item" to='/r/funny'>Funny</Link>
+              <Link className="navbar-item" to='/r/philadelphia'>Philadelphia</Link>
+              <Link className="navbar-item" to='/r/pics'>Pics</Link>
+            </div>
+          </div>
         </div>
 
         <div className="navbar-end">
@@ -46,7 +54,7 @@ const Nav = ({
               ) : (
                 <>
                   <div className="navbar-item">
-                    <Link to={`u/${currentUser.id}`} className="button is-light is-info">{currentUser.name}</Link>
+                    <Link to={`/u/${currentUser.id}`} className="button is-light is-info">{currentUser.name}</Link>
                   </div>
                   <div className="navbar-item">
                     <button className="button is-danger" onClick={() => logout()}>
