@@ -2,23 +2,37 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import UpdateForm from './UpdateForm';
+import CommentForm from './CommentForm';
 
 import { connect } from 'react-redux';
 import { fetchPost } from '../../actions/posts';
+import { fetchSubreddits } from '../../actions/subreddits';
 
 const Post = ({
   fetchPost,
+  fetchSubreddits,
   posts: { post },
-  auth: { currentUser }
+  auth: { currentUser },
+  subreddits: { subreddits }
 }) => {
-  const { post_id } = useParams();
+  const { post_id, name } = useParams();
   useEffect(() => {
     fetchPost(post_id);
+    fetchSubreddits();
   }, [
+    fetchSubreddits,
     fetchPost,
     post_id
   ]);
   const [ showForm, toggleShowForm ] = useState( false );
+
+  const fetchSubredditByName = (sub_name) => {
+    return subreddits.filter(subreddit => subreddit.name === sub_name)[0];
+  }
+  let subreddit_id = '';
+  if (subreddits.length !== 0) {
+    subreddit_id = fetchSubredditByName(name).id;
+  }
 
   return (
     <section className="section">
@@ -61,21 +75,33 @@ const Post = ({
           )
         }
       </div>
+      <div className="comment">
+        <h2 className="subtitle">Add a Comment</h2>
+        <CommentForm
+          currentUser={currentUser}
+          post_id={post_id}
+          name={name}
+          subreddit_id={subreddit_id}
+        />
+      </div>
     </section>
   )
 }
 
 Post.propTypes = {
+  fetchSubreddits: PropTypes.func.isRequired,
   fetchPost: PropTypes.func.isRequired,
+  subreddits: PropTypes.object,
   posts: PropTypes.object,
 }
 
 const mapStateToProps = state => ({
+  subreddits: state.subreddits,
   posts: state.posts,
   auth: state.auth
 })
 
 export default connect(
   mapStateToProps,
-  { fetchPost }
+  { fetchPost, fetchSubreddits }
 )(Post);

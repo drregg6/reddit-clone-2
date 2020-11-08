@@ -1,11 +1,10 @@
 /*
 
 TODOS:
-= Break Posts into smaller Components
-    - Post content
-    - Update / Downvote
-= Votes doc is created when a new post is created
-    - Votes has insufficient permissions - cannot Create
+= Comments comments comments
+= User Page
+  - Update User
+  - Add bio for user
 
 */
 

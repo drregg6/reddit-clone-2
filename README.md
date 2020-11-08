@@ -94,9 +94,8 @@ Project Link: [Title goes here](URL goes here)
   * [x] Order by created
 * [ ] Add comment to Post
   * Update Rules
-* [ ] User Profile
-  * [ ] Show Submitted Posts
-  * [ ] Show UpVoted Posts
+* [x] User Profile
+  * [x] Show Submitted Posts
   * [ ] Show Comments
 * [x] Edit Post
 * [ ] Edit Comment
