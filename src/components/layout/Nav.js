@@ -8,7 +8,7 @@ import { login, logout } from '../../actions/auth';
 const Nav = ({
   login,
   logout,
-  auth: { isLoggedIn }
+  auth: { currentUser, isLoggedIn }
 }) => {
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -44,11 +44,16 @@ const Nav = ({
                   </button>
                 </div>
               ) : (
-                <div className="navbar-item">
-                  <button className="button is-danger" onClick={() => logout()}>
-                    Logout
-                  </button>
-                </div>
+                <>
+                  <div className="navbar-item">
+                    <Link to={`u/${currentUser.id}`} className="button is-light is-info">{currentUser.name}</Link>
+                  </div>
+                  <div className="navbar-item">
+                    <button className="button is-danger" onClick={() => logout()}>
+                      Logout
+                    </button>
+                  </div>
+                </>
               )
             }
         </div>

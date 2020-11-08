@@ -18,7 +18,7 @@ const Posts = ({
   fetchVotes,
   posts: { posts, isLoading },
   users: { users },
-  auth: { user },
+  auth: { currentUser },
   votes: { votes }
 }) => {
   useEffect(() => {
@@ -113,11 +113,11 @@ const Posts = ({
               postVotes.userDownvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_downvotes : [];
 
               // author information
-              let author = getUser(post.user_id) !== undefined ? getUser(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png' }
+              let author = getUser(post.user_id) !== undefined ? getUser(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png', id: 'rand0mnumb3rgen3r4t0r' }
 
               return (
                 <PostCard
-                  currentUser={user}
+                  currentUser={currentUser}
                   post_id={post.id}
                   user_id={post.user_id}
                   subreddit={subreddit}
@@ -149,7 +149,7 @@ const Posts = ({
 
               return (
                 <PostCard
-                  currentUser={user}
+                  currentUser={currentUser}
                   post_id={post.id}
                   user_id={post.user_id}
                   subreddit={subreddit}

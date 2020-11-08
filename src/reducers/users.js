@@ -1,9 +1,13 @@
 import {
-  GET_USERS
+  GET_USERS,
+  GET_USER,
+  CLEAR_USER
 } from '../actions/types';
 
 const initialState = {
-  users: []
+  users: [],
+  user: null,
+  isLoading: true
 }
 
 export default function(state = initialState, action) {
@@ -14,6 +18,18 @@ export default function(state = initialState, action) {
         ...state,
         users: [...payload],
         isLoading: false
+      }
+    case GET_USER:
+      return {
+        ...state,
+        isLoading: false,
+        user: payload
+      }
+    case CLEAR_USER:
+      return {
+        ...state,
+        isLoading: false,
+        user: null
       }
     default:
       return state;

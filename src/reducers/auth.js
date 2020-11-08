@@ -1,12 +1,12 @@
 import {
   LOGIN_USER,
   LOGOUT_USER,
-  GET_USER,
+  GET_CURRENT_USER,
   LOGIN_FAIL
 } from '../actions/types';
 
 const initialState = {
-  user: {},
+  currentUser: {},
   isLoggedIn: false,
   isLoading: true
 }
@@ -15,10 +15,10 @@ export default function(state = initialState, action) {
   const { type, payload } = action;
   switch(type) {
     case LOGIN_USER:
-    case GET_USER:
+    case GET_CURRENT_USER:
       return {
         ...state,
-        user: {...payload},
+        currentUser: {...payload},
         isLoggedIn: true,
         isLoading: false
       };
@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAIL:
       return {
         ...state,
-        user: {},
+        currentUser: {},
         isLoggedIn: false,
         isLoading: false
       }

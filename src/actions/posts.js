@@ -5,6 +5,7 @@ import {
   UPDATE_POST,
   DELETE_POST,
   CLEAR_POST,
+  CLEAR_POSTS,
   ADD_VOTES,
   DELETE_VOTE
 } from './types';
@@ -13,8 +14,28 @@ import firebase from '../firebase';
 
 
 
+export const fetchUserPosts = (user_id) => async dispatch => {
+  try {
+    dispatch({ type: CLEAR_POSTS });
+    let payload = [];
+    const res = await db.collection('posts').where('user_id', '==', user_id).get()
+    res.forEach(doc => {
+      payload.push(doc.data());
+    });
+    dispatch({
+      type: GET_POSTS,
+      payload
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
+
 export const fetchPosts = (subreddit) => async dispatch => {
   try {
+    dispatch({ type: CLEAR_POSTS });
     let payload = [];
     const res = await db.collection('posts').where('subreddit_id', '==', subreddit).get();
     res.forEach(post => {

@@ -26,6 +26,7 @@ import Index from './components/homepage/Index';
 import Users from './components/users/Users';
 import Subreddit from './components/subreddit/Subreddit';
 import Post from './components/post/Post';
+import User from './components/user/User';
 
 import store from './store';
 import { getUser, userError } from './actions/auth';
@@ -58,6 +59,7 @@ function App() {
               <Route exact path='/users' component={Users} />
               <Route exact path ='/r/:name' component={Subreddit} />
               <Route exact path='/r/:name/:post_id' component={Post} />
+              <Route exact path='/u/:user_id' component={User} />
             </Switch>
           </div>
         </div>

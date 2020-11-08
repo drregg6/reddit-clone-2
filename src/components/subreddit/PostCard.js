@@ -70,7 +70,9 @@ const PostCard = ({
                   <p className="title is-4">{ title }</p>
                 )
               }
-              <p className="subtitle is-6">{ author.name }</p>
+              <p className="subtitle is-6">
+                <Link to={`/u/${author.id}`}>{ author.name }</Link>
+              </p>
             </div>
           </div>
 

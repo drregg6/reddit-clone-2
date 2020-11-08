@@ -4,7 +4,8 @@ import {
   CREATE_POST,
   UPDATE_POST,
   DELETE_POST,
-  CLEAR_POST
+  CLEAR_POST,
+  CLEAR_POSTS
 } from '../actions/types';
 
 const initialState = {
@@ -58,6 +59,12 @@ export default function(state = initialState, action) {
         ...state,
         isLoading: false,
         post: null
+      }
+    case CLEAR_POSTS:
+      return {
+        ...state,
+        isLoading: false,
+        posts: []
       }
     default:
       return state;

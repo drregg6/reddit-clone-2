@@ -1,7 +1,7 @@
 import {
   LOGIN_USER,
   LOGOUT_USER,
-  GET_USER,
+  GET_CURRENT_USER,
   LOGIN_FAIL
 } from './types';
 import firebase from '../firebase';
@@ -10,7 +10,7 @@ import db from '../db';
 // update the store with user information
 export const getUser = (user) => async dispatch => {
   dispatch({
-    type: GET_USER,
+    type: GET_CURRENT_USER,
     payload: user
   });
 }

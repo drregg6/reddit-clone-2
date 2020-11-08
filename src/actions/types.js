@@ -1,10 +1,12 @@
 // Users
 export const GET_USERS = 'GET_USERS';
+export const GET_USER = 'GET_USER';
+export const CLEAR_USER = 'CLEAR_USER';
 
 // Auth
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
-export const GET_USER = 'GET_USER';
+export const GET_CURRENT_USER = 'GET_CURRENT_USER';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 // Subreddits
@@ -19,6 +21,7 @@ export const CREATE_POST = 'CREATE_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const CLEAR_POST = 'CLEAR_POST';
+export const CLEAR_POSTS = 'CLEAR_POSTS';
 
 // Votes
 export const GET_VOTES = 'GET_VOTES';
