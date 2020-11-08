@@ -21,7 +21,7 @@ const Post = ({
   const [ showForm, toggleShowForm ] = useState( false );
 
   return (
-    <div>
+    <section className="section">
       {
         (post !== null && user.id === post.user_id) && (
           <button
@@ -40,8 +40,28 @@ const Post = ({
           />
         )
       }
-      <h1>{ post !== null ? post.title : 'Loading...' }</h1>
-    </div>
+      <div style={{ textAlign: 'center', margin: '2.5rem auto' }}>
+        <div className="content is-large">
+          <h1 className="is-title">{ post !== null && post.title }</h1>
+        </div>
+        {
+          (post !== null && post.desc !== '') && (
+            <div>
+              <p>
+                {post.desc}
+              </p>
+            </div>
+          )
+        }
+        {
+          (post !== null && post.url !== '') && (
+            <div>
+              <img src={post.url} alt={post.title} />
+            </div>
+          )
+        }
+      </div>
+    </section>
   )
 }
 

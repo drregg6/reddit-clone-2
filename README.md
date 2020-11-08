@@ -90,8 +90,8 @@ Project Link: [Title goes here](URL goes here)
 * [x] Search/Filter Posts
 * [x] UpVote/DownVote Posts
   * Update Rules
-  * [ ] Order by total score
-  * [ ] Order by created
+  * [x] Order by total score
+  * [x] Order by created
 * [ ] Add comment to Post
   * Update Rules
 * [ ] User Profile
