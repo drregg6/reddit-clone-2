@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+import { addComment } from '../../actions/comments';
+
 const CommentForm = ({
   currentUser,
   subreddit_id,
+  addComment,
   post_id
 }) => {
   const [ input, setInput ] = useState({
@@ -27,7 +31,8 @@ const CommentForm = ({
       subreddit_id,
       parent_id: null
     }
-    console.log(newComment);
+    addComment(newComment);
+    setInput({ content: '' })
   }
   return (
     <form className="post-form" onSubmit={event => handleSubmit(event)}>
@@ -52,9 +57,13 @@ const CommentForm = ({
 }
 
 CommentForm.propTypes = {
+  addComment: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   post_id: PropTypes.string,
   subreddit_id: PropTypes.string,
 }
 
-export default CommentForm;
+export default connect(
+  null,
+  { addComment }
+)(CommentForm);

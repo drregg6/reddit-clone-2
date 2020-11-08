@@ -78,7 +78,6 @@ export const createPost = (newPost) => async dispatch => {
   // generate an auto id
   let postsDoc = db.collection('posts').doc();
   let votesDoc = db.collection('votes').doc();
-  console.log(votesDoc.id);
 
   // create the payload object and populate with important data
   let postsPayload = {...newPost};

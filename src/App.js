@@ -5,6 +5,14 @@ TODOS:
 = User Page
   - Update User
   - Add bio for user
+= Reorganize Stores
+  - User can hold an array of userPosts, userComments
+  - Post can hold subredditName, votes
+= Actions can include
+  - getUserCommentsById
+  - getUserPostsById
+  - getSubredditPostsById
+  - etc etc...
 
 */
 
