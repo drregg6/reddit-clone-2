@@ -31,4 +31,5 @@ export const REMOVE_VOTE = 'REMOVE_VOTE';
 export const DELETE_VOTE = 'DELETE_VOTE';
 
 // Comments
+export const GET_COMMENTS = 'GET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';

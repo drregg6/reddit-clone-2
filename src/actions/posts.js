@@ -70,7 +70,6 @@ export const fetchPost = (post_id) => async dispatch => {
     await db.collection('users').doc(user_id).get().then(doc => {
       payload.author = doc.data();
     });
-    console.log(payload);
 
     // And comment information
     payload.comments = [];

@@ -1,8 +1,28 @@
 import {
+  GET_COMMENTS,
   ADD_COMMENT
 } from './types';
 import db from '../db';
 import firebase from '../firebase';
+
+export const fetchComments = () => async dispatch => {
+  let payload = [];
+  try {
+    const res = await db.collection('comments').get()
+    res.forEach(doc => {
+      payload.push(doc.data());
+    });
+
+    dispatch({
+      type: GET_COMMENTS,
+      payload
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
 
 export const addComment = body => async dispatch => {
   // Create an ID for the comment
