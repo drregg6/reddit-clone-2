@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
+import ReplyForm from './ReplyForm';
 
 import { connect } from 'react-redux';
 import { fetchUsers } from '../../actions/users';
@@ -11,13 +12,16 @@ const PostComment = ({
   currentUser,
   deleteComment,
   users: { users },
+  auth: { isLoggedIn },
   comment
 }) => {
   useEffect(() => {
     fetchUsers();
   }, [fetchUsers]);
-  let author;
 
+  const [ replyForm, toggleReplyForm ] = useState(false);
+
+  let author;
   const getAuthorById = user_id => {
     return users.filter(user => user.id === user_id);
   }
@@ -40,7 +44,7 @@ const PostComment = ({
   }
 
   return (
-    <div className="box">
+    <div className="comment my-2">
       <div className="media">
         <div className="media-left">
           <figure className="image">
@@ -72,8 +76,27 @@ const PostComment = ({
               <button className="delete" onClick={() => deleteComment(comment.id)}>X</button>
             </div>
           )
-        }     
+        }
       </div>
+      {
+        isLoggedIn && (
+          <button className="button is-primary is-small" onClick={() => toggleReplyForm(!replyForm)}>Reply</button>
+        )
+      }
+      {
+        replyForm && (
+          <div className="media">
+              <div className="media-content">
+                <ReplyForm
+                  currentUser={currentUser}
+                  subreddit_id={comment.subreddit_id}
+                  comment_id={comment.id}
+                  post_id={comment.post_id}
+                />
+              </div>
+          </div>
+        )
+      }
     </div>
   )
 }
@@ -87,7 +110,8 @@ PostComment.propTypes = {
 }
 
 const mapStateToProps = state => ({
-  users: state.users
+  users: state.users,
+  auth: state.auth
 });
 
 export default connect(

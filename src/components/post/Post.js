@@ -85,12 +85,14 @@ const Post = ({
         {
           (comments !== null && comments.length !== 0) && (
             comments.map(comment => {
-              return (
-                <PostComment
-                  comment={comment}
-                  currentUser={currentUser}
-                />
-              )
+              if (comment.parent_id === null) {
+                return (
+                  <PostComment
+                    comment={comment}
+                    currentUser={currentUser}
+                  />
+                )
+              }
             })
           )
         }

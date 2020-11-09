@@ -28,7 +28,7 @@ export const fetchComments = () => async dispatch => {
 
 
 
-export const addComment = body => async dispatch => {
+export const addComment = (body) => async dispatch => {
   // Create an ID for the comment
   let newDoc = db.collection('comments').doc();
 

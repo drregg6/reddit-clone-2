@@ -92,7 +92,7 @@ Project Link: [Title goes here](URL goes here)
   * Update Rules
   * [x] Order by total score
   * [x] Order by created
-* [ ] Add comment to Post
+* [x] Add comment to Post
   * Update Rules
 * [x] User Profile
   * [x] Show Submitted Posts
