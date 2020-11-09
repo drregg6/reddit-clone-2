@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
 import ReplyForm from './ReplyForm';
+import CommentReply from './CommentReply';
+import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
 import { connect } from 'react-redux';
 import { fetchUsers } from '../../actions/users';
@@ -13,7 +14,8 @@ const PostComment = ({
   deleteComment,
   users: { users },
   auth: { isLoggedIn },
-  comment
+  comment,
+  comments
 }) => {
   useEffect(() => {
     fetchUsers();
@@ -21,6 +23,7 @@ const PostComment = ({
 
   const [ replyForm, toggleReplyForm ] = useState(false);
 
+  // Get author information for the comment
   let author;
   const getAuthorById = user_id => {
     return users.filter(user => user.id === user_id);
@@ -30,18 +33,16 @@ const PostComment = ({
     author = getAuthorById(comment.user_id)[0];
   }
 
-  let created_at;
-  let updated_at;
-  if (comment.created_at.seconds === undefined) {
-    created_at = 'New Comment!';
-  } else {
-    created_at = format(new Date(comment.created_at.seconds * 1000), 'MM-dd-yyyy HH:mm');
+  // Find children comments of the parent comment
+  let childrenComments = [];
+  const getChildrenComments = parent_id => {
+    let tempChildrenComments = comments.filter(comment => comment.parent_id === parent_id);
+    tempChildrenComments.map(comment => {
+      comment.author = users.filter(user => user.id === comment.user_id)[0];
+    });
+    return tempChildrenComments;
   }
-  if (comment.updated_at.seconds === undefined) {
-    updated_at = 'New Comment!';
-  } else {
-    updated_at = format(new Date(comment.updated_at.seconds * 1000), 'MM-dd-yyyy HH:mm');
-  }
+  childrenComments = getChildrenComments(comment.id);
 
   return (
     <div className="comment my-2">
@@ -64,11 +65,23 @@ const PostComment = ({
           <div className="level">
             <div className="level-left">
               <div className="level-item">
-                <span className="created-at mr-2"><span className="has-text-weight-bold">Created on:</span> {created_at}</span>
-                <span className="updated-at ml-2"><span className="has-text-weight-bold">Updated on:</span> {updated_at}</span>
+                <span className="created-at mr-2"><span className="has-text-weight-bold">Created on:</span> {commentTimeFormatter(comment.created_at.seconds)}</span>
+                <span className="updated-at ml-2"><span className="has-text-weight-bold">Updated on:</span> {commentTimeFormatter(comment.updated_at.seconds)}</span>
               </div>
             </div>
           </div>
+          {
+            ( childrenComments.length !== 0 && childrenComments[0].author !== undefined) && (
+              childrenComments.map(comment => {
+                return (
+                  <CommentReply
+                    comment={comment}
+                    currentUser={currentUser}
+                  />
+                )
+              })
+            )
+          }
         </div>
         {
           currentUser.id === comment.user_id && (

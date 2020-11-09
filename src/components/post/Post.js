@@ -40,6 +40,11 @@ const Post = ({
     subreddit_id = fetchSubredditByName(name).id;
   }
 
+  const getCommentsByPostId = post_id => {
+    return comments.filter(comment => comment.post_id === post_id)
+  }
+  const postComments = getCommentsByPostId(post_id);
+
   return (
     <section className="section">
       {
@@ -83,12 +88,13 @@ const Post = ({
       </div>
       <div className="comments">
         {
-          (comments !== null && comments.length !== 0) && (
-            comments.map(comment => {
+          (postComments.length !== 0) && (
+            postComments.map(comment => {
               if (comment.parent_id === null) {
                 return (
                   <PostComment
                     comment={comment}
+                    comments={comments}
                     currentUser={currentUser}
                   />
                 )
