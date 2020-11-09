@@ -1,6 +1,7 @@
 import {
   GET_COMMENTS,
-  ADD_COMMENT
+  ADD_COMMENT,
+  DELETE_COMMENT
 } from '../actions/types';
 
 const initialState = {
@@ -23,6 +24,13 @@ export default function(state = initialState, action) {
         ...state,
         isLoading: false,
         comments: [...state.comments, payload]
+      }
+    case DELETE_COMMENT:
+      let deleteComment = state.comments.filter(comment => comment.id !== payload);
+      return {
+        ...state,
+        isLoading: false,
+        comments: [...deleteComment]
       }
     default:
       return state;

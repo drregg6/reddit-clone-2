@@ -1,6 +1,7 @@
 import {
   GET_COMMENTS,
-  ADD_COMMENT
+  ADD_COMMENT,
+  DELETE_COMMENT
 } from './types';
 import db from '../db';
 import firebase from '../firebase';
@@ -11,6 +12,9 @@ export const fetchComments = () => async dispatch => {
     const res = await db.collection('comments').get()
     res.forEach(doc => {
       payload.push(doc.data());
+    });
+    payload = payload.sort((obj1, obj2) => {
+      return obj2.created_at - obj1.created_at
     });
 
     dispatch({
@@ -38,6 +42,19 @@ export const addComment = body => async dispatch => {
     dispatch({
       type: ADD_COMMENT,
       payload: newComment
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
+export const deleteComment = (comment_id) => async dispatch => {
+  try {
+    await db.collection('comments').doc(comment_id).delete();
+    dispatch({
+      type: DELETE_COMMENT,
+      payload: comment_id
     });
   } catch (error) {
     console.error(error.message);

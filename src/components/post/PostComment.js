@@ -4,10 +4,12 @@ import { format } from 'date-fns';
 
 import { connect } from 'react-redux';
 import { fetchUsers } from '../../actions/users';
+import { deleteComment } from '../../actions/comments';
 
 const PostComment = ({
   fetchUsers,
   currentUser,
+  deleteComment,
   users: { users },
   comment
 }) => {
@@ -67,7 +69,7 @@ const PostComment = ({
         {
           currentUser.id === comment.user_id && (
             <div className="media-right">
-              <button className="delete">X</button>
+              <button className="delete" onClick={() => deleteComment(comment.id)}>X</button>
             </div>
           )
         }     
@@ -81,6 +83,7 @@ PostComment.propTypes = {
   users: PropTypes.object,
   comment: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
+  deleteComment: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -89,5 +92,8 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { fetchUsers }
+  {
+    fetchUsers,
+    deleteComment
+  }
 )(PostComment);
