@@ -2,6 +2,8 @@
 
 TODOS:
 = Comments comments comments
+  - Render comments on Post Component
+  - Render comments on User Component
 = User Page
   - Update User
   - Add bio for user

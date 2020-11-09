@@ -59,8 +59,24 @@ export const fetchPost = (post_id) => async dispatch => {
   dispatch({ type: CLEAR_POST });
   try {
     let payload = {};
+
+    // Will get Post information
     await db.collection('posts').doc(post_id).get().then(doc => {
       payload = doc.data();
+    });
+
+    // Author information
+    const { user_id } = payload;
+    await db.collection('users').doc(user_id).get().then(doc => {
+      payload.author = doc.data();
+    });
+    console.log(payload);
+
+    // And comment information
+    payload.comments = [];
+    let res = await db.collection('comments').where('post_id', '==', post_id).get();
+    await res.forEach(doc => {
+      payload.comments.push(doc.data());
     });
 
     dispatch({
