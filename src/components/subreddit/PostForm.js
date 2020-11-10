@@ -6,6 +6,7 @@ import { createPost } from '../../actions/posts';
 
 const PostForm = ({
   createPost,
+  toggleShowForm,
   subreddit
 }) => {
   const [input, setInput] = useState({
@@ -35,6 +36,7 @@ const PostForm = ({
       desc: '',
       url: ''
     });
+    toggleShowForm(false);
   }
 
   return (
@@ -85,6 +87,7 @@ const PostForm = ({
 
 PostForm.propTypes = {
   createPost: PropTypes.func.isRequired,
+  toggleShowForm: PropTypes.func,
   subreddit: PropTypes.string.isRequired
 }
 

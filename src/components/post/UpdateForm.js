@@ -6,6 +6,7 @@ import { updatePost } from '../../actions/posts';
 
 const UpdateForm = ({
   updatePost,
+  toggleShowForm,
   oldTitle,
   oldDesc,
   oldUrl,
@@ -27,6 +28,7 @@ const UpdateForm = ({
   const handleSubmit = event => {
     event.preventDefault();
     updatePost(post_id, input);
+    toggleShowForm(false);
   }
 
   return (
@@ -78,6 +80,7 @@ const UpdateForm = ({
 UpdateForm.propTypes = {
   updatePost: PropTypes.func.isRequired,
   oldTitle: PropTypes.string.isRequired,
+  toggleShowForm: PropTypes.func.isRequired,
   oldDesc: PropTypes.string,
   oldUrl: PropTypes.string,
   post_id: PropTypes.string.isRequired,

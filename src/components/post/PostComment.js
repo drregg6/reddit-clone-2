@@ -105,6 +105,7 @@ const PostComment = ({
                   subreddit_id={comment.subreddit_id}
                   comment_id={comment.id}
                   post_id={comment.post_id}
+                  toggleReplyForm={toggleReplyForm}
                 />
               </div>
           </div>

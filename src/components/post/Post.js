@@ -57,6 +57,7 @@ const Post = ({
             oldDesc={post.desc}
             oldUrl={post.url}
             post_id={post.id}
+            toggleShowForm={toggleShowForm}
           />
         )
       }

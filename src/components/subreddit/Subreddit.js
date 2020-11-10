@@ -36,7 +36,7 @@ const Subreddit = ({
         )
       }
       {
-        showForm && <PostForm subreddit={subreddit.id} />
+        showForm && <PostForm toggleShowForm={toggleShowForm} subreddit={subreddit.id} />
       }
       {
         (isLoading || subreddit === null) ? (

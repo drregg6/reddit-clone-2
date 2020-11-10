@@ -6,6 +6,7 @@ import { addComment } from '../../actions/comments';
 
 const ReplyForm = ({
   currentUser,
+  toggleReplyForm,
   subreddit_id,
   comment_id,
   addComment,
@@ -33,7 +34,8 @@ const ReplyForm = ({
       parent_id: comment_id
     }
     addComment(newComment);
-    setInput({ content: '' })
+    setInput({ content: '' });
+    toggleReplyForm(false);
   }
   return (
     <form className="post-form" onSubmit={event => handleSubmit(event)}>
@@ -59,6 +61,7 @@ const ReplyForm = ({
 
 ReplyForm.propTypes = {
   addComment: PropTypes.func.isRequired,
+  toggleReplyForm: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   post_id: PropTypes.string,
   comment_id: PropTypes.string,
