@@ -2,10 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
-import Votes from './Votes';
 
-import { connect } from 'react-redux';
-import { deletePost } from '../../actions/posts';
+import Votes from './Votes';
 
 const PostCard = ({
   deletePost,
@@ -96,7 +94,7 @@ const PostCard = ({
 }
 
 PostCard.propTypes = {
-  deletePost: PropTypes.func.isRequired,
+  deletePost: PropTypes.func,
   post_id: PropTypes.string.isRequired,
   user_id: PropTypes.string.isRequired,
   subreddit: PropTypes.string.isRequired,
@@ -107,7 +105,4 @@ PostCard.propTypes = {
   postVotes: PropTypes.object.isRequired,
 }
 
-export default connect(
-  null,
-  { deletePost }
-)(PostCard);
+export default PostCard;

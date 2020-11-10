@@ -14,21 +14,21 @@ const SubCard = ({
             <Link to={`/r/${subreddit.name}`}>{subreddit.name}</Link>
           </p>
         </div>
-        <div class="card-content">
-          <div class="media">
-            <div class="media-left">
-              <figure class="image is-96x96">
+        <div className="card-content">
+          <div className="media">
+            <div className="media-left">
+              <figure className="image is-96x96">
                 <img src={ post.url ? post.url : "https://bulma.io/images/placeholders/96x96.png" } alt="" />
               </figure>
             </div>
-            <div class="media-content">
-              <p class="title is-4">
+            <div className="media-content">
+              <p className="title is-4">
                 <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link>
               </p>
             </div>
           </div>
           {post.desc && (
-            <div class="content">
+            <div className="content">
               {post.desc}
             </div>
           )}

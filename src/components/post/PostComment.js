@@ -71,6 +71,26 @@ const PostComment = ({
             </div>
           </div>
           {
+            isLoggedIn && (
+              <button className="button is-primary is-small" onClick={() => toggleReplyForm(!replyForm)}>Reply</button>
+            )
+          }
+          {
+            replyForm && (
+              <div className="media">
+                  <div className="media-content">
+                    <ReplyForm
+                      currentUser={currentUser}
+                      subreddit_id={comment.subreddit_id}
+                      comment_id={comment.id}
+                      post_id={comment.post_id}
+                      toggleReplyForm={toggleReplyForm}
+                    />
+                  </div>
+              </div>
+            )
+          }
+          {
             ( childrenComments.length !== 0 && childrenComments[0].author !== undefined) && (
               childrenComments.map(comment => {
                 return (
@@ -91,26 +111,6 @@ const PostComment = ({
           )
         }
       </div>
-      {
-        isLoggedIn && (
-          <button className="button is-primary is-small" onClick={() => toggleReplyForm(!replyForm)}>Reply</button>
-        )
-      }
-      {
-        replyForm && (
-          <div className="media">
-              <div className="media-content">
-                <ReplyForm
-                  currentUser={currentUser}
-                  subreddit_id={comment.subreddit_id}
-                  comment_id={comment.id}
-                  post_id={comment.post_id}
-                  toggleReplyForm={toggleReplyForm}
-                />
-              </div>
-          </div>
-        )
-      }
     </div>
   )
 }

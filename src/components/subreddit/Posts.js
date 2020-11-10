@@ -1,36 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import PostCard from './PostCard';
-
-import { connect } from 'react-redux';
-import {
-  fetchSubredditPosts
-} from '../../actions/posts';
-import { fetchUsers } from '../../actions/users';
-import { fetchVotes } from '../../actions/votes';
 
 const Posts = ({
   search,
   subreddit,
-  subreddit_id,
-  fetchSubredditPosts,
-  fetchUsers,
-  fetchVotes,
-  posts: { posts, isLoading },
-  users: { users },
-  auth: { currentUser },
-  votes: { votes }
+  deletePost,
+  currentUser,
+  users,
+  votes,
+  posts
 }) => {
-  useEffect(() => {
-    fetchSubredditPosts(subreddit_id);
-    fetchUsers();
-    fetchVotes();
-  }, [
-    fetchUsers,
-    fetchSubredditPosts,
-    fetchVotes,
-    subreddit_id
-  ]);
 
   const [ sortByVote, toggleSortByVote ] = useState(false);
   const [ sortByNew, toggleSortByNew ] = useState(true);
@@ -98,7 +78,7 @@ const Posts = ({
       </button>
       <div className="columns is-multiline is-4 posts">
         {
-          (posts && !isLoading) ? sortByVote ? (
+          posts ? sortByVote ? (
             orderByVotes(posts).map(post => {
               // vote information
               let postVotes = {
@@ -149,6 +129,7 @@ const Posts = ({
 
               return (
                 <PostCard
+                  deletePost={deletePost}
                   currentUser={currentUser}
                   post_id={post.id}
                   user_id={post.user_id}
@@ -172,26 +153,13 @@ const Posts = ({
 }
 
 Posts.propTypes = {
-  fetchUsers: PropTypes.func.isRequired,
-  fetchSubredditPosts: PropTypes.func.isRequired,
-  fetchVotes: PropTypes.func.isRequired,
+  users: PropTypes.object,
+  votes: PropTypes.object,
+  deletePost: PropTypes.func.isRequired,
+  currentUser: PropTypes.object,
   search: PropTypes.string,
   subreddit: PropTypes.string,
   subreddit_id: PropTypes.string,
 }
 
-const mapStateToProps = state => ({
-  posts: state.posts,
-  users: state.users,
-  votes: state.votes,
-  auth: state.auth
-});
-
-export default connect(
-  mapStateToProps,
-  {
-    fetchUsers,
-    fetchSubredditPosts,
-    fetchVotes
-  }
-)(Posts);
+export default Posts;

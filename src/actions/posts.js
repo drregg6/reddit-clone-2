@@ -55,17 +55,18 @@ export const fetchUserPosts = (user_id) => async dispatch => {
 
 
 
-export const fetchSubredditPosts = (subreddit) => async dispatch => {
+export const fetchSubredditPosts = (subreddit_id) => async dispatch => {
   try {
     dispatch({ type: CLEAR_POSTS });
     let payload = [];
-    const res = await db.collection('posts').where('subreddit_id', '==', subreddit).get();
+    const res = await db.collection('posts').where('subreddit_id', '==', subreddit_id).get();
     res.forEach(post => {
       payload.push(post.data());
     });
     payload = payload.sort((obj1, obj2) => {
       return obj2.created_at - obj1.created_at
     });
+    console.log(payload)
     dispatch({
       type: GET_POSTS,
       payload
