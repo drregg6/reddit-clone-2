@@ -56,7 +56,7 @@ export const upvote = (vote_id, post_id, user_id) => async dispatch => {
         user_upvotes: firebase.firestore.FieldValue.arrayUnion(user_id),
         user_downvotes: firebase.firestore.FieldValue.arrayRemove(user_id),
         updated_at: firebase.firestore.FieldValue.serverTimestamp(),
-        votes: firebase.firestore.FieldValue.increment(1)
+        votes: firebase.firestore.FieldValue.increment(2)
       });
     } else {
       await db.collection('votes').doc(vote_id).update({
@@ -104,13 +104,13 @@ export const downvote = (vote_id, post_id, user_id) => async dispatch => {
         user_upvotes: firebase.firestore.FieldValue.arrayRemove(user_id),
         user_downvotes: firebase.firestore.FieldValue.arrayUnion(user_id),
         updated_at: firebase.firestore.FieldValue.serverTimestamp(),
-        votes: firebase.firestore.FieldValue.increment(-1)
+        votes: firebase.firestore.FieldValue.increment(-2)
       });
     } else if (upvoteFlag.userDownvoted) {
       await db.collection('votes').doc(vote_id).update({
         user_downvotes: firebase.firestore.FieldValue.arrayRemove(user_id),
         updated_at: firebase.firestore.FieldValue.serverTimestamp(),
-        votes: firebase.firestore.FieldValue.increment(-2)
+        votes: firebase.firestore.FieldValue.increment(1)
       });
     } else {
       await db.collection('votes').doc(vote_id).update({

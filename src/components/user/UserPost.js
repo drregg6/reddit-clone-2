@@ -11,12 +11,12 @@ const UserPost = ({
   deletePost
 }) => {
   return (
-    <div key={post.id} className="box">
-      <div className="media">
+    <div className="box">
+      <div key={post.id} className="media">
       { 
           post.url && (
             <div className="media-left">
-              <figure className="image is-128x128">
+              <figure className="image is-64x64">
                 <img
                   src={ post.url }
                   alt={ post.title }
@@ -36,6 +36,15 @@ const UserPost = ({
               </p>
             )
           }
+          <div className="level">
+            <div className="level-left">
+              <div className="level-item">
+                <p className="is-size-7">
+                  { subreddit !== undefined && <Link to={`/r/${subreddit.name}`}>{subreddit.name}</Link> }
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
         {
           (user !== null && user.id === currentUser.id) && (

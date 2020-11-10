@@ -79,7 +79,7 @@ const User = ({
           </div>
         </div>
       </div>
-      <div className="buttons">
+      <div className="buttons my-2">
         <button
           className={`button is-info ${userPostList && 'is-light'}`}
           disabled={userPostList}
@@ -88,7 +88,7 @@ const User = ({
           User Posts
         </button>
         <button
-          className={`button is-caution ${userCommentList && 'is-light'}`}
+          className={`button is-warning ${userCommentList && 'is-light'}`}
           disabled={userCommentList}
           onClick={() => handleCommentList()}
         >

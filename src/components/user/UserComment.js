@@ -28,7 +28,7 @@ const UserComment = ({
           </p>
           <div className="level">
             <div className="level-left">
-              <div className="level-item">
+              <div className="level-item is-size-7">
                 <span className="created-at mr-2"><span className="has-text-weight-bold">Created on:</span> {commentTimeFormatter(comment.created_at.seconds)}</span>
                 <span className="updated-at ml-2"><span className="has-text-weight-bold">Updated on:</span> {commentTimeFormatter(comment.updated_at.seconds)}</span>
               </div>
