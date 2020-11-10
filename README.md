@@ -1,5 +1,5 @@
-# Title
-> A quick blurb of the purpose of this app. Who was it built by, who was it built for, why was it built, and what does it use?
+# Reddit-Clone-2
+> Recreating a less polished version of Reddit using React and Redux as the client side and Firebase Firestore for the backend. Bulma is used to style the pages.
 
 ## Table of contents
 * [General info](#general-info)
@@ -7,13 +7,14 @@
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Features](#features)
+* [Resources](#resources)
 * [Status](#status)
 * [Inspiration](#inspiration)
 * [License](#license)
 * [Contact](#contact)
 
 ## General info
-A longer version of the description featuring details of the project. It might explain what the user is capable of doing. It could highlight the technologies used in the project. It could detail the flow of the project, like CRUD, and how it interacts with certain tech. User restrictions. Etc.
+Inspired by [The Coding Garden](https://github.com/CodingGarden/vue-firestore-reddit-clone)'s [YouTube code along](https://www.youtube.com/watch?v=UjX5ZE359ck). However, the video used Vue/Vuex, while I was more inspired to create the clone with React/Redux. The application uses Firebase Firestore methods to interact with the backend. The client and store is created with my own [React/Redux Boilerplate](https://github.com/drregg6/cra-redux-boilerplate) with create-react-app as the base.
 
 ## Screenshots
 ![screenshot](./src/images/imagename.png)
@@ -22,52 +23,29 @@ A longer version of the description featuring details of the project. It might e
 * Node - version 12.3.1
 * React - version 16.13.1
 * Sass - version 1.26.5
+* firebase - version 7.23.0
+* date-fns - version 2.16.1
+* bulma - version 0.9.1
 
 ## Setup
 1. Clone the repo
 ```sh
-git clone https://github.com/drregg6/repository.git
+git clone https://github.com/drregg6/reddit-clone-2.git
 ```
 2. Install NPM packages
 ```sh
 npm install
 ```
-3. [Get API key, Highlight changes that need to be made, etc...]
+3. Set up a Firebase/Firestore
 
 ## Features
-List of features ready and TODOs for future development
-* ADD FEATURE
-* ADD FEATURE
-* ADD FEATURE
-
-To-do list:
-* ADD TODO
-* ADD TODO
-* ADD TODO
-
-## Status
-Project is: _in progress_, _launched_, or _done_
-
-## Inspiration
-The project is a inspired by [Vishang](https://dev.to/vish448/create-react-project-without-create-react-app-3goh)
-
-## License
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Contact
-Dave Regg - [@daveregg](https://www.twitter.com/daveregg) - dave.r.regg@gmail.com
-
-Project Link: [Title goes here](URL goes here)
-
-# Full Stack Reddit Clone with Firebase Firestore, Vue.js/Vuex, Bulma
-
 * [x] Generate Vue App
 * [x] Create Firebase Project
 * [x] Add Firebase Auth
   * https://firebase.google.com/docs/auth/web/google-signin
   * https://firebase.google.com/docs/auth/web/manage-users
 * [x] Save user on login
-      * [x] Update Rules
+  * [x] Update Rules
 * [x] Add a few subreddits in Firestore
   * philadelphia
   * programming
@@ -97,6 +75,7 @@ Project Link: [Title goes here](URL goes here)
 * [x] User Profile
   * [x] Show Submitted Posts
   * [x] Show Comments
+  * [x] Edit User
 * [x] Edit Post
 * [ ] Edit Comment
 * [x] Reply to Comment
@@ -112,3 +91,17 @@ Project Link: [Title goes here](URL goes here)
 * https://angularfirebase.com/tag/firestore/
 
 ![](./ERD.png)
+
+## Status
+Project is: _in progress_
+
+## Inspiration
+The project is a inspired by [The Coding Garden](https://github.com/CodingGarden/vue-firestore-reddit-clone)
+
+## License
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+Dave Regg - [@daveregg](https://www.twitter.com/daveregg) - dave.r.regg@gmail.com
+
+Project Link: [Reddit-Clone-2](https://www.github.com/drregg6/reddit-clone-2)

@@ -47,7 +47,9 @@ const Post = ({
           <button
             className="button is-success"
             onClick={() => toggleShowForm(!showForm)}
-          >Edit Post</button>
+          >
+            {showForm ? 'Close Form' : 'Edit Post'}
+          </button>
         )
       }
       {

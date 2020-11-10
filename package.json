@@ -1,6 +1,6 @@
 {
-  "name": "cra-redux-boilerplate",
-  "description": "create-react-app boilerplate with redux implimented",
+  "name": "Reddit-Clone-2",
+  "description": "A reddit clone created with Firebase Firestore as the backend and React/Redux as the frontend",
   "version": "0.1.0",
   "private": true,
   "author": "Dave Regg <dave.r.regg@gmail.com",
@@ -8,7 +8,6 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "axios": "^0.19.2",
     "bulma": "^0.9.1",
     "date-fns": "^2.16.1",
     "firebase": "^7.23.0",

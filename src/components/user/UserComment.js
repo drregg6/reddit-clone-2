@@ -12,7 +12,7 @@ const UserComment = ({
     <div key={comment.id} className="box">
       <div className="media">
         <div className="media-left">
-          <figure className="image is-128x128">
+          <figure className="image is-64x64">
             <img
               src={ user.image }
               alt='user avatar'

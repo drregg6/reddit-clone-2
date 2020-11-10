@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-import { updateUser } from '../../actions/users';
-
 const UpdateUserForm = ({
   updateUser,
   toggleUpdateUserForm,
@@ -84,7 +81,4 @@ UpdateUserForm.propTypes = {
   user: PropTypes.object,
 }
 
-export default connect(
-  null,
-  { updateUser }
-)(UpdateUserForm);
+export default UpdateUserForm;

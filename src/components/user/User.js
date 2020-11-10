@@ -7,7 +7,7 @@ import UpdateUserForm from './UpdateUserForm';
 
 import { connect } from 'react-redux';
 import { fetchVotes } from '../../actions/votes';
-import { fetchUser } from '../../actions/users';
+import { fetchUser, updateUser } from '../../actions/users';
 import { fetchSubreddits } from '../../actions/subreddits';
 import { deletePost, fetchUserPosts } from '../../actions/posts';
 import { deleteComment, fetchUserComments } from '../../actions/comments';
@@ -16,6 +16,7 @@ const User = ({
   deletePost,
   deleteComment,
   fetchUser,
+  updateUser,
   fetchVotes,
   fetchUserPosts,
   fetchUserComments,
@@ -95,6 +96,7 @@ const User = ({
         (user !== null && updateUserForm) && (
           <UpdateUserForm
             user={user}
+            updateUser={updateUser}
             toggleUpdateUserForm={toggleUpdateUserForm}
           />
         )
@@ -168,6 +170,7 @@ User.propTypes = {
   deleteComment: PropTypes.func.isRequired,
   fetchUserPosts: PropTypes.func.isRequired,
   fetchUser: PropTypes.func.isRequired,
+  updateUser: PropTypes.func.isRequired,
   fetchVotes: PropTypes.func.isRequired,
   fetchSubreddits: PropTypes.func.isRequired,
   fetchUserComments: PropTypes.func.isRequired,
@@ -194,6 +197,7 @@ export default connect(
     deletePost,
     deleteComment,
     fetchUser,
+    updateUser,
     fetchVotes,
     fetchUserPosts,
     fetchSubreddits,
