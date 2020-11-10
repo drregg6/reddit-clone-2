@@ -7,8 +7,6 @@ import Votes from './Votes';
 
 const PostCard = ({
   deletePost,
-  upvote,
-  downvote,
   currentUser,
   subreddit,
   post_id,
@@ -37,8 +35,6 @@ const PostCard = ({
           userUpvotes={userUpvotes}
           userDownvotes={userDownvotes}
           currentUser={currentUser}
-          upvote={upvote}
-          downvote={downvote}
         />
       </div>
       {
@@ -95,8 +91,6 @@ PostCard.propTypes = {
   desc: PropTypes.string.isRequired,
   author: PropTypes.object.isRequired,
   postVotes: PropTypes.object.isRequired,
-  upvote: PropTypes.func.isRequired,
-  downvote: PropTypes.func.isRequired,
 }
 
 export default PostCard;

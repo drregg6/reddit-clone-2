@@ -7,8 +7,6 @@ const Posts = ({
   subreddit,
   deletePost,
   currentUser,
-  upvote,
-  downvote,
   users,
   votes,
   posts
@@ -112,8 +110,6 @@ const Posts = ({
                   updated_at={post.updated_at}
                   author={author}
                   postVotes={postVotes}
-                  upvote={upvote}
-                  downvote={downvote}
                 />
               )
             })
@@ -163,8 +159,6 @@ Posts.propTypes = {
   users: PropTypes.object,
   votes: PropTypes.object,
   deletePost: PropTypes.func.isRequired,
-  upvote: PropTypes.func.isRequired,
-  downvote: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   search: PropTypes.string,
   subreddit: PropTypes.string,
