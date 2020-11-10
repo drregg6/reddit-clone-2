@@ -34,3 +34,4 @@ export const DELETE_VOTE = 'DELETE_VOTE';
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const CLEAR_COMMENTS = 'CLEAR_COMMENTS';

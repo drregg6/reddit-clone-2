@@ -13,6 +13,24 @@ import db from '../db';
 import firebase from '../firebase';
 
 
+export const fetchAllPosts = () => async dispatch => {
+  let payload = [];
+  try {
+    dispatch({ type: CLEAR_POSTS });
+    await db.collection('posts').get().then(doc => {
+      payload.push(doc.data());
+    });
+
+    dispatch({
+      type: GET_POSTS,
+      payload
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
 
 export const fetchUserPosts = (user_id) => async dispatch => {
   try {
@@ -33,7 +51,7 @@ export const fetchUserPosts = (user_id) => async dispatch => {
 
 
 
-export const fetchPosts = (subreddit) => async dispatch => {
+export const fetchSubredditPosts = (subreddit) => async dispatch => {
   try {
     dispatch({ type: CLEAR_POSTS });
     let payload = [];

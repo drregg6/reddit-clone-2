@@ -1,7 +1,8 @@
 import {
   GET_COMMENTS,
   ADD_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  CLEAR_COMMENTS
 } from '../actions/types';
 
 const initialState = {
@@ -31,6 +32,12 @@ export default function(state = initialState, action) {
         ...state,
         isLoading: false,
         comments: [...deleteComment]
+      }
+    case CLEAR_COMMENTS:
+      return {
+        ...state,
+        isLoading: false,
+        comments: []
       }
     default:
       return state;

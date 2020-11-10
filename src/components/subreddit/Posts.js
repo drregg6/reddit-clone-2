@@ -4,7 +4,7 @@ import PostCard from './PostCard';
 
 import { connect } from 'react-redux';
 import {
-  fetchPosts
+  fetchSubredditPosts
 } from '../../actions/posts';
 import { fetchUsers } from '../../actions/users';
 import { fetchVotes } from '../../actions/votes';
@@ -13,7 +13,7 @@ const Posts = ({
   search,
   subreddit,
   subreddit_id,
-  fetchPosts,
+  fetchSubredditPosts,
   fetchUsers,
   fetchVotes,
   posts: { posts, isLoading },
@@ -22,12 +22,12 @@ const Posts = ({
   votes: { votes }
 }) => {
   useEffect(() => {
-    fetchPosts(subreddit_id);
+    fetchSubredditPosts(subreddit_id);
     fetchUsers();
     fetchVotes();
   }, [
     fetchUsers,
-    fetchPosts,
+    fetchSubredditPosts,
     fetchVotes,
     subreddit_id
   ]);
@@ -173,7 +173,7 @@ const Posts = ({
 
 Posts.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
-  fetchPosts: PropTypes.func.isRequired,
+  fetchSubredditPosts: PropTypes.func.isRequired,
   fetchVotes: PropTypes.func.isRequired,
   search: PropTypes.string,
   subreddit: PropTypes.string,
@@ -191,7 +191,7 @@ export default connect(
   mapStateToProps,
   {
     fetchUsers,
-    fetchPosts,
+    fetchSubredditPosts,
     fetchVotes
   }
 )(Posts);

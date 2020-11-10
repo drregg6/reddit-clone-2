@@ -8,12 +8,12 @@ import PostComment from './PostComment';
 import { connect } from 'react-redux';
 import { fetchPost } from '../../actions/posts';
 import { fetchSubreddits } from '../../actions/subreddits';
-import { fetchComments } from '../../actions/comments';
+import { fetchPostComments } from '../../actions/comments';
 
 const Post = ({
   fetchPost,
   fetchSubreddits,
-  fetchComments,
+  fetchPostComments,
   posts: { post },
   auth: { currentUser },
   subreddits: { subreddits },
@@ -23,10 +23,10 @@ const Post = ({
   useEffect(() => {
     fetchPost(post_id);
     fetchSubreddits();
-    fetchComments();
+    fetchPostComments(post_id);
   }, [
     fetchSubreddits,
-    fetchComments,
+    fetchPostComments,
     fetchPost,
     post_id
   ]);
@@ -39,11 +39,6 @@ const Post = ({
   if (subreddits.length !== 0) {
     subreddit_id = fetchSubredditByName(name).id;
   }
-
-  const getCommentsByPostId = post_id => {
-    return comments.filter(comment => comment.post_id === post_id)
-  }
-  const postComments = getCommentsByPostId(post_id);
 
   return (
     <section className="section">
@@ -88,8 +83,8 @@ const Post = ({
       </div>
       <div className="comments">
         {
-          (postComments.length !== 0) && (
-            postComments.map(comment => {
+          (comments.length !== 0) && (
+            comments.map(comment => {
               if (comment.parent_id === null) {
                 return (
                   <PostComment
@@ -117,7 +112,7 @@ const Post = ({
 Post.propTypes = {
   fetchSubreddits: PropTypes.func.isRequired,
   fetchPost: PropTypes.func.isRequired,
-  fetchComments: PropTypes.func.isRequired,
+  fetchPostComments: PropTypes.func.isRequired,
   subreddits: PropTypes.object,
   comments: PropTypes.object,
   posts: PropTypes.object,
@@ -135,6 +130,6 @@ export default connect(
   {
     fetchPost,
     fetchSubreddits,
-    fetchComments
+    fetchPostComments
   }
 )(Post);

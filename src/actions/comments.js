@@ -1,15 +1,63 @@
 import {
   GET_COMMENTS,
   ADD_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  CLEAR_COMMENTS
 } from './types';
 import db from '../db';
 import firebase from '../firebase';
 
-export const fetchComments = () => async dispatch => {
+export const fetchAllComments = () => async dispatch => {
   let payload = [];
   try {
+    dispatch({ type: CLEAR_COMMENTS });
+
     const res = await db.collection('comments').get()
+    res.forEach(doc => {
+      payload.push(doc.data());
+    });
+    payload = payload.sort((obj1, obj2) => {
+      return obj2.created_at - obj1.created_at
+    });
+
+    dispatch({
+      type: GET_COMMENTS,
+      payload
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
+
+export const fetchUserComments = user_id => async dispatch => {
+  let payload = [];
+  try {
+    dispatch({ type: CLEAR_COMMENTS });
+    const res = await db.collection('comments').where('user_id', '==', user_id).get();
+    res.forEach(doc => {
+      payload.push(doc.data());
+    });
+    payload = payload.sort((obj1, obj2) => {
+      return obj2.created_at - obj1.created_at
+    });
+
+    dispatch({
+      type: GET_COMMENTS,
+      payload
+    })
+  } catch (error) {
+    
+  }
+}
+
+
+export const fetchPostComments = post_id => async dispatch => {
+  let payload = [];
+  try {
+    dispatch({ type: CLEAR_COMMENTS });
+    const res = await db.collection('comments').where('post_id', '==', post_id).get();
     res.forEach(doc => {
       payload.push(doc.data());
     });
