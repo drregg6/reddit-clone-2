@@ -1,17 +1,5 @@
-/*
-
-this page can be a adjusted
-
-*/
-
 import React from 'react';
 import PropTypes from 'prop-types';
-
-import { connect } from 'react-redux';
-import {
-  upvote,
-  downvote
-} from '../../actions/votes';
 
 const Votes = ({
   postId,
@@ -86,12 +74,8 @@ Votes.propTypes = {
   userUpvotes: PropTypes.array,
   userDownvotes: PropTypes.array,
   currentUser: PropTypes.object.isRequired,
+  upvote: PropTypes.func.isRequired,
+  downvote: PropTypes.func.isRequired,
 }
 
-export default connect(
-  null,
-  {
-    upvote,
-    downvote
-  }
-)(Votes);
+export default Votes;

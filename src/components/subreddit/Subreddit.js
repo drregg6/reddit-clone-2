@@ -13,7 +13,11 @@ import {
   fetchSubredditPosts
 } from '../../actions/posts';
 import { fetchUsers } from '../../actions/users';
-import { fetchVotes } from '../../actions/votes';
+import {
+  upvote,
+  downvote,
+  fetchVotes
+} from '../../actions/votes';
 
 
 const Subreddit = ({
@@ -22,6 +26,8 @@ const Subreddit = ({
   fetchUsers,
   fetchVotes,
   deletePost,
+  upvote,
+  downvote,
   subreddits: { subreddit, isLoading },
   auth: { currentUser, isLoggedIn },
   users: { users },
@@ -115,6 +121,8 @@ const Subreddit = ({
             deletePost={deletePost}
             posts={posts}
             currentUser={currentUser}
+            upvote={upvote}
+            downvote={downvote}
           />
         )}
       </Container>
@@ -128,6 +136,8 @@ Subreddit.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   fetchVotes: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
+  upvote: PropTypes.func.isRequired,
+  downvote: PropTypes.func.isRequired,
   subreddits: PropTypes.object,
   posts: PropTypes.object,
 };
@@ -147,6 +157,8 @@ export default connect(
     fetchUsers,
     fetchVotes,
     fetchSubredditPosts,
-    fetchSubreddit
+    fetchSubreddit,
+    upvote,
+    downvote
   }
 )(Subreddit);
