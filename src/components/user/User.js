@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import UserPost from './UserPost';
 import UserComment from './UserComment';
+import UpdateUserForm from './UpdateUserForm';
 
 import { connect } from 'react-redux';
 import { fetchVotes } from '../../actions/votes';
@@ -43,6 +44,7 @@ const User = ({
   ]);
   const [ userPostList, toggleUserPostList ] = useState(true);
   const [ userCommentList, toggleUserCommentList ] = useState(false);
+  const [ updateUserForm, toggleUpdateUserForm ] = useState(false);
 
   const getSubredditById = subreddit_id => {
     return subreddits.filter(subreddit => subreddit.id === subreddit_id)[0];
@@ -72,13 +74,31 @@ const User = ({
               { user !== null && user.name }
             </h1>
             {
-              (user !== null && user.body !== '') && (
-                <h2 className="subtitle">{user.body}</h2>
+              (user !== null && user.bio !== '') && (
+                <h2 className="subtitle">{user.bio}</h2>
               )
             }
           </div>
         </div>
       </div>
+      {
+        (user !== null && user.id === currentUser.id) && (
+          <button
+            className="button is-small is-primary"
+            onClick={() => toggleUpdateUserForm(!updateUserForm)}
+          >
+            {updateUserForm ? 'Close Form' : 'Update User'}
+          </button>
+        )
+      }
+      {
+        (user !== null && updateUserForm) && (
+          <UpdateUserForm
+            user={user}
+            toggleUpdateUserForm={toggleUpdateUserForm}
+          />
+        )
+      }
       <div className="buttons my-2">
         <button
           className={`button is-info ${userPostList && 'is-light'}`}

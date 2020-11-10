@@ -1,9 +1,11 @@
 import {
   GET_USERS,
   GET_USER,
+  UPDATE_USER,
   CLEAR_USER
 } from './types';
 import db from '../db';
+import firebase from '../firebase';
 
 
 
@@ -34,6 +36,23 @@ export const fetchUser = (id) => async dispatch => {
     dispatch({
       type: GET_USER,
       payload
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
+export const updateUser = (body) => async dispatch => {
+  try {
+    let updatedUser = {...body};
+    updatedUser.updated_at = firebase.firestore.FieldValue.serverTimestamp();
+    await db.collection('users').doc(updatedUser.id).update(body);
+
+    dispatch({ type: CLEAR_USER });
+    dispatch({
+      type: UPDATE_USER,
+      payload: updatedUser
     });
   } catch (error) {
     console.error(error.message);
