@@ -17,8 +17,12 @@ export const fetchAllPosts = () => async dispatch => {
   let payload = [];
   try {
     dispatch({ type: CLEAR_POSTS });
-    await db.collection('posts').get().then(doc => {
+    const res = await db.collection('posts').get();
+    res.forEach(doc => {
       payload.push(doc.data());
+    });
+    payload = payload.sort((obj1, obj2) => {
+      return obj2.created_at - obj1.created_at
     });
 
     dispatch({

@@ -61,7 +61,6 @@ function App() {
       <div className="App">
         <div className="content">
           <Header />
-          <div className="container">
             <Switch>
               <Route exact path='/' component={Index} />
               <Route exact path ='/r/:name' component={Subreddit} />
@@ -71,7 +70,6 @@ function App() {
           </div>
         </div>
         <Footer />
-      </div>
     </Router>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import Container from '../layout/Container';
 import Posts from './Posts';
 import PostForm from './PostForm';
 
@@ -24,7 +25,7 @@ const Subreddit = ({
     setSearch(event.target.value);
   }
   return (
-    <section className="section">
+    <Container>
       {
         isLoggedIn && (
           <button
@@ -66,7 +67,7 @@ const Subreddit = ({
           subreddit_id={subreddit.id}
         />
       )}
-    </section>
+    </Container>
   )
 }
 

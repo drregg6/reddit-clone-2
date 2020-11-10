@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
+import Container from '../layout/Container';
 import UpdateForm from './UpdateForm';
 import CommentForm from './CommentForm';
 import PostComment from './PostComment';
@@ -41,7 +42,7 @@ const Post = ({
   }
 
   return (
-    <section className="section">
+    <Container>
       {
         (post !== null && currentUser.id === post.user_id) && (
           <button
@@ -108,7 +109,7 @@ const Post = ({
           subreddit_id={subreddit_id}
         />
       </div>
-    </section>
+    </Container>
   )
 }
 

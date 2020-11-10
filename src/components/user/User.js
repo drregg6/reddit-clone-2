@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+import Container from '../layout/Container';
 import UserPost from './UserPost';
 import UserComment from './UserComment';
 import UpdateUserForm from './UpdateUserForm';
@@ -64,7 +66,7 @@ const User = ({
   }
 
   return (
-    <div className="section">
+    <Container>
       <div className="hero is-primary mb-5">
         <div className="hero-body">
           <div className="container has-text-centered">
@@ -161,7 +163,7 @@ const User = ({
           </div>
         )
       }
-    </div>
+    </Container>
   )
 }
 
