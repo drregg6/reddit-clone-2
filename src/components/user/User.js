@@ -1,20 +1,26 @@
-import React, { useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import UserPost from './UserPost';
+import UserComment from './UserComment';
 
 import { connect } from 'react-redux';
 import { fetchVotes } from '../../actions/votes';
 import { fetchUser } from '../../actions/users';
 import { fetchSubreddits } from '../../actions/subreddits';
 import { deletePost, fetchUserPosts } from '../../actions/posts';
+import { deleteComment, fetchUserComments } from '../../actions/comments';
 
 const User = ({
   deletePost,
+  deleteComment,
   fetchUser,
   fetchVotes,
   fetchUserPosts,
+  fetchUserComments,
   fetchSubreddits,
   posts: { posts, isLoading },
+  comments: { comments },
   users: { user },
   auth: { currentUser },
   subreddits: { subreddits },
@@ -24,21 +30,34 @@ const User = ({
   useEffect(() => {
     fetchUser(user_id);
     fetchUserPosts(user_id);
+    fetchUserComments(user_id);
     fetchSubreddits();
     fetchVotes();
   }, [
     fetchUserPosts,
     fetchSubreddits,
+    fetchUserComments,
     fetchVotes,
     fetchUser,
     user_id
   ]);
+  const [ userPostList, toggleUserPostList ] = useState(true);
+  const [ userCommentList, toggleUserCommentList ] = useState(false);
 
   const getSubredditById = subreddit_id => {
     return subreddits.filter(subreddit => subreddit.id === subreddit_id)[0];
   }
   const getVoteIdByPost = post_id => {
     return votes.filter(vote => vote.post_id === post_id)[0];
+  }
+
+  const handlePostList = () => {
+    toggleUserPostList(true);
+    toggleUserCommentList(false);
+  }
+  const handleCommentList = () => {
+    toggleUserCommentList(true);
+    toggleUserPostList(false);
   }
 
   return (
@@ -60,72 +79,83 @@ const User = ({
           </div>
         </div>
       </div>
-      <div className="user-posts">
-        {
-          (posts.length !== 0 && !isLoading) && (
-            posts.map(post => {
-              let vote_id = getVoteIdByPost(post.id);
-              let subreddit = getSubredditById(post.subreddit_id);
-              return (
-                <div key={post.id} className="box">
-                  <div className="media">
-                  { 
-                      post.url && (
-                        <div className="media-left">
-                          <figure className="image is-128x128">
-                            <img
-                              src={ post.url }
-                              alt={ post.title }
-                            />
-                          </figure>
-                        </div>
-                      )
-                    }
-                    <div className="media-content">
-                      <p className="has-text-weight-bold">
-                        { subreddit !== undefined && <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link> }
-                      </p>
-                      {
-                        post.desc && (
-                          <p>
-                            {post.desc}
-                          </p>
-                        )
-                      }
-                    </div>
-                    {
-                      (user !== null && user.id === currentUser.id) && (
-                        <div className="media-right">
-                          <button
-                            className="delete"
-                            onClick={() => deletePost(post.id, vote_id)}
-                          >
-                            X
-                          </button>
-                        </div>
-                      )
-                    }
-                  </div>
-                </div>
-              )
-            })
-          )
-        }
+      <div className="buttons">
+        <button
+          className={`button is-info ${userPostList && 'is-light'}`}
+          disabled={userPostList}
+          onClick={() => handlePostList()}
+        >
+          User Posts
+        </button>
+        <button
+          className={`button is-caution ${userCommentList && 'is-light'}`}
+          disabled={userCommentList}
+          onClick={() => handleCommentList()}
+        >
+          User Comments
+        </button>
       </div>
+      {
+        userPostList && (
+          <div className="user-posts">
+            {
+              (posts.length !== 0 && !isLoading) && (
+                posts.map(post => {
+                  let vote_id = getVoteIdByPost(post.id);
+                  let subreddit = getSubredditById(post.subreddit_id);
+                  return (
+                    <UserPost
+                      vote_id={vote_id}
+                      subreddit={subreddit}
+                      currentUser={currentUser}
+                      deletePost={deletePost}
+                      user={user}
+                      post={post}
+                    />
+                  )
+                })
+              )
+            }
+          </div>
+        )
+      }
+      {
+        userCommentList && (
+          <div className="user-comments">
+            {
+              (comments.length !== 0 && !isLoading) && (
+                comments.map(comment => {
+                  return (
+                    <UserComment
+                      comment={comment}
+                      user={user}
+                      currentUser={currentUser}
+                      deleteComment={deleteComment}
+                    />
+                  )
+                })
+              )
+            }
+          </div>
+        )
+      }
     </div>
   )
 }
 
 User.propTypes = {
   deletePost: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
   fetchUserPosts: PropTypes.func.isRequired,
   fetchUser: PropTypes.func.isRequired,
   fetchVotes: PropTypes.func.isRequired,
   fetchSubreddits: PropTypes.func.isRequired,
+  fetchUserComments: PropTypes.func.isRequired,
   users: PropTypes.object,
   auth: PropTypes.object,
   posts: PropTypes.object,
   votes: PropTypes.object,
+  comments: PropTypes.array,
   subreddits: PropTypes.object,
 }
 
@@ -134,16 +164,19 @@ const mapStateToProps = state => ({
   auth: state.auth,
   posts: state.posts,
   votes: state.votes,
-  subreddits: state.subreddits
+  subreddits: state.subreddits,
+  comments: state.comments
 });
 
 export default connect(
   mapStateToProps,
   {
     deletePost,
+    deleteComment,
     fetchUser,
     fetchVotes,
     fetchUserPosts,
     fetchSubreddits,
+    fetchUserComments
   }
 )(User)

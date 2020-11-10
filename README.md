@@ -96,13 +96,12 @@ Project Link: [Title goes here](URL goes here)
   * Update Rules
 * [x] User Profile
   * [x] Show Submitted Posts
-  * [ ] Show Comments
+  * [x] Show Comments
 * [x] Edit Post
 * [ ] Edit Comment
-* [ ] UpVote/DownVote Comment
-* [ ] Reply to Comment
+* [x] Reply to Comment
 * [ ] Display Error Image if bad link/error
-* [ ] Cloud Function Score Aggregator (?)
+* [ ] Cloud Function Score Aggregator (???)
   * https://firebase.google.com/docs/firestore/solutions/aggregation#solution_cloud_functions
 * [x] Delete Post
   * [x] Cloud Function "Cascade Delete" comments
