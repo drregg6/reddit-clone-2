@@ -26,14 +26,10 @@ const Nav = ({
 
       <div id="navbarBasicExample" className="navbar-menu">
         <div className="navbar-start">
-          <Link className="navbar-item" to="/">
-            Home
-          </Link>
-          
           <div className="navbar-item has-dropdown is-hoverable">
-            <a href="!#" className="navbar-link is-arrowless">
+            <Link to="/r/index" className="navbar-link is-arrowless">
               Subreddits
-            </a>
+            </Link>
             <div className="navbar-dropdown">
               <Link className="navbar-item" to='/r/programming'>Programming</Link>
               <Link className="navbar-item" to='/r/funny'>Funny</Link>

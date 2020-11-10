@@ -41,11 +41,11 @@ const Subreddit = ({
       }
       {
         (isLoading || subreddit === null) ? (
-          <h1>Loading...</h1>
+          <h1 className="is-capitalized">Loading...</h1>
         ) : (!isLoading && Object.keys(subreddit).length === 0) ? (
-          <h1>This Subreddit does not exist yet</h1>
+          <h1 className="is-capitalized">This Subreddit does not exist yet</h1>
         ) : (
-          <h1>{ subreddit.name }</h1>
+          <h1 className="is-capitalized">{ subreddit.name }</h1>
         )
       }
       <form className="form">

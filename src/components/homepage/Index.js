@@ -30,13 +30,13 @@ const Index = ({
   ])
   return (
     <section>
-      <div class="hero is-info is-large">
-        <div class="hero-body">
-          <div class="container">
-            <h1 class="title">
+      <div className="hero is-info is-large">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title">
               One Kick Ass Site
             </h1>
-            <h2 class="subtitle is-size-6">
+            <h2 className="subtitle is-size-6">
               Welcome to the best Reddit clone you'll ever see!
             </h2>
             { !isLoggedIn && <button className="button is-outlined" onClick={() => login()}>Login</button> }
