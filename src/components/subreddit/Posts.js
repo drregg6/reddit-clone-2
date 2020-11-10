@@ -14,30 +14,9 @@ const Posts = ({
   posts
 }) => {
 
+  // Ordering posts by Vote or New
   const [ sortByVote, toggleSortByVote ] = useState(false);
   const [ sortByNew, toggleSortByNew ] = useState(true);
-
-  const getUser = (id) => {
-    return users.filter(user => user.id === id)[0];
-  }
-
-  const getVoteByPostId = post_id => {
-    return votes.filter(doc => doc.post_id === post_id)[0];
-  }
-
-  const getPostByVoteId = post_id => {
-    return posts.filter(doc => doc.id === post_id)[0];
-  }
-
-  const filterPosts = posts => {
-    if (search !== '') {
-      const regex = new RegExp(search, 'gi');
-      return posts.filter(post => {
-        return (post.title + post.desc).match(regex)
-      });
-    }
-    return posts;
-  }
 
   const orderByVotes = posts => {
     let postVotes = posts.map(post => getVoteByPostId(post.id));
@@ -62,23 +41,47 @@ const Posts = ({
     toggleSortByVote(false);
   }
 
+  // Filtering posts through the search bar
+  const filterPosts = posts => {
+    if (search !== '') {
+      const regex = new RegExp(search, 'gi');
+      return posts.filter(post => {
+        return (post.title + post.desc).match(regex)
+      });
+    }
+    return posts;
+  }
+
+  // Getters
+  const getAuthor = (id) => {
+    return users.filter(user => user.id === id)[0];
+  }
+  const getVoteByPostId = post_id => {
+    return votes.filter(doc => doc.post_id === post_id)[0];
+  }
+  const getPostByVoteId = post_id => {
+    return posts.filter(doc => doc.id === post_id)[0];
+  }
+
   return (
     <section>
-      <button
-        className={`button is-primary ${sortByVote && `is-light`}`}
-        onClick={() => handleSortByVote()}
-        disabled={sortByVote}
-      >
-        Sort By Most Votes
-      </button>
-      <button
-        className={`button is-info ${sortByNew && `is-light`}`}
-        onClick={() => handleSortByNew()}
-        disabled={sortByNew}
-      >
-        Sort By New
-      </button>
-      <div className="columns is-multiline is-4 posts">
+      <div className="buttons mb-5">
+        <button
+          className={`mr-5 is-small button is-primary ${sortByVote && `is-light`}`}
+          onClick={() => handleSortByVote()}
+          disabled={sortByVote}
+        >
+          Sort By Most Votes
+        </button>
+        <button
+          className={`ml-5 is-small button is-info ${sortByNew && `is-light`}`}
+          onClick={() => handleSortByNew()}
+          disabled={sortByNew}
+        >
+          Sort By New
+        </button>
+      </div>
+      <div>
         {
           posts ? sortByVote ? (
             orderByVotes(posts).map(post => {
@@ -95,7 +98,7 @@ const Posts = ({
               postVotes.userDownvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_downvotes : [];
 
               // author information
-              let author = getUser(post.user_id) !== undefined ? getUser(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png', id: 'rand0mnumb3rgen3r4t0r' }
+              let author = getAuthor(post.user_id) !== undefined ? getAuthor(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png', id: 'rand0mnumb3rgen3r4t0r' }
 
               return (
                 <PostCard
@@ -129,7 +132,7 @@ const Posts = ({
               postVotes.userDownvotes = getVoteByPostId(post.id) !== undefined ? getVoteByPostId(post.id).user_downvotes : [];
 
               // author information
-              let author = getUser(post.user_id) !== undefined ? getUser(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png' }
+              let author = getAuthor(post.user_id) !== undefined ? getAuthor(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png' }
 
               return (
                 <PostCard

@@ -28,71 +28,59 @@ const PostCard = ({
   } = postVotes;
   const vote_id = voteId;
   return (
-    <div className="column is-4 post-column" key={post_id}>
+    <div className="media" key={post_id}>
+      <div className="media-left">
+        <Votes
+          voteId={voteId}
+          postId={post_id}
+          votes={votes}
+          userUpvotes={userUpvotes}
+          userDownvotes={userDownvotes}
+          currentUser={currentUser}
+          upvote={upvote}
+          downvote={downvote}
+        />
+      </div>
       {
-        user_id === currentUser.id && (
-        <button
-          className="button is-danger delete-button"
-          onClick={() => (deletePost(post_id, vote_id))}
-        >
-          X
-        </button>
-      )}
-      <div className="card">
-        {
-          (url !== '') && (
-            <div className="card-image">
-              <figure className="image">
-              <a href={`${ url }`} target="_blank" rel="noopener noreferrer">
-                <img src={ url !== '' ? url : 'https://bulma.io/images/placeholders/96x96.png' } alt={ title } />
-              </a>
-              </figure>
-            </div>
-          )
-        }
-        <div className="card-content">
-          <div className="media">
-            <div className="media-left">
-              <figure className="image is-48x48">
+        url !== '' && (
+          <div className="media-left" style={{ alignSelf: 'center' }}>
+            <figure className="image is-64x64">
+              <a href={url} target="_blank" rel="noopener noreferrer">
                 <img
-                  src={ author.image }
-                  alt="user avatar"
+                  src={url}
+                  alt=""
                 />
+              </a>
+            </figure>
+          </div>
+        )
+      }
+      <div className="media-content post-content">
+        <p className="has-text-weight-bold">
+          <Link to={`/r/${subreddit}/${post_id}`}>{title}</Link>
+        </p>
+        <p>{desc}</p>
+        <div className="level is-size-7">
+          <div className="level-right">
+            <div className="level-item">
+              <span className="has-text-weight-bold mr-1">Updated:</span> { dateFormatter(updated_at.seconds) }
+            </div>
+            <div className="level-item">
+              <figure className="image is-24x24 mr-2">
+                <img className="is-rounded" src={author.image} alt="" />
               </figure>
-            </div>
-            <div className="media-content">
-              {
-                url !== '' ? (
-                  <p className="title is-4">
-                    <Link to={`/r/${subreddit}/${post_id}`}>{ title }</Link>
-                  </p>
-                ) : (
-                  <p className="title is-4">{ title }</p>
-                )
-              }
-              <p className="subtitle is-6">
-                <Link to={`/u/${author.id}`}>{ author.name }</Link>
-              </p>
+              { author.name }
             </div>
           </div>
-
-          <div className="content">
-            { desc && desc }
-            <br />
-            <time>{ updated_at && dateFormatter(updated_at.seconds) }</time>
-          </div>
-          <Votes
-            voteId={voteId}
-            postId={post_id}
-            votes={votes}
-            userUpvotes={userUpvotes}
-            userDownvotes={userDownvotes}
-            currentUser={currentUser}
-            upvote={upvote}
-            downvote={downvote}
-          />
         </div>
       </div>
+      {
+        user_id === currentUser.id && (
+          <div className="media-right">
+            <button className="delete" onClick={() => deletePost(post_id, vote_id)}>X</button>
+          </div>
+        )
+      }
     </div>
   )
 }

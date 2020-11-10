@@ -46,3 +46,17 @@
   top: 5%;
   right: 10%;
 }
+
+.votes {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.post-content {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}

@@ -15,7 +15,7 @@ const Votes = ({
   let post_id = postId;
   let user_id = currentUser.id;
   return (
-    <div className="votes" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div className="votes">
       {
         Object.entries(currentUser).length === 0 ? ( // If User is a guest the button should not be accessible
           <button
@@ -40,7 +40,7 @@ const Votes = ({
           </button>
         )
       }
-      <span className="vote-amount" style={{ margin: '0 1rem' }}>{ votes }</span>
+      <span className="vote-amount my-1">{ votes }</span>
       {
         Object.entries(currentUser).length === 0 ? (
           <button
