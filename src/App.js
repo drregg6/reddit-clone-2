@@ -1,8 +1,7 @@
 /*
 
 TODOS:
-= Upvote / Downvote will not update the store on Post page
-  - New action for PostUpvote / PostDownvote
+= Upvote / Downvote on Homepage
 = Create Subreddit page
 = Footer
 

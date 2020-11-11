@@ -13,6 +13,9 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 // Subreddits
 export const GET_SUBREDDITS = 'GET_SUBREDDITS';
 export const GET_SUBREDDIT = 'GET_SUBREDDIT';
+export const CREATE_SUBREDDIT = 'CREATE_SUBREDDIT';
+export const UPDATE_SUBREDDIT = 'UPDATE_SUBREDDIT';
+export const DELETE_SUBREDDIT = 'DELETE_SUBREDDIT';
 export const CLEAR_SUBREDDIT = 'CLEAR_SUBREDDIT';
 
 // Posts

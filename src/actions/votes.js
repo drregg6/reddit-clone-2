@@ -44,7 +44,7 @@ export const fetchPostVote = post_id => async dispatch => {
 }
 
 
-export const upvote = (vote_id, post_id, user_id) => async dispatch => {
+export const upvote = (vote_id, post_id, user_id, singlePost=false) => async dispatch => {
   // IF user_id exists in user_upvotes, remove user_id and votes--
   // ELSE IF user_id exists in user_downvotes, remove user_id from downvotes, add user_id to upvotes, votes += 2
   // ELSE user_id does not exist in user_upvotes, add user_id and votes++
@@ -89,6 +89,10 @@ export const upvote = (vote_id, post_id, user_id) => async dispatch => {
     await db.collection('votes').doc(vote_id).get().then(doc => {
       payload = doc.data();
     });
+    if (singlePost) {
+      dispatch({ type: CLEAR_VOTE });
+      dispatch({ type: GET_VOTE, payload });
+    }
     
     dispatch({
       type: ADD_VOTE,
@@ -100,7 +104,7 @@ export const upvote = (vote_id, post_id, user_id) => async dispatch => {
 }
 
 
-export const downvote = (vote_id, post_id, user_id) => async dispatch => {
+export const downvote = (vote_id, post_id, user_id, singlePost=false) => async dispatch => {
   let payload;
   let upvoteFlag = {
     userUpvoted: false,
@@ -143,6 +147,10 @@ export const downvote = (vote_id, post_id, user_id) => async dispatch => {
     await db.collection('votes').doc(vote_id).get().then(doc => {
       payload = doc.data();
     });
+    if (singlePost) {
+      dispatch({ type: CLEAR_VOTE });
+      dispatch({ type: GET_VOTE, payload });
+    }
     
     dispatch({
       type: REMOVE_VOTE,

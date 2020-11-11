@@ -78,7 +78,7 @@ const Post = ({
         <button
           className={`button is-success is-small ${vote !== null && vote.user_upvotes.indexOf(currentUser.id) !== -1 && 'is-light'}`}
           disabled={Object.entries(currentUser).length === 0}
-          onClick={() => upvote(vote.id, post_id, currentUser.id)}
+          onClick={() => upvote(vote.id, post_id, currentUser.id, true)}
         >
           Upvote
         </button>
@@ -86,7 +86,7 @@ const Post = ({
           <button
             className={`button is-danger is-small ${vote !== null && vote.user_downvotes.indexOf(currentUser.id) !== -1 && 'is-light'}`}
             disabled={Object.entries(currentUser).length === 0}
-            onClick={() => downvote(vote.id, post_id, currentUser.id)}
+            onClick={() => downvote(vote.id, post_id, currentUser.id, true)}
           >
             Downvote
           </button>
