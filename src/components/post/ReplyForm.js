@@ -53,7 +53,7 @@ const ReplyForm = ({
         </div>
       </div>
       <div className="control">
-        <button className="button is-primary">Comment</button>
+        <button className="button is-primary is-small">Comment</button>
       </div>
     </form>
   )

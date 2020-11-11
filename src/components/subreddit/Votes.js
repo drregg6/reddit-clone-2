@@ -20,7 +20,7 @@ const Votes = ({
   return (
     <div className="votes">
       <button
-        className={`button is-success is-small ${userUpvotes.indexOf(currentUser.id) && 'is-light'}`}
+        className={`button is-success is-small ${userUpvotes.indexOf(currentUser.id) !== -1 && 'is-light'}`}
         disabled={Object.entries(currentUser).length === 0}
         onClick={() => upvote(vote_id, post_id, user_id)}
       >
@@ -28,7 +28,7 @@ const Votes = ({
       </button>
       <span className="vote-amount my-1">{ votes }</span>
       <button
-        className={`button is-danger is-small ${userDownvotes.indexOf(currentUser.id) && 'is-light'}`}
+        className={`button is-danger is-small ${userDownvotes.indexOf(currentUser.id) !== -1 && 'is-light'}`}
         disabled={Object.entries(currentUser).length === 0}
         onClick={() => downvote(vote_id, post_id, user_id)}
       >
