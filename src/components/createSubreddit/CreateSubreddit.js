@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import Container from '../layout/Container';
 
@@ -8,13 +9,14 @@ import { createSubreddit } from '../../actions/subreddits';
 
 const CreateSubreddit = ({
   createSubreddit,
-  auth: { currentUser, isLoggedIn }
+  auth: { currentUser }
 }) => {
   const [ input, setInput ] = useState({
     name: '',
     desc: ''
   });
   const { name, desc } = input;
+  let history = useHistory();
 
   const handleChange = event => {
     setInput({
@@ -24,16 +26,19 @@ const CreateSubreddit = ({
   }
   const handleSubmit = event => {
     event.preventDefault();
-    
     // Get currentUser.id
     let user_id = currentUser.id;
+    let name = input.name.toLowerCase();
+    name = name.replaceAll(/\W/g, '')
+
 
     let newSubreddit = {
-      ...input,
+      name,
+      desc: input.desc,
       user_id
     }
 
-    console.log(newSubreddit);
+    createSubreddit(newSubreddit, history);
     setInput({
       name: '',
       desc: ''
@@ -53,6 +58,7 @@ const CreateSubreddit = ({
               value={name}
               placeholder="Name the Subreddit"
               onChange={event => handleChange(event)}
+              maxLength="20"
             />
           </div>
         </div>
@@ -66,6 +72,7 @@ const CreateSubreddit = ({
               value={desc}
               placeholder="Describe the Subreddit"
               onChange={event => handleChange(event)}
+              maxLength="140"
             >
             </textarea>
           </div>

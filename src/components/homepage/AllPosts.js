@@ -19,6 +19,7 @@ const AllPosts = ({
           posts.map(post => {
             return (
               <PostMedia
+                key={post.id}
                 post={post}
                 users={users}
                 subreddits={subreddits}

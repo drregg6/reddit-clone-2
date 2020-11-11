@@ -41,7 +41,7 @@ const Footer = ({
             isLoggedIn ? (
               <nav className="nav">
                 <div className="navbar-item">
-                  <button className="button is-light is-info mb-1">{currentUser.name}</button>
+                  <Link to={`/u/${currentUser.id}`} className="button is-light is-info mb-1">{currentUser.name}</Link>
                 </div>
                 <div className="navbar-item">
                   <button className="button is-danger mt-1" onClick={() => logout()}>Logout</button>

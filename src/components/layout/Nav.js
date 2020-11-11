@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 import { login, logout } from '../../actions/auth';
+import { fetchSubreddits } from '../../actions/subreddits';
 
 const Nav = ({
   login,
   logout,
+  fetchSubreddits,
+  subreddits: { subreddits },
   auth: { currentUser, isLoggedIn }
 }) => {
+  useEffect(() => {
+    fetchSubreddits();
+  }, [fetchSubreddits])
   return (
     <nav className="navbar is-light" role="navigation" aria-label="dropdown navigation">
       <div className="navbar-brand">
@@ -31,11 +37,20 @@ const Nav = ({
               Subreddits
             </Link>
             <div className="navbar-dropdown">
-              <Link className="navbar-item" to='/r/programming'>Programming</Link>
-              <Link className="navbar-item" to='/r/funny'>Funny</Link>
-              <Link className="navbar-item" to='/r/philadelphia'>Philadelphia</Link>
-              <Link className="navbar-item" to='/r/pics'>Pics</Link>
+              {
+                subreddits !== null && (
+                  subreddits.map(subreddit => {
+                    return (
+                      <Link key={subreddit.id} className="navbar-item is-capitalized" to={`/r/${subreddit.name}`}>{subreddit.name}</Link>
+                    )
+                  })
+                )
+              }
+              { isLoggedIn && <Link className="navbar-item" to='/create-a-subreddit'>Create a Subreddit</Link> }
             </div>
+          </div>
+          <div className="navbar-item">
+            { isLoggedIn && <Link to='/create-a-subreddit'>Create a Subreddit</Link>}
           </div>
         </div>
 
@@ -69,14 +84,21 @@ const Nav = ({
 Nav.propTypes = {
   auth: PropTypes.object,
   login: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  fetchSubreddits: PropTypes.func.isRequired,
+  subreddits: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  subreddits: state.subreddits
 });
 
 export default connect(
   mapStateToProps,
-  { login, logout }
+  {
+    login,
+    logout,
+    fetchSubreddits
+  }
 )(Nav);

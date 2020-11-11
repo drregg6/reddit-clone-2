@@ -44,7 +44,7 @@ export const fetchSubreddit = (params) => async dispatch => {
 }
 
 
-export const createSubreddit = body => async dispatch => {
+export const createSubreddit = (body, history) => async dispatch => {
   try {
     // Create an ID
     const doc = db.collection('subreddits').doc();
@@ -56,7 +56,10 @@ export const createSubreddit = body => async dispatch => {
     dispatch({
       type: CREATE_SUBREDDIT,
       payload: newSubreddit
-    })
+    });
+    if (history) {
+      history.push(`/r/${newSubreddit.name}`);
+    }
   } catch (error) {
     console.error(error.message);
   }

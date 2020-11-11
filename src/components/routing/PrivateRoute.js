@@ -4,6 +4,9 @@ import { Route, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux'
 
+// Not quite working with Firestore
+// If a user types in the address, isLoggedIn doesn't trigger that quickly
+// The user is not popped into the database quick enough
 const PrivateRoute = ({
   component: Component,
   auth: { isLoggedIn, isLoading },
