@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
 import Container from '../layout/Container';
@@ -13,12 +13,21 @@ import { fetchPost } from '../../actions/posts';
 import { fetchSubreddits } from '../../actions/subreddits';
 import { fetchPostComments } from '../../actions/comments';
 import { fetchUsers } from '../../actions/users';
+import {
+  fetchPostVote,
+  upvote, 
+  downvote
+} from '../../actions/votes';
 
 const Post = ({
   fetchPost,
   fetchUsers,
+  fetchPostVote,
   fetchSubreddits,
   fetchPostComments,
+  upvote,
+  downvote,
+  votes: { vote },
   posts: { post },
   users: { users },
   auth: { currentUser },
@@ -31,9 +40,11 @@ const Post = ({
     fetchSubreddits();
     fetchPostComments(post_id);
     fetchUsers();
+    fetchPostVote(post_id);
   }, [
     fetchSubreddits,
     fetchPostComments,
+    fetchPostVote,
     fetchUsers,
     fetchPost,
     post_id
@@ -62,7 +73,24 @@ const Post = ({
 
   return (
     <section>
-      <div className="hero is-info">
+      <div className="hero is-warning">
+        <div className="hero-head mt-3" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+        <button
+          className={`button is-success is-small ${vote !== null && vote.user_upvotes.indexOf(currentUser.id) !== -1 && 'is-light'}`}
+          disabled={Object.entries(currentUser).length === 0}
+          onClick={() => upvote(vote.id, post_id, currentUser.id)}
+        >
+          Upvote
+        </button>
+        { vote !== null && <span className="mx-3">{vote.votes}</span>}
+          <button
+            className={`button is-danger is-small ${vote !== null && vote.user_downvotes.indexOf(currentUser.id) !== -1 && 'is-light'}`}
+            disabled={Object.entries(currentUser).length === 0}
+            onClick={() => downvote(vote.id, post_id, currentUser.id)}
+          >
+            Downvote
+          </button>
+        </div>
         <div className="hero-body has-text-centered">
           {
             (post !== null && post.url) && (
@@ -85,7 +113,7 @@ const Post = ({
             )
           }
         </div>
-        <div className="hero-foot">
+        <div className="hero-foot mb-3">
           <div className="level is-size-6">
             <div className="level-item has-text-centered">
               <figure className="image is-24x24 mr-2" style={{ marginBottom: 0 }}>
@@ -95,16 +123,22 @@ const Post = ({
                   alt=""
                 />
               </figure>
+              <Link to={`/u/${author.id}`}>
+                <p>
+                  {author.name}
+                </p>
+              </Link>
+            </div>
+            <div className="level-item has-text-centered">
               <p>
-                {author.name}
+                Created: { post !== null && commentTimeFormatter(post.created_at.seconds) }
               </p>
             </div>
-            <p className="level-item has-text-centered">
-              Created: { post !== null && commentTimeFormatter(post.created_at.seconds) }
-            </p>
-            <p className="level-item has-text-centered">
-              Updated: { post !== null && commentTimeFormatter(post.updated_at.seconds) }
-            </p>
+            <div className="level-item has-text-centered">
+              <p>
+                Updated: { post !== null && commentTimeFormatter(post.updated_at.seconds) }
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -146,13 +180,15 @@ const Post = ({
               })
             )
           }
-          <h2 className="subtitle">Add a Comment</h2>
-          <CommentForm
-            currentUser={currentUser}
-            post_id={post_id}
-            name={name}
-            subreddit_id={subreddit_id}
-          />
+          <div className="mt-3 comment-form">
+            <h2 className="subtitle">Add a Comment</h2>
+            <CommentForm
+              currentUser={currentUser}
+              post_id={post_id}
+              name={name}
+              subreddit_id={subreddit_id}
+            />
+          </div>
         </div>
       </Container>
     </section>
@@ -163,10 +199,14 @@ Post.propTypes = {
   fetchSubreddits: PropTypes.func.isRequired,
   fetchPost: PropTypes.func.isRequired,
   fetchUsers: PropTypes.func.isRequired,
+  fetchPostVote: PropTypes.func.isRequired,
   fetchPostComments: PropTypes.func.isRequired,
   subreddits: PropTypes.object,
   comments: PropTypes.object,
   posts: PropTypes.object,
+  votes: PropTypes.object,
+  upvote: PropTypes.func.isRequired,
+  downvote: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -174,7 +214,8 @@ const mapStateToProps = state => ({
   comments: state.comments,
   users: state.users,
   posts: state.posts,
-  auth: state.auth
+  auth: state.auth,
+  votes: state.votes
 })
 
 export default connect(
@@ -182,7 +223,10 @@ export default connect(
   {
     fetchPost,
     fetchUsers,
+    fetchPostVote,
     fetchSubreddits,
-    fetchPostComments
+    fetchPostComments,
+    upvote,
+    downvote
   }
 )(Post);

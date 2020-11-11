@@ -1,20 +1,10 @@
 /*
 
 TODOS:
-= Comments comments comments
-  - Render comments on Post Component
-  - Render comments on User Component
-= User Page
-  - Update User
-  - Add bio for user
-= Reorganize Stores
-  - User can hold an array of userPosts, userComments
-  - Post can hold subredditName, votes
-= Actions can include
-  - getUserCommentsById
-  - getUserPostsById
-  - getSubredditPostsById
-  - etc etc...
+= Upvote / Downvote will not update the store on Post page
+  - New action for PostUpvote / PostDownvote
+= Create Subreddit page
+= Footer
 
 */
 

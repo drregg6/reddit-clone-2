@@ -1,7 +1,9 @@
 import {
   GET_VOTES,
+  GET_VOTE,
   ADD_VOTE,
-  REMOVE_VOTE
+  REMOVE_VOTE,
+  CLEAR_VOTE
 } from './types';
 import db from '../db';
 import firebase from '../firebase';
@@ -16,6 +18,24 @@ export const fetchVotes = () => async dispatch => {
     });
     dispatch({
       type: GET_VOTES,
+      payload
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
+export const fetchPostVote = post_id => async dispatch => {
+  let payload;
+  try {
+    const res = await db.collection('votes').where('post_id', '==', post_id).get();
+    res.forEach(doc => {
+      payload = doc.data();
+    });
+    dispatch({ type: CLEAR_VOTE });
+    dispatch({
+      type: GET_VOTE,
       payload
     });
   } catch (error) {

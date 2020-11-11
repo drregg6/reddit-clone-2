@@ -26,10 +26,12 @@ export const CLEAR_POSTS = 'CLEAR_POSTS';
 
 // Votes
 export const GET_VOTES = 'GET_VOTES';
+export const GET_VOTE = 'GET_VOTE';
 export const ADD_VOTE = 'ADD_VOTE';
 export const ADD_VOTES = 'ADD_VOTES';
 export const REMOVE_VOTE = 'REMOVE_VOTE';
 export const DELETE_VOTE = 'DELETE_VOTE';
+export const CLEAR_VOTE = 'CLEAR_VOTE';
 
 // Comments
 export const GET_COMMENTS = 'GET_COMMENTS';

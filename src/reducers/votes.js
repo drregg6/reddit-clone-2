@@ -1,13 +1,16 @@
 import {
   GET_VOTES,
+  GET_VOTE,
   ADD_VOTE,
   ADD_VOTES,
   REMOVE_VOTE,
-  DELETE_VOTE
+  DELETE_VOTE,
+  CLEAR_VOTE
 } from '../actions/types';
 
 const initialState = {
   votes: [],
+  vote: null,
   isLoading: true
 }
 
@@ -18,6 +21,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         votes: [...payload],
+        isLoading: false
+      }
+    case GET_VOTE:
+      return {
+        ...state,
+        vote: payload,
         isLoading: false
       }
     case ADD_VOTES:
@@ -53,6 +62,12 @@ export default function(state = initialState, action) {
         ...state,
         isLoading: false,
         votes: [...deleteVote]
+      }
+    case CLEAR_VOTE:
+      return {
+        ...state,
+        isLoading: false,
+        vote: null
       }
     default:
       return state;
