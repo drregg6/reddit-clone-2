@@ -39,7 +39,7 @@ const Index = ({
         <div className="hero-body">
           <div className="container">
             <h1 className="title">
-              One Kick Ass Site
+              Dave Regg's Personal Reddit
             </h1>
             <h2 className="subtitle is-size-6">
               Welcome to the best Reddit clone you'll ever see!

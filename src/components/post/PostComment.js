@@ -95,6 +95,7 @@ const PostComment = ({
               childrenComments.map(comment => {
                 return (
                   <CommentReply
+                    key={comment.id}
                     comment={comment}
                     currentUser={currentUser}
                   />

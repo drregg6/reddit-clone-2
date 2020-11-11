@@ -174,6 +174,7 @@ const Post = ({
                       comment={comment}
                       comments={comments}
                       currentUser={currentUser}
+                      key={comment.id}
                     />
                   )
                 }

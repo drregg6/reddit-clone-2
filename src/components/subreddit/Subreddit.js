@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Container from '../layout/Container';
@@ -7,7 +7,10 @@ import Posts from './Posts';
 import PostForm from './PostForm';
 
 import { connect } from 'react-redux';
-import { fetchSubreddit } from '../../actions/subreddits';
+import {
+  fetchSubreddit,
+  deleteSubreddit
+} from '../../actions/subreddits';
 import {
   deletePost,
   fetchSubredditPosts
@@ -24,6 +27,7 @@ const Subreddit = ({
   fetchUsers,
   fetchVotes,
   deletePost,
+  deleteSubreddit,
   subreddits: { subreddit, isLoading },
   auth: { currentUser, isLoggedIn },
   users: { users },
@@ -31,6 +35,7 @@ const Subreddit = ({
   posts: { posts }
 }) => {
   let name = useParams();
+  let history = useHistory();
   useEffect(() => {
     fetchSubreddit(name);
     fetchUsers();
@@ -71,6 +76,11 @@ const Subreddit = ({
                 </>
               ) : (
                 <h1 className=" title is-capitalized">{ subreddit.name }</h1>
+              )
+            }
+            {
+              (subreddit !== null && currentUser.id === subreddit.user_id) && (
+                <button className="button is-danger" onClick={() => deleteSubreddit(subreddit.id, history)}>Delete Subreddit</button>
               )
             }
           </div>
@@ -130,6 +140,7 @@ Subreddit.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   fetchVotes: PropTypes.func.isRequired,
   deletePost: PropTypes.func.isRequired,
+  deleteSubreddit: PropTypes.func.isRequired,
   subreddits: PropTypes.object,
   posts: PropTypes.object,
 };
@@ -146,6 +157,7 @@ export default connect(
   mapStateToProps,
   {
     deletePost,
+    deleteSubreddit,
     fetchUsers,
     fetchVotes,
     fetchSubredditPosts,

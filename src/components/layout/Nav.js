@@ -20,7 +20,7 @@ const Nav = ({
     <nav className="navbar is-light" role="navigation" aria-label="dropdown navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to="/">
-          One Kickass Site
+          Dave Regg's Personal Reddit
         </Link>
 
         <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">

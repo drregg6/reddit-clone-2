@@ -69,13 +69,6 @@ export const createSubreddit = (body, history) => async dispatch => {
 export const updateSubreddit = body => async dispatch => {
   try {
     await db.collection('subreddits').doc(body.id).set(body);
-
-    // Delete associated posts
-
-    // Delete associated votes
-
-    // Delete associated comments
-
     
     dispatch({
       type: UPDATE_SUBREDDIT,
@@ -87,14 +80,49 @@ export const updateSubreddit = body => async dispatch => {
 }
 
 
-export const deleteSubreddit = id => async dispatch => {
-  try {
-    await db.collection('subreddits').doc(id).delete();
-    dispatch({
-      type: DELETE_SUBREDDIT,
-      payload: id
-    });
-  } catch (error) {
-    console.error(error.message);
+export const deleteSubreddit = (subreddit_id, history) => async dispatch => {
+  if (window.confirm('Are you sure? This action cannot be undone!')) {
+    try {
+      // Delete associated posts
+      await db.collection('posts').where('subreddit_id', '==', subreddit_id).get().then(querySnapshot => {
+        let batch = db.batch();
+
+        querySnapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+
+        return batch.commit();
+      });
+      // Delete associated votes
+      await db.collection('votes').where('subreddit_id', '==', subreddit_id).get().then(querySnapshot => {
+        let batch = db.batch();
+
+        querySnapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+
+        return batch.commit();
+      });
+      // Delete associated comments
+      await db.collection('comments').where('subreddit_id', '==', subreddit_id).get().then(querySnapshot => {
+        let batch = db.batch();
+
+        querySnapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+
+        return batch.commit();
+      });
+
+      await db.collection('subreddits').doc(subreddit_id).delete();
+
+      dispatch({
+        type: DELETE_SUBREDDIT,
+        payload: subreddit_id
+      });
+      history.push('/');
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 }

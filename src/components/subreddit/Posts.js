@@ -100,6 +100,7 @@ const Posts = ({
 
               return (
                 <PostCard
+                  key={post.id}
                   currentUser={currentUser}
                   post_id={post.id}
                   user_id={post.user_id}
@@ -132,6 +133,7 @@ const Posts = ({
 
               return (
                 <PostCard
+                  key={post.id}
                   deletePost={deletePost}
                   currentUser={currentUser}
                   post_id={post.id}
@@ -156,8 +158,8 @@ const Posts = ({
 }
 
 Posts.propTypes = {
-  users: PropTypes.object,
-  votes: PropTypes.object,
+  users: PropTypes.array,
+  votes: PropTypes.array,
   deletePost: PropTypes.func.isRequired,
   currentUser: PropTypes.object,
   search: PropTypes.string,

@@ -183,6 +183,17 @@ export const updatePost = (post_id, body) => async dispatch => {
 
 export const deletePost = (post_id, vote_id) => async dispatch => {
   try {
+    // delete associated comments
+    await db.collection('comments').where('post_id', '==', post_id).get().then(querySnapshot => {
+      let batch = db.batch();
+
+        querySnapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+
+        return batch.commit();
+    })
+
     // delete the Post doc associated with the id
     await db.collection('posts').doc(post_id).delete();
     dispatch({
@@ -191,7 +202,15 @@ export const deletePost = (post_id, vote_id) => async dispatch => {
     });
 
     // delete the Votes doc associated with posts
-    await db.collection('votes').doc(vote_id).delete();
+    await db.collection('votes').where('post_id', '==', post_id).get().then(querySnapshot => {
+      let batch = db.batch();
+
+        querySnapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+
+        return batch.commit();
+    });
     dispatch({
       type: DELETE_VOTE,
       payload: vote_id
