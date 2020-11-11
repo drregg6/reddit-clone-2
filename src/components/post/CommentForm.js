@@ -41,7 +41,6 @@ const CommentForm = ({
           <textarea
             className="textarea"
             placeholder="Comment"
-            type="text"
             value={content}
             name="content"
             onChange={event => handleChange(event)}

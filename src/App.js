@@ -19,12 +19,14 @@ import firebase from './firebase';
 
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 import Index from './components/homepage/Index';
 import Subreddit from './components/subreddit/Subreddit';
 import Post from './components/post/Post';
 import User from './components/user/User';
 import Subreddits from './components/subreddits/Subreddits';
+import CreateSubreddit from './components/createSubreddit/CreateSubreddit';
 
 import store from './store';
 import { getUser, userError } from './actions/auth';
@@ -53,6 +55,7 @@ function App() {
           <Header />
             <Switch>
               <Route exact path='/' component={Index} />
+              <PrivateRoute exact path='/create-a-subreddit' component={CreateSubreddit} />
               <Route exact path='/r/index' component={Subreddits} />
               <Route exact path ='/r/:name' component={Subreddit} />
               <Route exact path='/r/:name/:post_id' component={Post} />

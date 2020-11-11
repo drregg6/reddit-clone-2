@@ -66,6 +66,14 @@ export const createSubreddit = body => async dispatch => {
 export const updateSubreddit = body => async dispatch => {
   try {
     await db.collection('subreddits').doc(body.id).set(body);
+
+    // Delete associated posts
+
+    // Delete associated votes
+
+    // Delete associated comments
+
+    
     dispatch({
       type: UPDATE_SUBREDDIT,
       payload: body
