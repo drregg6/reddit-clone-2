@@ -2,7 +2,6 @@
 
 TODOS:
 = Create Subreddit page
-= Footer
 
 */
 

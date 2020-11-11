@@ -1,18 +1,71 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-const Footer = () => {
+import { connect } from 'react-redux';
+import {
+  login,
+  logout
+} from '../../actions/auth';
+
+const Footer = ({
+  auth: { isLoggedIn, currentUser }
+}) => {
   return (
     <footer className="footer">
-      <p>
-        This is the footer
-      </p>
+      <div className="columns">
+        <div className="column">
+          <nav className="nav">
+            <div className="navbar-item">
+              <Link to='/'>Home</Link>
+            </div>
+            <div className="navbar-item">
+              <Link to='/r/index'>Subreddits</Link>
+            </div>
+            {
+              isLoggedIn && (
+                <div className="navbar-item">
+                  <Link to='/create-a-subreddit'>Create a Subreddit</Link>
+                </div>
+              )
+            }
+          </nav>
+        </div>
+        <div className="column">
+          <p>
+            &copy;{new Date().getFullYear()} <a href="http://www.daveregg.com" rel="noopener noreferrer" target="_blank">Dave Regg</a>
+          </p>
+        </div>
+        <div className="column is-2">
+          {
+            isLoggedIn ? (
+              <nav className="nav">
+                <div className="navbar-item">
+                  <button className="button is-light is-info mb-1">{currentUser.name}</button>
+                </div>
+                <div className="navbar-item">
+                  <button className="button is-danger mt-1" onClick={() => logout()}>Logout</button>
+                </div>
+              </nav>
+            ) : (
+              <button className="button is-info" onClick={() => login()}>Login with Google</button>
+            )
+          }
+        </div>
+      </div>
     </footer>
   )
 }
 
-// Footer.propTypes = {
+Footer.propTypes = {
+  auth: PropTypes.object,
+}
 
-// }
+const mapStateToProps = state => ({
+  auth: state.auth
+})
 
-export default Footer;
+export default connect(
+  mapStateToProps,
+  null
+)(Footer);
