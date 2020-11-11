@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -15,7 +15,10 @@ const Nav = ({
 }) => {
   useEffect(() => {
     fetchSubreddits();
-  }, [fetchSubreddits])
+  }, [fetchSubreddits]);
+
+  const [ isActive, setIsActive ] = useState(false);
+
   return (
     <nav className="navbar is-light" role="navigation" aria-label="dropdown navigation">
       <div className="navbar-brand">
@@ -23,14 +26,21 @@ const Nav = ({
           Dave Regg's Personal Reddit
         </Link>
 
-        <a href="!#" role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+        <a
+          role="button"
+          className={`navbar-burger burger ${isActive && 'is-active'}`}
+          aria-label="menu"
+          aria-expanded="false"
+          data-target="navbarBasicExample"
+          onClick={() => setIsActive(!isActive)}
+        >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
         </a>
       </div>
 
-      <div id="navbarBasicExample" className="navbar-menu">
+      <div id="navbarBasicExample" className={`navbar-menu ${isActive && 'is-active'}`}>
         <div className="navbar-start">
           <div className="navbar-item has-dropdown is-hoverable">
             <Link to="/r/index" className="navbar-link is-arrowless">

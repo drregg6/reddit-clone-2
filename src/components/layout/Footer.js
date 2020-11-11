@@ -12,7 +12,7 @@ const Footer = ({
   auth: { isLoggedIn, currentUser }
 }) => {
   return (
-    <footer className="footer">
+    <footer className="footer has-text-centered">
       <div className="columns">
         <div className="column">
           <nav className="nav">
@@ -31,7 +31,7 @@ const Footer = ({
             }
           </nav>
         </div>
-        <div className="column">
+        <div className="column mid-column">
           <p>
             &copy;{new Date().getFullYear()} <a href="http://www.daveregg.com" rel="noopener noreferrer" target="_blank">Dave Regg</a>
           </p>

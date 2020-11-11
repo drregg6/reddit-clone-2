@@ -13,7 +13,7 @@ const AllPosts = ({
 }) => {
   return (
     <Container>
-      <h1 className="mb-6 has-text-centered">Check out the latest posts</h1>
+      <h1 className="mb-6 has-text-centered is-title">Check out the latest posts</h1>
       {
         posts.length !== 0 && (
           posts.map(post => {

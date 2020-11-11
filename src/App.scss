@@ -72,3 +72,50 @@
   border: 2px solid black;
   border-radius: 5px;
 }
+
+@media only screen and (max-width: 600px) {
+  footer .mid-column {
+    margin: 2.5rem auto;
+  }
+
+  .container {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+
+  .media {
+    flex-direction: column;
+  }
+
+  .media-left,
+  .media-content {
+    margin: 0 auto;
+  }
+
+  .media-content {
+    width: 75vw;
+    height: auto;
+  }
+
+  .media-image {
+    width: 75vw;
+    .image {
+      margin: 1rem auto;
+      width: 75vw;
+      height: auto;
+    }
+  }
+
+  .level {
+    display: flex;
+    flex-wrap: wrap-reverse;
+  }
+
+  .votes {
+    flex-direction: row;
+
+    .vote-amount {
+      margin: 0 2rem;
+    }
+  }
+}

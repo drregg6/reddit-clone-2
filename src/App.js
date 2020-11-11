@@ -1,7 +1,12 @@
 /*
 
 TODOS:
-= Create Subreddit page
+= Update Subreddit
+= Update Comment
+= Consistent margins and paddings
+= Mobile format
+= if url is not an image
+    - set url to link image
 
 */
 

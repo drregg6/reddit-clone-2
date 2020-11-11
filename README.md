@@ -104,4 +104,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## Contact
 Dave Regg - [@daveregg](https://www.twitter.com/daveregg) - dave.r.regg@gmail.com
 
-Project Link: [Reddit-Clone-2](https://www.github.com/drregg6/reddit-clone-2)
+Project Link: [Dave Regg's Personal Reddit](https://pure-stream-37591.herokuapp.com/r/programming)
