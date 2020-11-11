@@ -87,16 +87,18 @@ const Post = ({
         </div>
         <div className="hero-foot">
           <div className="level is-size-6">
-            <figure className="image is-24x24">
-              <img
-                className="is-rounded"
-                src={author.image}
-                alt=""
-              />
-            </figure>
-            <p class="level-item has-text-centered">
-              {author.name}
-            </p>
+            <div className="level-item has-text-centered">
+              <figure className="image is-24x24 mr-2" style={{ marginBottom: 0 }}>
+                <img
+                  className="is-rounded"
+                  src={author.image}
+                  alt=""
+                />
+              </figure>
+              <p>
+                {author.name}
+              </p>
+            </div>
             <p className="level-item has-text-centered">
               Created: { post !== null && commentTimeFormatter(post.created_at.seconds) }
             </p>

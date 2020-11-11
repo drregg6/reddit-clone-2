@@ -39,7 +39,7 @@ const PostCard = ({
       </div>
       {
         url !== '' && (
-          <div className="media-left" style={{ alignSelf: 'center' }}>
+          <div className="media-left align-center">
             <figure className="image is-64x64">
               <a href={url} target="_blank" rel="noopener noreferrer">
                 <img

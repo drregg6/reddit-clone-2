@@ -17,10 +17,10 @@ const PostMedia = ({
   const author = getAuthorById(post.user_id);
   const subreddit = getSubredditById(post.subreddit_id);
   return (
-    <div key={post.id} className="media my-6">
+    <div key={post.id} className="media">
       {
         post.url !== '' && (
-          <div className="media-left">
+          <div className="media-left align-center">
             <figure className="image is-64x64">
               <img
                 src={post.url}
@@ -30,7 +30,7 @@ const PostMedia = ({
           </div>
         )
       }
-      <div className="media-content">
+      <div className="media-content post-content">
         <p>
           {subreddit && <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link>}
         </p>
