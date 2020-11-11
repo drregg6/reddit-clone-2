@@ -3,9 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
 
+import Votes from '../subreddit/Votes';
+
 const PostMedia = ({
   post,
   users,
+  vote,
+  currentUser,
   subreddits
 }) => {
   const getAuthorById = user_id => {
@@ -16,8 +20,23 @@ const PostMedia = ({
   }
   const author = getAuthorById(post.user_id);
   const subreddit = getSubredditById(post.subreddit_id);
+
   return (
     <div key={post.id} className="media">
+      {
+        vote !== undefined && (
+          <div className="media-left">
+            <Votes
+              voteId={vote.id}
+              postId={vote.post_id}
+              votes={vote.votes}
+              userUpvotes={vote.user_upvotes}
+              userDownvote={vote.user_downvotes}
+              currentUser={currentUser}
+            />
+          </div>
+        )
+      }
       {
         post.url !== '' && (
           <div className="media-left align-center">
@@ -60,6 +79,8 @@ PostMedia.propTypes = {
   post: PropTypes.object,
   users: PropTypes.array,
   subreddits: PropTypes.array,
+  vote: PropTypes.object,
+  currentUser: PropTypes.object,
 }
 
 export default PostMedia;

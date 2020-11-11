@@ -29,7 +29,7 @@ const PostCard = ({
     <div className="media" key={post_id}>
       <div className="media-left">
         <Votes
-          voteId={voteId}
+          voteId={vote_id}
           postId={post_id}
           votes={votes}
           userUpvotes={userUpvotes}
