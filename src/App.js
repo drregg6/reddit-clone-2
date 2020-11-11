@@ -1,7 +1,6 @@
 /*
 
 TODOS:
-= Upvote / Downvote on Homepage
 = Create Subreddit page
 = Footer
 

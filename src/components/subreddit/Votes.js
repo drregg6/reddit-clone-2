@@ -17,12 +17,6 @@ const Votes = ({
   let vote_id = voteId;
   let post_id = postId;
   let user_id = currentUser.id;
-  if (userDownvotes === undefined) {
-    userDownvotes = [];
-  }
-  if (userUpvotes === undefined) {
-    userUpvotes = [];
-  }
   return (
     <div className="votes">
       <button

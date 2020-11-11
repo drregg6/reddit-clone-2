@@ -8,7 +8,7 @@ import Votes from '../subreddit/Votes';
 const PostMedia = ({
   post,
   users,
-  vote,
+  votes,
   currentUser,
   subreddits
 }) => {
@@ -18,8 +18,12 @@ const PostMedia = ({
   const getSubredditById = subreddit_id => {
     return subreddits.filter(subreddit => subreddit.id === subreddit_id)[0];
   }
+  const getVoteByPostId = post_id => {
+    return votes.filter(vote => vote.post_id === post_id)[0];
+  }
   const author = getAuthorById(post.user_id);
   const subreddit = getSubredditById(post.subreddit_id);
+  let vote = getVoteByPostId(post.id);
 
   return (
     <div key={post.id} className="media">
@@ -31,7 +35,7 @@ const PostMedia = ({
               postId={vote.post_id}
               votes={vote.votes}
               userUpvotes={vote.user_upvotes}
-              userDownvote={vote.user_downvotes}
+              userDownvotes={vote.user_downvotes}
               currentUser={currentUser}
             />
           </div>
@@ -79,7 +83,7 @@ PostMedia.propTypes = {
   post: PropTypes.object,
   users: PropTypes.array,
   subreddits: PropTypes.array,
-  vote: PropTypes.object,
+  votes: PropTypes.array,
   currentUser: PropTypes.object,
 }
 
