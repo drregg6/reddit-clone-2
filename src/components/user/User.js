@@ -5,11 +5,10 @@ import PropTypes from 'prop-types';
 import Container from '../layout/Container';
 import UserPost from './UserPost';
 import UserComment from './UserComment';
-import UpdateUserForm from './UpdateUserForm';
 
 import { connect } from 'react-redux';
 import { fetchVotes } from '../../actions/votes';
-import { fetchUser, updateUser } from '../../actions/users';
+import { fetchUser } from '../../actions/users';
 import { fetchSubreddits } from '../../actions/subreddits';
 import { deletePost, fetchUserPosts } from '../../actions/posts';
 import { deleteComment, fetchUserComments } from '../../actions/comments';
@@ -18,7 +17,6 @@ const User = ({
   deletePost,
   deleteComment,
   fetchUser,
-  updateUser,
   fetchVotes,
   fetchUserPosts,
   fetchUserComments,
@@ -47,7 +45,6 @@ const User = ({
   ]);
   const [ userPostList, toggleUserPostList ] = useState(true);
   const [ userCommentList, toggleUserCommentList ] = useState(false);
-  const [ updateUserForm, toggleUpdateUserForm ] = useState(false);
 
   const getSubredditById = subreddit_id => {
     return subreddits.filter(subreddit => subreddit.id === subreddit_id)[0];
@@ -85,25 +82,6 @@ const User = ({
         </div>
       </div>
       <Container>
-        {
-          (user !== null && user.id === currentUser.id) && (
-            <button
-              className="button is-small is-primary"
-              onClick={() => toggleUpdateUserForm(!updateUserForm)}
-            >
-              {updateUserForm ? 'Close Form' : 'Update User'}
-            </button>
-          )
-        }
-        {
-          (user !== null && updateUserForm) && (
-            <UpdateUserForm
-              user={user}
-              updateUser={updateUser}
-              toggleUpdateUserForm={toggleUpdateUserForm}
-            />
-          )
-        }
         <div className="buttons my-2">
           <button
             className={`button is-info ${userPostList && 'is-light'}`}
@@ -174,7 +152,6 @@ User.propTypes = {
   deleteComment: PropTypes.func.isRequired,
   fetchUserPosts: PropTypes.func.isRequired,
   fetchUser: PropTypes.func.isRequired,
-  updateUser: PropTypes.func.isRequired,
   fetchVotes: PropTypes.func.isRequired,
   fetchSubreddits: PropTypes.func.isRequired,
   fetchUserComments: PropTypes.func.isRequired,
@@ -201,7 +178,6 @@ export default connect(
     deletePost,
     deleteComment,
     fetchUser,
-    updateUser,
     fetchVotes,
     fetchUserPosts,
     fetchSubreddits,

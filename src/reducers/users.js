@@ -1,7 +1,6 @@
 import {
   GET_USERS,
   GET_USER,
-  UPDATE_USER,
   CLEAR_USER
 } from '../actions/types';
 
@@ -21,12 +20,6 @@ export default function(state = initialState, action) {
         isLoading: false
       }
     case GET_USER:
-      return {
-        ...state,
-        isLoading: false,
-        user: payload
-      }
-    case UPDATE_USER:
       return {
         ...state,
         isLoading: false,
