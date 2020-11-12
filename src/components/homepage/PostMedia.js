@@ -19,10 +19,10 @@ const PostMedia = ({
   let vote = getDocById(votes, post.id, 'post_id');
 
   return (
-    <div key={post.id} className="media">
+    <div className="my-6 media">
       {
         vote !== undefined && (
-          <div className="media-left">
+          <div className="media-left align-center">
             <Votes
               voteId={vote.id}
               postId={vote.post_id}
@@ -34,15 +34,15 @@ const PostMedia = ({
           </div>
         )
       }
-      <div className={`media-image media-left align-center`}>
-        <figure className={`image is-64x64`}>
-          <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+      <div className="media-image media-left align-center">
+        <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+          <figure className="image is-128x128 center-image">
             <img
               src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
               alt=""
             />
-          </a>
-        </figure>
+          </figure>
+        </a>
       </div>
       <div className={`media-content post-content`}>
         <p>

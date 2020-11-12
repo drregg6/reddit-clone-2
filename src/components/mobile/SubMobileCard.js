@@ -7,7 +7,6 @@ const SubMobileCard = ({
   subreddit,
   post
 }) => {
-  console.log(post.url)
   return (
     <div className="column post-column">
       <div className="card">

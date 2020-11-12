@@ -42,7 +42,7 @@ const Index = ({
             <h1 className="title">
               Dave Regg's Personal Reddit
             </h1>
-            <h2 className="subtitle is-size-6">
+            <h2 className="subtitle">
               Welcome to the best Reddit clone you'll ever see!
             </h2>
             { !isLoggedIn && <button className="button is-outlined" onClick={() => login()}>Login</button> }

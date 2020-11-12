@@ -25,7 +25,7 @@ const PostCard = ({
 
   return (
     <div className="media" key={post_id}>
-      <div className="media-left">
+      <div className="media-left align-center">
         <Votes
           voteId={vote_id}
           postId={post_id}
@@ -36,14 +36,14 @@ const PostCard = ({
         />
       </div>
       <div className="media-left align-center">
-        <figure className="image is-64x64">
-          <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+        <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+          <figure className="image is-128x128 center-image">
             <img
               src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
               alt=""
             />
-          </a>
-        </figure>
+          </figure>
+        </a>
       </div>
       <div className="media-content post-content">
         <p className="has-text-weight-bold">

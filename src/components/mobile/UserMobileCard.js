@@ -11,9 +11,8 @@ const UserMobileCard = ({
   vote,
   deletePost
 }) => {
-  console.log(LinkImage);
   return (
-    <div className="card ">
+    <div className="card mobile-card">
       {
         post !== undefined && (
           <div className="card-image">

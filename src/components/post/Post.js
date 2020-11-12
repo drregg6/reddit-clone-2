@@ -4,15 +4,17 @@ import { useParams, Link } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 import getDocById from '../../utils/getDocById';
+import LinkImage from '../../images/defaults/link.png';
 
 import Container from '../layout/Container';
+import Hero from '../layout/Hero';
 import UpdateForm from './UpdateForm';
 import CommentForm from './CommentForm';
 import PostComment from './PostComment';
 import MobileComment from '../mobile/MobileComment';
 
 import { connect } from 'react-redux';
-import { fetchPost } from '../../actions/posts';
+import { fetchPost, deletePost } from '../../actions/posts';
 import { fetchSubreddits } from '../../actions/subreddits';
 import { fetchPostComments } from '../../actions/comments';
 import { fetchUsers } from '../../actions/users';
@@ -28,6 +30,7 @@ const Post = ({
   fetchPostVote,
   fetchSubreddits,
   fetchPostComments,
+  deletePost,
   upvote,
   downvote,
   votes: { vote },
@@ -54,7 +57,7 @@ const Post = ({
   ]);
   const [ showForm, toggleShowForm ] = useState( false );
   
-  let subreddit_id = '';
+  let subreddit_id;
   if (subreddits.length !== 0) {
     subreddit_id = getDocById(subreddits, name, 'name').id;
   }
@@ -71,7 +74,7 @@ const Post = ({
 
   return (
     <section>
-      <div className="hero is-warning">
+      <Hero medium color='light'>
         <div className="hero-head mt-3" style={{ marginLeft: 'auto', marginRight: 'auto' }}>
         <button
           className={`button is-success is-small ${vote !== null && vote.user_upvotes.indexOf(currentUser.id) !== -1 && 'is-light'}`}
@@ -91,12 +94,14 @@ const Post = ({
         </div>
         <div className="hero-body post-hero-body">
           {
-            (post !== null && post.image) && (
-              <figure className="image post-image">
-                <img
-                  src={post.image}
-                  alt=""
-                />
+            post !== null && (
+                <figure className="image post-image">
+                <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+                  <img
+                    src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                    alt=""
+                  />
+                </a>
               </figure>
             )
           }
@@ -105,7 +110,7 @@ const Post = ({
           </h1>
           {
             (post !== null && post.desc) && (
-              <h2 className="subtitle">
+              <h2 className="subtitle is-size-5">
                 { post.desc }
               </h2>
             )
@@ -137,9 +142,16 @@ const Post = ({
                 Updated: { post !== null && commentTimeFormatter(post.updated_at.seconds) }
               </p>
             </div>
+            {
+              (post !== null && currentUser.id === post.user_id) && (
+                <div className="level-item has-text-centered mb-0">
+                  <button className="button is-small is-danger" onClick={() => deletePost(post.id, vote.id)}>Delete Post</button>
+                </div>
+              )
+            }
           </div>
         </div>
-      </div>
+      </Hero>
       <Container>
         {
           (post !== null && currentUser.id === post.user_id) && (
@@ -218,6 +230,7 @@ Post.propTypes = {
   votes: PropTypes.object,
   upvote: PropTypes.func.isRequired,
   downvote: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -237,6 +250,7 @@ export default connect(
     fetchPostVote,
     fetchSubreddits,
     fetchPostComments,
+    deletePost,
     upvote,
     downvote
   }

@@ -116,6 +116,7 @@ const Posts = ({
                   key={post.id}
                   currentUser={currentUser}
                   post={post}
+                  subreddit={subreddit}
                   author={author}
                   postVotes={postVotes}
                 />
@@ -152,6 +153,7 @@ const Posts = ({
                   key={post.id}
                   deletePost={deletePost}
                   currentUser={currentUser}
+                  subreddit={subreddit}
                   post={post}
                   author={author}
                   postVotes={postVotes}

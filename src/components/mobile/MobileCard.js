@@ -7,6 +7,7 @@ import LinkImage from '../../images/defaults/link.png';
 
 import { connect } from 'react-redux';
 import { upvote, downvote } from '../../actions/votes';
+import { deletePost } from '../../actions/posts';
 
 const MobileCard = ({
   post,
@@ -20,7 +21,7 @@ const MobileCard = ({
   let vote = getDocById(votes, post.id);
 
   return (
-    <div className="card">
+    <div className="my-6 card mobile-card">
       <div className="card-image">
         <figure className="image is-4by3">
           <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
@@ -68,6 +69,11 @@ const MobileCard = ({
         </div>
       </div>
       {
+        currentUser.id === post.user_id && (
+          <button className="delete-button" onClick={() => deletePost(post.id, vote.id)}>X</button>
+        )
+      }
+      {
         vote !== undefined && (
           <div className="card-footer">
             <div className="card-footer-item">
@@ -106,9 +112,10 @@ MobileCard.propTypes = {
   currentUser: PropTypes.object,
   upvote: PropTypes.func.isRequired,
   downvote: PropTypes.func.isRequired,
+  deletePost: PropTypes.func.isRequired,
 }
 
 export default connect(
   null,
-  { upvote, downvote }
+  { upvote, downvote, deletePost }
 )(MobileCard);
