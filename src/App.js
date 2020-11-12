@@ -4,8 +4,6 @@ TODOS:
 = Update Subreddit
 = Update Comment
 = Consistent margins and paddings
-= if url is not an image
-  - set url to link image
 
 */
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import LinkImage from '../../images/defaults/link.png';
 
 const UserPost = ({
   post,
@@ -13,18 +14,16 @@ const UserPost = ({
   return (
     <div className="box">
       <div className="media">
-      { 
-          post.url && (
-            <div className="media-left">
-              <figure className="image is-64x64">
-                <img
-                  src={ post.url }
-                  alt={ post.title }
-                />
-              </figure>
-            </div>
-          )
-        }
+        <div className="media-left">
+          <figure className="image is-64x64">
+            <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+              <img
+                src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                alt=""
+              />
+            </a>
+          </figure>
+        </div>
         <div className="media-content">
           <p className="has-text-weight-bold">
             { subreddit !== undefined && <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link> }

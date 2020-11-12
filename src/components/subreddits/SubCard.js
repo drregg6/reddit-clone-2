@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import LinkImage from '../../images/defaults/link.png';
 
 const SubCard = ({
   subreddit,
@@ -18,7 +19,12 @@ const SubCard = ({
           <div className="media">
             <div className="media-left">
               <figure className="image is-96x96">
-                <img src={ post.url ? post.url : "https://bulma.io/images/placeholders/96x96.png" } alt="" />
+                <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+                  <img
+                    src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                    alt=""
+                  />
+                </a>
               </figure>
             </div>
             <div className="media-content">

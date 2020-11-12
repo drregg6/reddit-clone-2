@@ -10,13 +10,7 @@ const PostCard = ({
   deletePost,
   currentUser,
   subreddit,
-  post_id,
-  user_id,
-  url,
-  image,
-  title,
-  desc,
-  updated_at,
+  post,
   author,
   postVotes
 }) => {
@@ -27,6 +21,7 @@ const PostCard = ({
     votes
   } = postVotes;
   const vote_id = voteId;
+  const post_id = post.id;
 
   return (
     <div className="media" key={post_id}>
@@ -42,9 +37,9 @@ const PostCard = ({
       </div>
       <div className="media-left align-center">
         <figure className="image is-64x64">
-          <a href={(image !== undefined) ? image : url} target="_blank" rel="noopener noreferrer">
+          <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
             <img
-              src={(image !== undefined) ? image : LinkImage}
+              src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
               alt=""
             />
           </a>
@@ -52,25 +47,29 @@ const PostCard = ({
       </div>
       <div className="media-content post-content">
         <p className="has-text-weight-bold">
-          <Link to={`/r/${subreddit}/${post_id}`}>{title}</Link>
+          <Link to={`/r/${subreddit}/${post_id}`}>{post.title}</Link>
         </p>
-        <p>{desc}</p>
+        {
+          post.desc !== '' && (
+            <p>{post.desc}</p>
+          )
+        }
         <div className="level is-size-7">
           <div className="level-right">
             <div className="level-item">
-              <span className="has-text-weight-bold mr-1">Updated:</span> { dateFormatter(updated_at.seconds) }
+              <span className="has-text-weight-bold mr-1">Updated:</span> { dateFormatter(post.updated_at.seconds) }
             </div>
             <div className="level-item">
               <figure className="image is-24x24 mr-2">
                 <img className="is-rounded" src={author.image} alt="" />
               </figure>
-              { author.name }
+              <Link to={`/u/${author.id}`}>{ author.name }</Link>
             </div>
           </div>
         </div>
       </div>
       {
-        user_id === currentUser.id && (
+        post.user_id === currentUser.id && (
           <div className="media-right">
             <button className="delete" onClick={() => deletePost(post_id, vote_id)}>X</button>
           </div>
@@ -82,14 +81,9 @@ const PostCard = ({
 
 PostCard.propTypes = {
   deletePost: PropTypes.func,
-  post_id: PropTypes.string.isRequired,
-  user_id: PropTypes.string.isRequired,
-  subreddit: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  desc: PropTypes.string.isRequired,
+  post: PropTypes.object,
   author: PropTypes.object.isRequired,
+  currentUser: PropTypes.object,
   postVotes: PropTypes.object.isRequired,
 }
 

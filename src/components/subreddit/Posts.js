@@ -115,14 +115,7 @@ const Posts = ({
                 <PostCard
                   key={post.id}
                   currentUser={currentUser}
-                  post_id={post.id}
-                  user_id={post.user_id}
-                  subreddit={subreddit}
-                  url={post.url}
-                  image={post.image}
-                  title={post.title}
-                  desc={post.desc}
-                  updated_at={post.updated_at}
+                  post={post}
                   author={author}
                   postVotes={postVotes}
                 />
@@ -159,14 +152,7 @@ const Posts = ({
                   key={post.id}
                   deletePost={deletePost}
                   currentUser={currentUser}
-                  post_id={post.id}
-                  user_id={post.user_id}
-                  subreddit={subreddit}
-                  url={post.url}
-                  image={post.image}
-                  title={post.title}
-                  desc={post.desc}
-                  updated_at={post.updated_at}
+                  post={post}
                   author={author}
                   postVotes={postVotes}
                 />
