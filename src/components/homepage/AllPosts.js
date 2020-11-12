@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { isMobile } from 'react-device-detect';
 
 import Container from '../layout/Container';
 import PostMedia from './PostMedia';
+import MobileCard from '../mobile/MobileCard';
 
 const AllPosts = ({
   posts,
@@ -17,7 +19,16 @@ const AllPosts = ({
       {
         posts.length !== 0 && (
           posts.map(post => {
-            return (
+            return isMobile ? (
+              <MobileCard
+                key={post.id}
+                post={post}
+                users={users}
+                subreddits={subreddits}
+                votes={votes}
+                currentUser={currentUser}
+              />
+            ) : (
               <PostMedia
                 key={post.id}
                 post={post}

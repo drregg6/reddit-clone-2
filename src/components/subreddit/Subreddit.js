@@ -8,6 +8,7 @@ import PostForm from './PostForm';
 
 import { connect } from 'react-redux';
 import {
+  fetchSubreddits,
   fetchSubreddit,
   deleteSubreddit
 } from '../../actions/subreddits';
@@ -23,12 +24,13 @@ import {
 
 const Subreddit = ({
   fetchSubredditPosts,
+  fetchSubreddits,
   fetchSubreddit,
   fetchUsers,
   fetchVotes,
   deletePost,
   deleteSubreddit,
-  subreddits: { subreddit, isLoading },
+  subreddits: { subreddits, subreddit, isLoading },
   auth: { currentUser, isLoggedIn },
   users: { users },
   votes: { votes },
@@ -38,10 +40,12 @@ const Subreddit = ({
   let history = useHistory();
   useEffect(() => {
     fetchSubreddit(name);
+    fetchSubreddits();
     fetchUsers();
     fetchVotes();
   }, [
     fetchSubreddit,
+    fetchSubreddits,
     fetchUsers,
     fetchVotes,
     name
@@ -127,6 +131,7 @@ const Subreddit = ({
             deletePost={deletePost}
             posts={posts}
             currentUser={currentUser}
+            subreddits={subreddits}
           />
         )}
       </Container>
@@ -136,6 +141,7 @@ const Subreddit = ({
 
 Subreddit.propTypes = {
   fetchSubredditPosts: PropTypes.func.isRequired,
+  fetchSubreddits: PropTypes.func.isRequired,
   fetchSubreddit: PropTypes.func.isRequired,
   fetchUsers: PropTypes.func.isRequired,
   fetchVotes: PropTypes.func.isRequired,
@@ -161,6 +167,7 @@ export default connect(
     fetchUsers,
     fetchVotes,
     fetchSubredditPosts,
+    fetchSubreddits,
     fetchSubreddit
   }
 )(Subreddit);

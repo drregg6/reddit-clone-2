@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
-import { isMobile } from 'react-device-detect';
 
 import Votes from '../subreddit/Votes';
 
@@ -44,8 +43,8 @@ const PostMedia = ({
       }
       {
         post.url !== '' && (
-          <div className={`media-image media-left ${!isMobile && 'align-center'}`}>
-            <figure className={`image ${isMobile ? 'is-128x128' : 'is-64x64'}`}>
+          <div className={`media-image media-left align-center`}>
+            <figure className={`image is-64x64`}>
               <img
                 src={post.url}
                 alt=""
@@ -54,50 +53,27 @@ const PostMedia = ({
           </div>
         )
       }
-      <div className={`media-content ${!isMobile && 'post-content'}`}>
-        <p className={`${isMobile && 'has-text-centered'}`}>
+      <div className={`media-content post-content`}>
+        <p>
           {subreddit && <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link>}
         </p>
         <p>
           {post.desc}
         </p>
-        {
-          isMobile ? (
-            <div className="columns is-mobile mobile-columns">
-              <div className="column has-text-centered is-size-7">
-                <p>
-                  Created { dateFormatter(post.created_at.seconds) }
-                </p>
-                <p>
-                  Updated { dateFormatter(post.updated_at.seconds) }
-                </p>
-              </div>
-              <div className="column has-text-centered is-size-7">
-                <p>
-                  {author && <Link to={`/u/${author.id}`}>{author.name}</Link>}
-                </p>
-                <p>
-                  {subreddit && <Link to={`/r/${subreddit.name}`}>{subreddit.name}</Link>}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="level">
-              <div className="level-item has-text-centered is-size-7">
-                Created { dateFormatter(post.created_at.seconds) }
-              </div>
-              <div className="level-item has-text-centered is-size-7">
-                Updated { dateFormatter(post.updated_at.seconds) }
-              </div>
-              <div className="level-item has-text-centered is-size-7">
-                {author && <Link to={`/u/${author.id}`}>{author.name}</Link>}
-              </div>
-              <div className="level-item has-text-centered is-size-7">
-                {subreddit && <Link to={`/r/${subreddit.name}`}>{subreddit.name}</Link>}
-              </div>
-            </div>
-          )
-        }
+        <div className="level">
+          <div className="level-item has-text-centered is-size-7">
+            Created { dateFormatter(post.created_at.seconds) }
+          </div>
+          <div className="level-item has-text-centered is-size-7">
+            Updated { dateFormatter(post.updated_at.seconds) }
+          </div>
+          <div className="level-item has-text-centered is-size-7">
+            {author && <Link to={`/u/${author.id}`}>{author.name}</Link>}
+          </div>
+          <div className="level-item has-text-centered is-size-7">
+            {subreddit && <Link to={`/r/${subreddit.name}`}>{subreddit.name}</Link>}
+          </div>
+        </div>
       </div>
     </div>
   )

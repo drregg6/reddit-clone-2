@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { isMobile } from 'react-device-detect';
+
 import PostCard from './PostCard';
+import MobileCard from '../mobile/MobileCard';
 
 const Posts = ({
   search,
   subreddit,
   deletePost,
   currentUser,
+  subreddits,
   users,
   votes,
   posts
@@ -65,7 +69,7 @@ const Posts = ({
     <section>
       <div className="buttons mb-5">
         <button
-          className={`mr-5 is-small button is-primary ${sortByVote && `is-light`}`}
+          className={`mr-3 is-small button is-primary ${sortByVote && `is-light`}`}
           onClick={() => handleSortByVote()}
           disabled={sortByVote}
         >
@@ -98,7 +102,16 @@ const Posts = ({
               // author information
               let author = getAuthor(post.user_id) !== undefined ? getAuthor(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png', id: 'rand0mnumb3rgen3r4t0r' }
 
-              return (
+              return isMobile ? (
+                <MobileCard
+                  key={post.id}
+                  post={post}
+                  users={users}
+                  subreddits={subreddits}
+                  votes={votes}
+                  currentUser={currentUser}
+                />
+              ) : (
                 <PostCard
                   key={post.id}
                   currentUser={currentUser}
@@ -131,7 +144,16 @@ const Posts = ({
               // author information
               let author = getAuthor(post.user_id) !== undefined ? getAuthor(post.user_id) : { name: 'Anonymous', image: 'https://bulma.io/images/placeholders/96x96.png' }
 
-              return (
+              return isMobile ? (
+                <MobileCard
+                  key={post.id}
+                  post={post}
+                  users={users}
+                  subreddits={subreddits}
+                  votes={votes}
+                  currentUser={currentUser}
+                />
+              ) : (
                 <PostCard
                   key={post.id}
                   deletePost={deletePost}
@@ -165,6 +187,7 @@ Posts.propTypes = {
   search: PropTypes.string,
   subreddit: PropTypes.string,
   subreddit_id: PropTypes.string,
+  subreddits: PropTypes.array,
 }
 
 export default Posts;
