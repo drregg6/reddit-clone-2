@@ -7,12 +7,12 @@ const UserPost = ({
   user,
   subreddit,
   currentUser,
-  vote_id,
+  vote,
   deletePost
 }) => {
   return (
     <div className="box">
-      <div key={post.id} className="media">
+      <div className="media">
       { 
           post.url && (
             <div className="media-left">
@@ -51,7 +51,7 @@ const UserPost = ({
             <div className="media-right">
               <button
                 className="delete"
-                onClick={() => deletePost(post.id, vote_id)}
+                onClick={() => deletePost(post.id, vote.id)}
               >
                 X
               </button>
@@ -66,9 +66,9 @@ const UserPost = ({
 UserPost.propTypes = {
   post: PropTypes.object,
   user: PropTypes.object,
-  subreddit: PropTypes.string,
+  subreddit: PropTypes.object,
   currentUser: PropTypes.object,
-  vote_id: PropTypes.string,
+  vote: PropTypes.object,
   deletePost: PropTypes.func,
 }
 

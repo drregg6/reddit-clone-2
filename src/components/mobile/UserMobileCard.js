@@ -1,0 +1,57 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+const UserMobileCard = ({
+  post,
+  user,
+  subreddit,
+  currentUser,
+  vote,
+  deletePost
+}) => {
+  return (
+    <div className="card ">
+      {
+        post.image && (
+          <div className="card-image">
+            <figure className="image is-4by3">
+              <img
+                src={(post.image !== undefined && post.image !== '') ? post.image : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/VisualEditor_-_Icon_-_Link.svg/768px-VisualEditor_-_Icon_-_Link.svg.png'}
+                alt=""
+              />
+            </figure>
+          </div>
+        )
+      }
+      <div className="card-content">
+        <p className="mt-0 mb-0">
+          {subreddit !== undefined && <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link>}
+        </p>
+        {
+          post.desc && (
+            <p className="mt-0 mb-0">
+              {post.desc}
+            </p>
+          )
+        }
+      </div>
+      {
+        (user !== null && user.id === currentUser.id) && (
+          <button className="delete-button" onClick={() => deletePost(post.id, vote.id)}>X</button>
+        )
+      }
+    </div>
+  )
+}
+
+UserMobileCard.propTypes = {
+  post: PropTypes.object,
+  user: PropTypes.object,
+  subreddit: PropTypes.object,
+  currentUser: PropTypes.object,
+  vote: PropTypes.object,
+  deletePost: PropTypes.func,
+}
+
+export default UserMobileCard;

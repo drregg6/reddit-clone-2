@@ -9,7 +9,7 @@ const UserComment = ({
   deleteComment
 }) => {
   return (
-    <div key={comment.id} className="box">
+    <div className="box">
       <div className="media">
         <div className="media-left">
           <figure className="image is-64x64">

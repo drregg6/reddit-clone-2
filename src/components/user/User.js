@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import getDocById from '../../utils/getDocById';
+import { isMobile } from 'react-device-detect';
 
 import Container from '../layout/Container';
 import UserPost from './UserPost';
 import UserComment from './UserComment';
+import UserMobileComment from '../mobile/UserMobileComment';
+import UserMobileCard from '../mobile/UserMobileCard';
 
 import { connect } from 'react-redux';
 import { fetchVotes } from '../../actions/votes';
@@ -23,7 +27,7 @@ const User = ({
   fetchSubreddits,
   posts: { posts, isLoading },
   comments: { comments },
-  users: { user },
+  users: { user, users },
   auth: { currentUser },
   subreddits: { subreddits },
   votes: { votes }
@@ -45,13 +49,6 @@ const User = ({
   ]);
   const [ userPostList, toggleUserPostList ] = useState(true);
   const [ userCommentList, toggleUserCommentList ] = useState(false);
-
-  const getSubredditById = subreddit_id => {
-    return subreddits.filter(subreddit => subreddit.id === subreddit_id)[0];
-  }
-  const getVoteIdByPost = post_id => {
-    return votes.filter(vote => vote.post_id === post_id)[0];
-  }
 
   const handlePostList = () => {
     toggleUserPostList(true);
@@ -84,14 +81,14 @@ const User = ({
       <Container>
         <div className="buttons my-2">
           <button
-            className={`button is-info ${userPostList && 'is-light'}`}
+            className={`button is-small is-info ${userPostList && 'is-light'}`}
             disabled={userPostList}
             onClick={() => handlePostList()}
           >
             User Posts
           </button>
           <button
-            className={`button is-warning ${userCommentList && 'is-light'}`}
+            className={`button is-small is-warning ${userCommentList && 'is-light'}`}
             disabled={userCommentList}
             onClick={() => handleCommentList()}
           >
@@ -104,11 +101,22 @@ const User = ({
               {
                 (posts.length !== 0 && !isLoading) && (
                   posts.map(post => {
-                    let vote_id = getVoteIdByPost(post.id);
-                    let subreddit = getSubredditById(post.subreddit_id);
-                    return (
+                    let vote = getDocById(votes, post.id, 'post_id');
+                    let subreddit = getDocById(subreddits, post.subreddit_id);
+                    return isMobile ? (
+                      <UserMobileCard
+                        key={post.id}
+                        post={post}
+                        user={user}
+                        subreddit={subreddit}
+                        currentUser={currentUser}
+                        vote={vote}
+                        deletePost={deletePost}
+                      />
+                    ) : (
                       <UserPost
-                        vote_id={vote_id}
+                        key={post.id}
+                        vote={vote}
                         subreddit={subreddit}
                         currentUser={currentUser}
                         deletePost={deletePost}
@@ -128,8 +136,17 @@ const User = ({
               {
                 (comments.length !== 0 && !isLoading) && (
                   comments.map(comment => {
-                    return (
+                    return isMobile ? (
+                      <UserMobileComment
+                        key={comment.id}
+                        comment={comment}
+                        user={user}
+                        currentUser={currentUser}
+                        deleteComment={deleteComment}
+                      />
+                    ) : (
                       <UserComment
+                        key={comment.id}
                         comment={comment}
                         user={user}
                         currentUser={currentUser}
