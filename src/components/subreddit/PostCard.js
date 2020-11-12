@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
+import LinkImage from '../../images/defaults/link.png';
 
 import Votes from './Votes';
 
@@ -12,6 +13,7 @@ const PostCard = ({
   post_id,
   user_id,
   url,
+  image,
   title,
   desc,
   updated_at,
@@ -25,6 +27,7 @@ const PostCard = ({
     votes
   } = postVotes;
   const vote_id = voteId;
+
   return (
     <div className="media" key={post_id}>
       <div className="media-left">
@@ -37,20 +40,16 @@ const PostCard = ({
           currentUser={currentUser}
         />
       </div>
-      {
-        url !== '' && (
-          <div className="media-left align-center">
-            <figure className="image is-64x64">
-              <a href={url} target="_blank" rel="noopener noreferrer">
-                <img
-                  src={url}
-                  alt=""
-                />
-              </a>
-            </figure>
-          </div>
-        )
-      }
+      <div className="media-left align-center">
+        <figure className="image is-64x64">
+          <a href={(image !== undefined) ? image : url} target="_blank" rel="noopener noreferrer">
+            <img
+              src={(image !== undefined) ? image : LinkImage}
+              alt=""
+            />
+          </a>
+        </figure>
+      </div>
       <div className="media-content post-content">
         <p className="has-text-weight-bold">
           <Link to={`/r/${subreddit}/${post_id}`}>{title}</Link>
@@ -87,6 +86,7 @@ PostCard.propTypes = {
   user_id: PropTypes.string.isRequired,
   subreddit: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   desc: PropTypes.string.isRequired,
   author: PropTypes.object.isRequired,

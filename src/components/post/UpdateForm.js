@@ -92,8 +92,10 @@ const UpdateForm = ({
             value={url}
             name="url"
             onChange={event => handleChange(event)}
+            disabled={image.length !== 0}
           />
         </div>
+        <p className="help">You may only link to an image <span className="has-text-weight-bold">or</span> a website</p>
       </div>
       <div className="field">
         <div className="control">
@@ -104,8 +106,10 @@ const UpdateForm = ({
             value={image}
             name="image"
             onChange={event => handleChange(event)}
+            disabled={url.length !== 0}
           />
         </div>
+        <p className="help">You may only link to an image <span className="has-text-weight-bold">or</span> a website</p>
       </div>
       <div className="control">
         <button className="button is-primary">Update Post</button>

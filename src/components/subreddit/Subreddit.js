@@ -68,7 +68,7 @@ const Subreddit = ({
     <section>
       <Hero
         medium
-        color={(subreddit !== null && subreddit.color !== undefined && subreddit.color !== '') ? subreddit.color : 'yellow'}
+        color={(subreddit !== null) && subreddit.color}
       >
         <div className="hero-body">
           <div className="container">
@@ -109,7 +109,7 @@ const Subreddit = ({
           showForm && (
             <PostForm
               toggleShowForm={toggleShowForm}
-              subreddit={subreddit.id}
+              subreddit={subreddit}
             />
           )
         }

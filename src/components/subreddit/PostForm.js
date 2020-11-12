@@ -44,7 +44,7 @@ const PostForm = ({
       desc,
       image: newImage,
       url: newUrl,
-      subreddit_id: subreddit
+      subreddit_id: subreddit.id
     }
     
     createPost(newPost);
@@ -96,6 +96,7 @@ const PostForm = ({
             disabled={image.length !== 0}
           />
         </div>
+        <p className="help">You may only link to an image <span className="has-text-weight-bold">or</span> a website</p>
       </div>
       <div className="field">
         <div className="control">
@@ -109,6 +110,7 @@ const PostForm = ({
             disabled={url.length !== 0}
           />
         </div>
+        <p className="help">You may only link to an image <span className="has-text-weight-bold">or</span> a website</p>
       </div>
       <div className="control">
         <button className="button is-primary">Create Post</button>
@@ -120,7 +122,7 @@ const PostForm = ({
 PostForm.propTypes = {
   createPost: PropTypes.func.isRequired,
   toggleShowForm: PropTypes.func,
-  subreddit: PropTypes.string.isRequired
+  subreddit: PropTypes.object.isRequired
 }
 
 export default connect(

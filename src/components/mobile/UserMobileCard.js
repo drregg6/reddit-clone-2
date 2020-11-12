@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import LinkImage from '../../images/defaults/link.png';
 
 const UserMobileCard = ({
   post,
@@ -10,16 +11,19 @@ const UserMobileCard = ({
   vote,
   deletePost
 }) => {
+  console.log(LinkImage);
   return (
     <div className="card ">
       {
-        post.image && (
+        post !== undefined && (
           <div className="card-image">
             <figure className="image is-4by3">
-              <img
-                src={(post.image !== undefined && post.image !== '') ? post.image : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/VisualEditor_-_Icon_-_Link.svg/768px-VisualEditor_-_Icon_-_Link.svg.png'}
-                alt=""
-              />
+              <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+                <img
+                  src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                  alt=""
+                />
+              </a>
             </figure>
           </div>
         )

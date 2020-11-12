@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
 import getDocById from '../../utils/getDocById';
+import LinkImage from '../../images/defaults/link.png';
 
 import { connect } from 'react-redux';
 import { upvote, downvote } from '../../actions/votes';
@@ -19,13 +20,15 @@ const MobileCard = ({
   let vote = getDocById(votes, post.id);
 
   return (
-    <div className="card" key={post.id}>
+    <div className="card">
       <div className="card-image">
         <figure className="image is-4by3">
-          <img
-            src={(post.image !== undefined && post.image !== '') ? post.image : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/VisualEditor_-_Icon_-_Link.svg/768px-VisualEditor_-_Icon_-_Link.svg.png'}
-            alt=""
-          />
+          <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+            <img
+              src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+              alt=""
+            />
+          </a>
         </figure>
       </div>
       <div className="card-content">

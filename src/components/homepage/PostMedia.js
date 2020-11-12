@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
+import LinkImage from '../../images/defaults/link.png';
 
 import Votes from '../subreddit/Votes';
 
@@ -41,18 +42,16 @@ const PostMedia = ({
           </div>
         )
       }
-      {
-        post.url !== '' && (
-          <div className={`media-image media-left align-center`}>
-            <figure className={`image is-64x64`}>
-              <img
-                src={post.url}
-                alt=""
-              />
-            </figure>
-          </div>
-        )
-      }
+      <div className={`media-image media-left align-center`}>
+        <figure className={`image is-64x64`}>
+          <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+            <img
+              src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+              alt=""
+            />
+          </a>
+        </figure>
+      </div>
       <div className={`media-content post-content`}>
         <p>
           {subreddit && <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link>}

@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import LinkImage from '../../images/defaults/link.png';
 
 const SubMobileCard = ({
   subreddit,
   post
 }) => {
+  console.log(post.url)
   return (
     <div className="column post-column">
       <div className="card">
@@ -16,10 +18,12 @@ const SubMobileCard = ({
         </div>
         <div className="card-image">
           <figure className="image is-4by3">
-            <img
-              src={post.image !== undefined && post.image !== '' ? post.image : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/VisualEditor_-_Icon_-_Link.svg/768px-VisualEditor_-_Icon_-_Link.svg.png'}
-              alt=""
-            />
+            <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+              <img
+                src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                alt=""
+              />
+            </a>
           </figure>
         </div>
         <div className="card-content">
