@@ -2,9 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
-import { connect } from 'react-redux';
-import { deleteComment } from '../../actions/comments';
-
 const CommentReply = ({
   deleteComment,
   comment,
@@ -52,7 +49,7 @@ const CommentReply = ({
 CommentReply.propTypes = {
   currentUser: PropTypes.object,
   comment: PropTypes.object,
-  deleteComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func,
 }
 
-export default connect(null, {deleteComment})(CommentReply);
+export default CommentReply;

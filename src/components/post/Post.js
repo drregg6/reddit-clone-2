@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
 import Container from '../layout/Container';
 import UpdateForm from './UpdateForm';
 import CommentForm from './CommentForm';
 import PostComment from './PostComment';
+import MobileComment from '../mobile/MobileComment';
 
 import { connect } from 'react-redux';
 import { fetchPost } from '../../actions/posts';
@@ -30,7 +32,7 @@ const Post = ({
   votes: { vote },
   posts: { post },
   users: { users },
-  auth: { currentUser },
+  auth: { currentUser, isLoggedIn },
   subreddits: { subreddits },
   comments: { comments }
 }) => {
@@ -170,11 +172,22 @@ const Post = ({
             (comments.length !== 0) && (
               comments.map(comment => {
                 if (comment.parent_id === null) {
-                  return (
+                  return isMobile ? (
+                    <MobileComment
+                      key={comment.id}
+                      users={users}
+                      comments={comments}
+                      comment={comment}
+                      currentUser={currentUser}
+                      isLoggedIn={isLoggedIn}
+                    />
+                  ) : (
                     <PostComment
                       comment={comment}
                       comments={comments}
                       currentUser={currentUser}
+                      isLoggedIn={isLoggedIn}
+                      users={users}
                       key={comment.id}
                     />
                   )

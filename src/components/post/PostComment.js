@@ -1,37 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ReplyForm from './ReplyForm';
-import CommentReply from './CommentReply';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
+import ReplyForm from './ReplyForm';
+import CommentReply from './CommentReply';
+
 import { connect } from 'react-redux';
-import { fetchUsers } from '../../actions/users';
 import { deleteComment } from '../../actions/comments';
 
 const PostComment = ({
-  fetchUsers,
   currentUser,
+  isLoggedIn,
   deleteComment,
-  users: { users },
-  auth: { isLoggedIn },
+  users,
   comment,
   comments
 }) => {
-  useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
-
   const [ replyForm, toggleReplyForm ] = useState(false);
 
   // Get author information for the comment
-  let author;
   const getAuthorById = user_id => {
     return users.filter(user => user.id === user_id);
   }
-
-  if (users.length !== 0) {
-    author = getAuthorById(comment.user_id)[0];
-  }
+  const author = getAuthorById(comment.user_id)[0];
 
   // Find children comments of the parent comment
   let childrenComments = [];
@@ -98,6 +89,7 @@ const PostComment = ({
                     key={comment.id}
                     comment={comment}
                     currentUser={currentUser}
+                    deleteComment={deleteComment}
                   />
                 )
               })
@@ -117,22 +109,16 @@ const PostComment = ({
 }
 
 PostComment.propTypes = {
-  fetchUsers: PropTypes.func.isRequired,
-  users: PropTypes.object,
+  isLoggedIn: PropTypes.bool,
+  users: PropTypes.array,
   comment: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
   deleteComment: PropTypes.func.isRequired,
 }
 
-const mapStateToProps = state => ({
-  users: state.users,
-  auth: state.auth
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   {
-    fetchUsers,
     deleteComment
   }
 )(PostComment);
