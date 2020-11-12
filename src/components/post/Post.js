@@ -156,6 +156,7 @@ const Post = ({
         {
           (showForm && post !== null) && (
             <UpdateForm
+              oldImage={post.image}
               oldTitle={post.title}
               oldDesc={post.desc}
               oldUrl={post.url}

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
+import getDocById from '../../utils/getDocById';
 
 import { connect } from 'react-redux';
 import { upvote, downvote } from '../../actions/votes';
@@ -13,30 +14,20 @@ const MobileCard = ({
   currentUser,
   subreddits
 }) => {
-  const getAuthorById = user_id => {
-    return users.filter(user => user.id === user_id)[0];
-  }
-  const getSubredditById = subreddit_id => {
-    return subreddits.filter(subreddit => subreddit.id === subreddit_id)[0];
-  }
-  const getVoteByPostId = post_id => {
-    return votes.filter(vote => vote.post_id === post_id)[0];
-  }
-  const author = getAuthorById(post.user_id);
-  const subreddit = getSubredditById(post.subreddit_id);
-  let vote = getVoteByPostId(post.id);
+  const author = getDocById(users, post.user_id);
+  const subreddit = getDocById(subreddits, post.subreddit_id);
+  let vote = getDocById(votes, post.id);
 
   return (
     <div className="card" key={post.id}>
-      {
-        post.url !== '' && (
-          <div className="card-image">
-            <figure className="image is-4by3">
-              <img src={post.url} alt="" />
-            </figure>
-          </div>
-        )
-      }
+      <div className="card-image">
+        <figure className="image is-4by3">
+          <img
+            src={(post.image !== undefined && post.image !== '') ? post.image : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/VisualEditor_-_Icon_-_Link.svg/768px-VisualEditor_-_Icon_-_Link.svg.png'}
+            alt=""
+          />
+        </figure>
+      </div>
       <div className="card-content">
         <div className="media">
           <div className="media-left">

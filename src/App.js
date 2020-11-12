@@ -5,8 +5,10 @@ TODOS:
 = Update Comment
 = Consistent margins and paddings
 = Mobile format
+  - comments
+  - User page
 = if url is not an image
-    - set url to link image
+  - set url to link image
 
 */
 

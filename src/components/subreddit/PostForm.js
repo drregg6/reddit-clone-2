@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import isImage from '../../utils/isImage';
 
 import { connect } from 'react-redux';
 import { createPost } from '../../actions/posts';
@@ -12,9 +13,10 @@ const PostForm = ({
   const [input, setInput] = useState({
     title: '',
     desc: '',
+    image: '',
     url: ''
   });
-  const { title, desc, url } = input;
+  const { title, desc, image, url } = input;
 
   const handleChange = event => {
     setInput({
@@ -25,8 +27,23 @@ const PostForm = ({
 
   const handleSubmit = event => {
     event.preventDefault();
+    let newImage = image;
+    let newUrl = url;
+    if (newImage !== '') {
+      if (isImage(newImage)) {
+        newUrl = '';
+      } else {
+        newUrl = newImage;
+      }
+    }
+    if (newUrl !== '') {
+      newImage = '';
+    }
     let newPost = {
-      ...input,
+      title,
+      desc,
+      image: newImage,
+      url: newUrl,
       subreddit_id: subreddit
     }
     
@@ -34,7 +51,8 @@ const PostForm = ({
     setInput({
       title: '',
       desc: '',
-      url: ''
+      url: '',
+      image: ''
     });
     toggleShowForm(false);
   }
@@ -78,6 +96,18 @@ const PostForm = ({
           />
         </div>
       </div>
+      <div className="field">
+        <div className="control">
+          <input
+            className="input"
+            placeholder="Image"
+            type="text"
+            value={image}
+            name="image"
+            onChange={event => handleChange(event)}
+          />
+        </div>
+      </div>
       <div className="control">
         <button className="button is-primary">Create Post</button>
       </div>
@@ -91,7 +121,6 @@ PostForm.propTypes = {
   subreddit: PropTypes.string.isRequired
 }
 
-// will need to know if user is authorized
 export default connect(
   null,
   { createPost }

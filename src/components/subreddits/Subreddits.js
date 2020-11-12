@@ -1,8 +1,11 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import getDocById from '../../utils/getDocById';
+import { isMobile } from 'react-device-detect';
 
 import Container from '../layout/Container';
 import SubCard from './SubCard';
+import SubMobileCard from '../mobile/SubMobileCard';
 
 import { connect } from 'react-redux';
 import { fetchSubreddits } from '../../actions/subreddits';
@@ -21,9 +24,6 @@ const Subreddits = ({
     fetchSubreddits,
     fetchAllPosts
   ]);
-  const findFirstPostOfSub = subreddit_id => {
-    return posts.filter(post => post.subreddit_id === subreddit_id)[0];
-  }
   return (
     <section>
       <div className="hero is-warning is-medium">
@@ -43,11 +43,12 @@ const Subreddits = ({
           {
             subreddits.length !== 0 && (
               subreddits.map(sub => {
-                let post = findFirstPostOfSub(sub.id);
+                let post = getDocById(posts, sub.id, 'subreddit_id');
                 if (post === undefined) {
                   post = {
                     title: 'Nothing here yet!',
-                    url: 'https://bulma.io/images/placeholders/96x96.png',
+                    url: '',
+                    image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/VisualEditor_-_Icon_-_Link.svg/768px-VisualEditor_-_Icon_-_Link.svg.png',
                     user_id: 'none',
                     subreddit_id: sub.id,
                     id: 'none',
@@ -62,7 +63,14 @@ const Subreddits = ({
                     }
                   };
                 }
-                return (
+                console.log(posts);
+                return isMobile ? (
+                  <SubMobileCard
+                    key={sub.id}
+                    subreddit={sub}
+                    post={post}
+                  />
+                ) : (
                   <SubCard
                     key={sub.id}
                     subreddit={sub}
