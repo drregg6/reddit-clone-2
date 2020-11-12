@@ -56,6 +56,7 @@
   font-weight: bold;
   color: white;
   outline: none;
+  cursor: pointer;
 
   transition: all .25s;
 }
@@ -79,6 +80,17 @@
   justify-content: space-around;
 }
 
+.post-hero-body {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post-image {
+  width: 35vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .align-center {
   align-self: center;
 }
@@ -99,5 +111,9 @@
   .container {
     margin-left: 2rem;
     margin-right: 2rem;
+  }
+
+  .post-image {
+    width: 80vw;
   }
 }

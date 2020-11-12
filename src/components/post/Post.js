@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams, Link } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
+import getDocById from '../../utils/getDocById';
 
 import Container from '../layout/Container';
 import UpdateForm from './UpdateForm';
@@ -52,25 +53,20 @@ const Post = ({
     post_id
   ]);
   const [ showForm, toggleShowForm ] = useState( false );
-
-  const fetchSubredditByName = (sub_name) => {
-    return subreddits.filter(subreddit => subreddit.name === sub_name)[0];
-  }
+  
   let subreddit_id = '';
   if (subreddits.length !== 0) {
-    subreddit_id = fetchSubredditByName(name).id;
+    subreddit_id = getDocById(subreddits, name, 'name').id;
   }
 
-  const fetchAuthorById = user_id => {
-    return users.filter(user => user.id === user_id)[0];
-  }
   let author = {
     name: 'Anonymous',
+    url: '',
     image: 'https://bulma.io/images/placeholders/96x96.png',
     id: 'rand0mnumb3rgen3r4t0r'
   };
   if (post !== null) {
-    author = fetchAuthorById(post.user_id);
+    author = getDocById(users, post.user_id);
   }
 
   return (
@@ -93,18 +89,18 @@ const Post = ({
             Downvote
           </button>
         </div>
-        <div className="hero-body has-text-centered">
+        <div className="hero-body post-hero-body">
           {
-            (post !== null && post.url) && (
-              <figure className="image" style={{ margin: '0 auto', width: '35vw' }}>
+            (post !== null && post.image) && (
+              <figure className="image post-image">
                 <img
-                  src={post.url}
+                  src={post.image}
                   alt=""
                 />
               </figure>
             )
           }
-          <h1 className="title">
+          <h1 className="title has-text-centered">
             { post !== null && post.title }
           </h1>
           {
@@ -116,8 +112,8 @@ const Post = ({
           }
         </div>
         <div className="hero-foot mb-3">
-          <div className="level is-size-6">
-            <div className="level-item has-text-centered">
+          <div className="level is-size-7">
+            <div className="level-item has-text-centered mb-0">
               <figure className="image is-24x24 mr-2" style={{ marginBottom: 0 }}>
                 <img
                   className="is-rounded"
@@ -131,12 +127,12 @@ const Post = ({
                 </p>
               </Link>
             </div>
-            <div className="level-item has-text-centered">
+            <div className="level-item has-text-centered mt-0 mb-0">
               <p>
                 Created: { post !== null && commentTimeFormatter(post.created_at.seconds) }
               </p>
             </div>
-            <div className="level-item has-text-centered">
+            <div className="level-item has-text-centered mt-0">
               <p>
                 Updated: { post !== null && commentTimeFormatter(post.updated_at.seconds) }
               </p>
