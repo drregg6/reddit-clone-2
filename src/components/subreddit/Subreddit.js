@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Container from '../layout/Container';
+import Hero from '../layout/Hero';
 import Posts from './Posts';
 import PostForm from './PostForm';
 
@@ -64,8 +65,11 @@ const Subreddit = ({
   }
 
   return (
-    <div>
-      <div className="hero is-success is-medium">
+    <section>
+      <Hero
+        medium
+        color={(subreddit !== null && subreddit.color !== undefined && subreddit.color !== '') ? subreddit.color : 'yellow'}
+      >
         <div className="hero-body">
           <div className="container">
             {
@@ -89,7 +93,7 @@ const Subreddit = ({
             }
           </div>
         </div>
-      </div>
+      </Hero>
       <Container>
         {
           isLoggedIn && (
@@ -135,7 +139,7 @@ const Subreddit = ({
           />
         )}
       </Container>
-    </div>
+    </section>
   )
 }
 

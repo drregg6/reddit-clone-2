@@ -93,6 +93,7 @@ const PostForm = ({
             value={url}
             name="url"
             onChange={event => handleChange(event)}
+            disabled={image.length !== 0}
           />
         </div>
       </div>
@@ -105,6 +106,7 @@ const PostForm = ({
             value={image}
             name="image"
             onChange={event => handleChange(event)}
+            disabled={url.length !== 0}
           />
         </div>
       </div>

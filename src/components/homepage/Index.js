@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import Hero from '../layout/Hero';
 import AllPosts from './AllPosts';
 
 import { connect } from 'react-redux';
@@ -35,7 +36,7 @@ const Index = ({
   ])
   return (
     <section>
-      <div className="hero is-info is-large">
+      <Hero color="lightblue" large>
         <div className="hero-body">
           <div className="container">
             <h1 className="title">
@@ -47,7 +48,7 @@ const Index = ({
             { !isLoggedIn && <button className="button is-outlined" onClick={() => login()}>Login</button> }
           </div>
         </div>
-      </div>
+      </Hero>
       <AllPosts
         posts={posts.slice(0,25)}
         users={users}

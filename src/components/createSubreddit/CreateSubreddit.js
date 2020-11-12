@@ -13,9 +13,10 @@ const CreateSubreddit = ({
 }) => {
   const [ input, setInput ] = useState({
     name: '',
-    desc: ''
+    desc: '',
+    color: 'red'
   });
-  const { name, desc } = input;
+  const { name, desc, color } = input;
   let history = useHistory();
 
   const handleChange = event => {
@@ -35,13 +36,15 @@ const CreateSubreddit = ({
     let newSubreddit = {
       name,
       desc: input.desc,
-      user_id
+      user_id,
+      color
     }
 
     createSubreddit(newSubreddit, history);
     setInput({
       name: '',
-      desc: ''
+      desc: '',
+      color: ''
     });
   }
   return (
@@ -75,6 +78,22 @@ const CreateSubreddit = ({
               maxLength="140"
             >
             </textarea>
+          </div>
+        </div>
+        <div className="field">
+          <div className="control">
+            <label className="label">Color</label>
+            <div className="select">
+              <select name="color" onChange={event => handleChange(event)}>
+                <option value="yellow">Yellow</option>
+                <option value="dark">Black</option>
+                <option value="light">Light gray</option>
+                <option value="lightblue">Light blue</option>
+                <option value="darkblue">Dark blue</option>
+                <option value="teal">Teal</option>
+                <option value="green">Green</option>
+              </select>
+            </div>
           </div>
         </div>
         <div className="control">
