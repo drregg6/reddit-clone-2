@@ -66,7 +66,7 @@ const User = ({
   }
 
   return (
-    <Container>
+    <section>
       <div className="hero is-primary mb-5">
         <div className="hero-body">
           <div className="container has-text-centered">
@@ -84,86 +84,88 @@ const User = ({
           </div>
         </div>
       </div>
-      {
-        (user !== null && user.id === currentUser.id) && (
+      <Container>
+        {
+          (user !== null && user.id === currentUser.id) && (
+            <button
+              className="button is-small is-primary"
+              onClick={() => toggleUpdateUserForm(!updateUserForm)}
+            >
+              {updateUserForm ? 'Close Form' : 'Update User'}
+            </button>
+          )
+        }
+        {
+          (user !== null && updateUserForm) && (
+            <UpdateUserForm
+              user={user}
+              updateUser={updateUser}
+              toggleUpdateUserForm={toggleUpdateUserForm}
+            />
+          )
+        }
+        <div className="buttons my-2">
           <button
-            className="button is-small is-primary"
-            onClick={() => toggleUpdateUserForm(!updateUserForm)}
+            className={`button is-info ${userPostList && 'is-light'}`}
+            disabled={userPostList}
+            onClick={() => handlePostList()}
           >
-            {updateUserForm ? 'Close Form' : 'Update User'}
+            User Posts
           </button>
-        )
-      }
-      {
-        (user !== null && updateUserForm) && (
-          <UpdateUserForm
-            user={user}
-            updateUser={updateUser}
-            toggleUpdateUserForm={toggleUpdateUserForm}
-          />
-        )
-      }
-      <div className="buttons my-2">
-        <button
-          className={`button is-info ${userPostList && 'is-light'}`}
-          disabled={userPostList}
-          onClick={() => handlePostList()}
-        >
-          User Posts
-        </button>
-        <button
-          className={`button is-warning ${userCommentList && 'is-light'}`}
-          disabled={userCommentList}
-          onClick={() => handleCommentList()}
-        >
-          User Comments
-        </button>
-      </div>
-      {
-        userPostList && (
-          <div className="user-posts">
-            {
-              (posts.length !== 0 && !isLoading) && (
-                posts.map(post => {
-                  let vote_id = getVoteIdByPost(post.id);
-                  let subreddit = getSubredditById(post.subreddit_id);
-                  return (
-                    <UserPost
-                      vote_id={vote_id}
-                      subreddit={subreddit}
-                      currentUser={currentUser}
-                      deletePost={deletePost}
-                      user={user}
-                      post={post}
-                    />
-                  )
-                })
-              )
-            }
-          </div>
-        )
-      }
-      {
-        userCommentList && (
-          <div className="user-comments">
-            {
-              (comments.length !== 0 && !isLoading) && (
-                comments.map(comment => {
-                  return (
-                    <UserComment
-                      comment={comment}
-                      user={user}
-                      currentUser={currentUser}
-                      deleteComment={deleteComment}
-                    />
-                  )
-                })
-              )
-            }
-          </div>
-        )
-      }
-    </Container>
+          <button
+            className={`button is-warning ${userCommentList && 'is-light'}`}
+            disabled={userCommentList}
+            onClick={() => handleCommentList()}
+          >
+            User Comments
+          </button>
+        </div>
+        {
+          userPostList && (
+            <div className="user-posts">
+              {
+                (posts.length !== 0 && !isLoading) && (
+                  posts.map(post => {
+                    let vote_id = getVoteIdByPost(post.id);
+                    let subreddit = getSubredditById(post.subreddit_id);
+                    return (
+                      <UserPost
+                        vote_id={vote_id}
+                        subreddit={subreddit}
+                        currentUser={currentUser}
+                        deletePost={deletePost}
+                        user={user}
+                        post={post}
+                      />
+                    )
+                  })
+                )
+              }
+            </div>
+          )
+        }
+        {
+          userCommentList && (
+            <div className="user-comments">
+              {
+                (comments.length !== 0 && !isLoading) && (
+                  comments.map(comment => {
+                    return (
+                      <UserComment
+                        comment={comment}
+                        user={user}
+                        currentUser={currentUser}
+                        deleteComment={deleteComment}
+                      />
+                    )
+                  })
+                )
+              }
+            </div>
+          )
+        }
+      </Container>
+    </section>
   )
 }
 
