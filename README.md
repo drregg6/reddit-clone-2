@@ -17,7 +17,7 @@
 Inspired by [The Coding Garden](https://github.com/CodingGarden/vue-firestore-reddit-clone)'s [YouTube code along](https://www.youtube.com/watch?v=UjX5ZE359ck). However, the video used Vue/Vuex, while I was more inspired to create the clone with React/Redux. The application uses Firebase Firestore methods to interact with the backend. The client and store is created with my own [React/Redux Boilerplate](https://github.com/drregg6/cra-redux-boilerplate) with create-react-app as the base.
 
 ## Screenshots
-![screenshot](./src/images/imagename.png)
+![screenshot](./src/images/screenshots/reddit-screen-shot.png)
 
 ## Technologies
 * Node - version 12.3.1
@@ -77,9 +77,9 @@ npm install
   * [x] Show Comments
   * [x] Edit User
 * [x] Edit Post
-* [ ] Edit Comment
+* [x] Edit Comment
 * [x] Reply to Comment
-* [ ] Display Error Image if bad link/error
+* [x] Display Error Image if bad link/error
 * [ ] Cloud Function Score Aggregator (???)
   * https://firebase.google.com/docs/firestore/solutions/aggregation#solution_cloud_functions
 * [x] Delete Post
