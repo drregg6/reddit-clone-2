@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-import { updateComment } from '../../actions/comments';
-
 const UpdateCommentForm = ({
   comment_id,
   oldContent,
-  toggleUpdateForm,
   updateComment,
+  toggleUpdateForm,
 }) => {
   const [ input, setInput ] = useState({
     content: oldContent
@@ -31,7 +28,7 @@ const UpdateCommentForm = ({
     toggleUpdateForm(false);
   }
   return (
-    <form onSubmit={(event) => handleSubmit(event)}>
+    <form className="post-form" onSubmit={(event) => handleSubmit(event)}>
       <div className="field">
         <div className="control">
           <textarea
@@ -51,12 +48,10 @@ const UpdateCommentForm = ({
 }
 
 UpdateCommentForm.propTypes = {
+  comment_id: PropTypes.string,
+  oldContent: PropTypes.string,
+  toggleUpdateForm: PropTypes.func.isRequired,
   updateComment: PropTypes.func.isRequired,
 }
 
-export default connect(
-  null,
-  {
-    updateComment
-  }
-)(UpdateCommentForm);
+export default UpdateCommentForm;

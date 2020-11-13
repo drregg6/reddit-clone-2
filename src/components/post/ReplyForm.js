@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-import { addComment } from '../../actions/comments';
-
 const ReplyForm = ({
   currentUser,
   toggleReplyForm,
@@ -68,7 +65,4 @@ ReplyForm.propTypes = {
   subreddit_id: PropTypes.string,
 }
 
-export default connect(
-  null,
-  { addComment }
-)(ReplyForm);
+export default ReplyForm;

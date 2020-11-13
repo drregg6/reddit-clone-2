@@ -7,12 +7,18 @@ import CommentReply from './CommentReply';
 import UpdateCommentForm from '../updateComment/UpdateCommentForm';
 
 import { connect } from 'react-redux';
-import { deleteComment } from '../../actions/comments';
+import {
+  addComment,
+  updateComment,
+  deleteComment
+} from '../../actions/comments';
 
 const PostComment = ({
   currentUser,
   isLoggedIn,
   deleteComment,
+  addComment,
+  updateComment,
   users,
   comment,
   comments
@@ -79,7 +85,7 @@ const PostComment = ({
           }
           {
             currentUser.id === comment.user_id && (
-              <button className="button is-danger is-small" onClick={() => handleToggleUpdateForm()}>Edit</button>
+              <button className="button is-warning is-small" onClick={() => handleToggleUpdateForm()}>Edit</button>
             )
           }
           {
@@ -87,6 +93,7 @@ const PostComment = ({
               <div className="media">
                   <div className="media-content">
                     <ReplyForm
+                      addComment={addComment}
                       currentUser={currentUser}
                       subreddit_id={comment.subreddit_id}
                       comment_id={comment.id}
@@ -102,6 +109,7 @@ const PostComment = ({
               <div className="media">
                   <div className="media-content">
                     <UpdateCommentForm
+                      updateComment={updateComment}
                       comment_id={comment.id}
                       toggleUpdateForm={toggleUpdateForm}
                       oldContent={comment.content}
@@ -118,7 +126,6 @@ const PostComment = ({
                     key={comment.id}
                     comment={comment}
                     currentUser={currentUser}
-                    deleteComment={deleteComment}
                   />
                 )
               })
@@ -142,12 +149,16 @@ PostComment.propTypes = {
   users: PropTypes.array,
   comment: PropTypes.object.isRequired,
   currentUser: PropTypes.object,
+  addComment: PropTypes.func.isRequired,
+  updateComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
 }
 
 export default connect(
   null,
   {
+    addComment,
+    updateComment,
     deleteComment
   }
 )(PostComment);

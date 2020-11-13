@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
+import UpdateCommentForm from '../updateComment/UpdateCommentForm';
+
+import { connect } from 'react-redux';
+import {
+  updateComment,
+  deleteComment
+} from '../../actions/comments';
+
 const CommentReply = ({
+  updateComment,
   deleteComment,
   comment,
   currentUser
 }) => {
+  const [ updateForm, toggleUpdateForm ] = useState(false);
+
   let author = {
     name: 'Anonymous',
     image: 'https://bulma.io/images/placeholders/96x96.png'
@@ -36,6 +47,21 @@ const CommentReply = ({
               </div>
             </div>
           </div>
+          {
+            currentUser.id === comment.user_id && (
+              <button className="button is-warning is-small" onClick={() => toggleUpdateForm(!updateForm)}>Edit</button>
+            )
+          }
+          {
+            updateForm && (
+              <UpdateCommentForm
+                comment_id={comment.id}
+                oldContent={comment.content}
+                updateComment={updateComment}
+                toggleUpdateForm={toggleUpdateForm}
+              />
+            )
+          }
       </div>
       {
         currentUser.id === comment.user_id && (
@@ -49,7 +75,14 @@ const CommentReply = ({
 CommentReply.propTypes = {
   currentUser: PropTypes.object,
   comment: PropTypes.object,
-  deleteComment: PropTypes.func,
+  updateComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
 }
 
-export default CommentReply;
+export default connect(
+  null,
+  {
+    updateComment,
+    deleteComment
+  }
+)(CommentReply);

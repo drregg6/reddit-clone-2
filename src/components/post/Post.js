@@ -16,7 +16,10 @@ import MobileComment from '../mobile/MobileComment';
 import { connect } from 'react-redux';
 import { fetchPost, deletePost } from '../../actions/posts';
 import { fetchSubreddits } from '../../actions/subreddits';
-import { fetchPostComments } from '../../actions/comments';
+import {
+  fetchPostComments,
+  addComment
+} from '../../actions/comments';
 import { fetchUsers } from '../../actions/users';
 import {
   fetchPostVote,
@@ -30,6 +33,7 @@ const Post = ({
   fetchPostVote,
   fetchSubreddits,
   fetchPostComments,
+  addComment,
   deletePost,
   upvote,
   downvote,
@@ -206,6 +210,7 @@ const Post = ({
           <div className="mt-3 comment-form">
             <h2 className="subtitle">Add a Comment</h2>
             <CommentForm
+              addComment={addComment}
               currentUser={currentUser}
               post_id={post_id}
               name={name}
@@ -224,6 +229,7 @@ Post.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
   fetchPostVote: PropTypes.func.isRequired,
   fetchPostComments: PropTypes.func.isRequired,
+  addComment: PropTypes.func.isRequired,
   subreddits: PropTypes.object,
   comments: PropTypes.object,
   posts: PropTypes.object,
@@ -250,6 +256,7 @@ export default connect(
     fetchPostVote,
     fetchSubreddits,
     fetchPostComments,
+    addComment,
     deletePost,
     upvote,
     downvote

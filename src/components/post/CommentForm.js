@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-import { addComment } from '../../actions/comments';
-
 const CommentForm = ({
+  addComment,
   currentUser,
   subreddit_id,
-  addComment,
   post_id
 }) => {
   const [ input, setInput ] = useState({
@@ -62,7 +59,4 @@ CommentForm.propTypes = {
   subreddit_id: PropTypes.string,
 }
 
-export default connect(
-  null,
-  { addComment }
-)(CommentForm);
+export default CommentForm;

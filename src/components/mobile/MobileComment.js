@@ -8,9 +8,16 @@ import ReplyForm from '../post/ReplyForm';
 import MobileCommentReply from './MobileCommentReply';
 
 import { connect } from 'react-redux';
-import { deleteComment } from '../../actions/comments';
+import {
+  addComment,
+  updateComment,
+  deleteComment
+} from '../../actions/comments';
+import UpdateCommentForm from 'components/updateComment/UpdateCommentForm';
 
 const MobileComment = ({
+  addComment,
+  updateComment,
   deleteComment,
   isLoggedIn,
   currentUser,
@@ -19,6 +26,8 @@ const MobileComment = ({
   comments
 }) => {
   const [ replyForm, toggleReplyForm ] = useState(false);
+  const [ updateForm, toggleUpdateForm ] = useState(false);
+
   const author = getDocById(users, comment.user_id);
   let childrenComments = [];
   const getChildrenComments = parent_id => {
@@ -29,6 +38,16 @@ const MobileComment = ({
     return tempChildrenComments;
   }
   childrenComments = getChildrenComments(comment.id);
+
+  const handleToggleUpdateForm = () => {
+    if (replyForm) toggleReplyForm(false);
+    toggleUpdateForm(!updateForm);
+  }
+  const handleToggleReplyForm = () => {
+    if (updateForm) toggleUpdateForm(false);
+    toggleReplyForm(!replyForm);
+  }
+
   return (
     <div className="card mobile-card">
       {
@@ -61,15 +80,31 @@ const MobileComment = ({
       {
         isLoggedIn && (
           <footer className="card-footer" style={{ flexDirection: 'column', alignItems: 'center' }}>
-            <button className="button is-primary is-small" style={{ width: '100%' }} onClick={() => toggleReplyForm(!replyForm)}>Reply</button>
+            <button className="button is-primary is-small" style={{ width: '100%' }} onClick={() => handleToggleReplyForm()}>Reply</button>
+            {
+              currentUser.id === comment.user_id && (
+                <button className="button is-warning is-small" style={{ width: '100%'}} onClick={() => handleToggleUpdateForm()}>Edit</button>
+              )
+            }
             {
               replyForm && (
                 <ReplyForm
+                  addComment={addComment}
                   currentUser={currentUser}
                   subreddit_id={comment.subreddit_id}
                   comment_id={comment.id}
                   post_id={comment.post_id}
                   toggleReplyForm={toggleReplyForm}
+                />
+              )
+            }
+            {
+              updateForm && (
+                <UpdateCommentForm
+                  comment_id={comment.id}
+                  oldContent={comment.content}
+                  toggleUpdateForm={toggleUpdateForm}
+                  updateComment={updateComment}
                 />
               )
             }
@@ -100,6 +135,8 @@ const MobileComment = ({
 }
 
 MobileComment.propTypes = {
+  addComment: PropTypes.func.isRequired,
+  updateComment: PropTypes.func.isRequired,
   deleteComment: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool,
   currentUser: PropTypes.object,
@@ -109,5 +146,9 @@ MobileComment.propTypes = {
 
 export default connect(
   null,
-  { deleteComment }
+  {
+    addComment,
+    updateComment,
+    deleteComment
+  }
 )(MobileComment);

@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
+import UpdateCommentForm from '../updateComment/UpdateCommentForm';
+
+import { connect } from 'react-redux';
+import {
+  updateComment,
+  deleteComment
+} from '../../actions/comments';
+
 const MobileCommentReply = ({
+  updateComment,
   deleteComment,
   comment,
   currentUser
 }) => {
+  const [ updateForm, toggleUpdateForm ] = useState(false);
   let author = {
     id: 'st1llw0rk1ng',
     name: 'Anonymous',
@@ -44,6 +54,23 @@ const MobileCommentReply = ({
       </div>
       {
         currentUser.id === comment.user_id && (
+          <div className="card-footer" style={{ flexDirection: 'column', alignItems: 'center' }}>
+            <button className="button is-warning is-small" style={{ width: '100%' }} onClick={() => toggleUpdateForm(!updateForm)}>Edit</button>
+            {
+              updateForm && (
+                <UpdateCommentForm
+                  updateComment={updateComment}
+                  oldContent={comment.content}
+                  toggleUpdateForm={toggleUpdateForm}
+                  comment_id={comment.id}
+                />
+              )
+            }
+          </div>
+        )
+      }
+      {
+        currentUser.id === comment.user_id && (
           <button className="delete-button" onClick={() => deleteComment(comment.id)}>X</button>
         )
       }
@@ -52,9 +79,16 @@ const MobileCommentReply = ({
 }
 
 MobileCommentReply.propTypes = {
-  deleteComment: PropTypes.func,
+  updateComment: PropTypes.func.isRequired,
+  deleteComment: PropTypes.func.isRequired,
   comment: PropTypes.object,
   currentUser: PropTypes.object,
 }
 
-export default MobileCommentReply;
+export default connect(
+  null,
+  {
+    updateComment,
+    deleteComment
+  }
+)(MobileCommentReply);
