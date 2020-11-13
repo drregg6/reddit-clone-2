@@ -109,6 +109,10 @@
   align-items: center;
 }
 
+.footer .navbar-item {
+  justify-content: center;
+}
+
 @media only screen and (max-width: 600px) {
   .buttons {
     flex-wrap: nowrap;

@@ -4,6 +4,7 @@ import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
 import ReplyForm from './ReplyForm';
 import CommentReply from './CommentReply';
+import UpdateCommentForm from '../updateComment/UpdateCommentForm';
 
 import { connect } from 'react-redux';
 import { deleteComment } from '../../actions/comments';
@@ -17,6 +18,7 @@ const PostComment = ({
   comments
 }) => {
   const [ replyForm, toggleReplyForm ] = useState(false);
+  const [ updateForm, toggleUpdateForm ] = useState(false);
 
   // Get author information for the comment
   const getAuthorById = user_id => {
@@ -34,6 +36,15 @@ const PostComment = ({
     return tempChildrenComments;
   }
   childrenComments = getChildrenComments(comment.id);
+
+  const handleToggleUpdateForm = () => {
+    if (replyForm) toggleReplyForm(false);
+    toggleUpdateForm(!updateForm);
+  }
+  const handleToggleReplyForm = () => {
+    if (updateForm) toggleUpdateForm(false);
+    toggleReplyForm(!replyForm);
+  }
 
   return (
     <div className="comment my-2">
@@ -63,7 +74,12 @@ const PostComment = ({
           </div>
           {
             isLoggedIn && (
-              <button className="button is-primary is-small" onClick={() => toggleReplyForm(!replyForm)}>Reply</button>
+              <button className="button is-primary is-small" onClick={() => handleToggleReplyForm()}>Reply</button>
+            )
+          }
+          {
+            currentUser.id === comment.user_id && (
+              <button className="button is-danger is-small" onClick={() => handleToggleUpdateForm()}>Edit</button>
             )
           }
           {
@@ -76,6 +92,19 @@ const PostComment = ({
                       comment_id={comment.id}
                       post_id={comment.post_id}
                       toggleReplyForm={toggleReplyForm}
+                    />
+                  </div>
+              </div>
+            )
+          }
+          {
+            updateForm && (
+              <div className="media">
+                  <div className="media-content">
+                    <UpdateCommentForm
+                      comment_id={comment.id}
+                      toggleUpdateForm={toggleUpdateForm}
+                      oldContent={comment.content}
                     />
                   </div>
               </div>

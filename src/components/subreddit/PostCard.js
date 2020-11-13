@@ -60,7 +60,7 @@ const PostCard = ({
               <span className="has-text-weight-bold mr-1">Updated:</span> { dateFormatter(post.updated_at.seconds) }
             </div>
             <div className="level-item">
-              <figure className="image is-24x24 mr-2">
+              <figure className="image is-24x24 mr-2 mb-0">
                 <img className="is-rounded" src={author.image} alt="" />
               </figure>
               <Link to={`/u/${author.id}`}>{ author.name }</Link>

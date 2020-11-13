@@ -1,6 +1,7 @@
 import {
   GET_COMMENTS,
   ADD_COMMENT,
+  UPDATE_COMMENT,
   DELETE_COMMENT,
   CLEAR_COMMENTS
 } from './types';
@@ -90,6 +91,27 @@ export const addComment = (body) => async dispatch => {
     dispatch({
       type: ADD_COMMENT,
       payload: newComment
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
+export const updateComment = body => async dispatch => {
+  let payload;
+  try {
+    let updatedComment = {...body};
+    updatedComment.updated_at = firebase.firestore.FieldValue.serverTimestamp();
+
+    await db.collection('comments').doc(updatedComment.id).update(updatedComment);
+    await db.collection('comments').doc(updatedComment.id).get().then(doc => {
+      payload = doc.data();
+    });
+    
+    dispatch({
+      type: UPDATE_COMMENT,
+      payload
     });
   } catch (error) {
     console.error(error.message);

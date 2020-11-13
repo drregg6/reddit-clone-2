@@ -1,7 +1,6 @@
 /*
 
 TODOS:
-= Update Subreddit
 = Update Comment
 = Consistent margins and paddings
 

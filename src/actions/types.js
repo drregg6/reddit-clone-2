@@ -38,5 +38,6 @@ export const CLEAR_VOTE = 'CLEAR_VOTE';
 // Comments
 export const GET_COMMENTS = 'GET_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const CLEAR_COMMENTS = 'CLEAR_COMMENTS';
