@@ -2,6 +2,8 @@
 
 TODOS:
 = Consistent margins and paddings
+= Comments throughout app
+= Reorganize components
 
 */
 

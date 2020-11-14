@@ -183,8 +183,8 @@ const Post = ({
           {
             (comments.length !== 0) && (
               comments.map(comment => {
-                if (comment.parent_id === null) {
-                  return isMobile ? (
+                return (comment.parent_id === null) && (
+                  isMobile ? (
                     <MobileComment
                       key={comment.id}
                       users={users}
@@ -203,7 +203,7 @@ const Post = ({
                       key={comment.id}
                     />
                   )
-                }
+                )
               })
             )
           }

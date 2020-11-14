@@ -27,7 +27,6 @@ const Hero = ({
 }
 
 Hero.propTypes = {
-  color: PropTypes.string,
   large: PropTypes.bool,
   medium: PropTypes.bool,
 }

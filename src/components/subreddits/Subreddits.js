@@ -63,7 +63,6 @@ const Subreddits = ({
                     }
                   };
                 }
-                console.log(posts);
                 return isMobile ? (
                   <SubMobileCard
                     key={sub.id}

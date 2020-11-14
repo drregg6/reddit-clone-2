@@ -26,18 +26,18 @@ const Nav = ({
           Dave Regg's Personal Reddit
         </Link>
 
-        <a
-          role="button"
+        <button
           className={`navbar-burger burger ${isActive && 'is-active'}`}
           aria-label="menu"
           aria-expanded="false"
           data-target="navbarBasicExample"
           onClick={() => setIsActive(!isActive)}
+          style={{ outline: 'none', border: 'none' }}
         >
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
-        </a>
+        </button>
       </div>
 
       <div id="navbarBasicExample" className={`navbar-menu ${isActive && 'is-active'}`}>
