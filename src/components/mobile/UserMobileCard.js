@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import LinkImage from '../../images/defaults/link.png';
+import SpeechBubble from '../../images/defaults/speech-bubble.jpg';
 
 const UserMobileCard = ({
   post,
@@ -11,6 +12,16 @@ const UserMobileCard = ({
   vote,
   deletePost
 }) => {
+  let imageSrc;
+  if (post.image !== '') {
+    imageSrc = post.image;
+  } else if (post.fileRef !== '') {
+    imageSrc = post.fileRef;
+  } else if (post.url !== '') {
+    imageSrc = LinkImage;
+  } else {
+    imageSrc = SpeechBubble;
+  }
   return (
     <div className="card mobile-card">
       {
@@ -19,7 +30,7 @@ const UserMobileCard = ({
             <figure className="image is-4by3">
               <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
                 <img
-                  src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                  src={imageSrc}
                   alt=""
                 />
               </a>

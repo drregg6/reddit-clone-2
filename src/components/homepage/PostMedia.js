@@ -20,6 +20,16 @@ const PostMedia = ({
   const author = getDocById(users, post.user_id);
   const subreddit = getDocById(subreddits, post.subreddit_id);
   let vote = getDocById(votes, post.id, 'post_id');
+  let imageSrc;
+  if (post.image !== '') {
+    imageSrc = post.image;
+  } else if (post.fileRef !== '') {
+    imageSrc = post.fileRef;
+  } else if (post.url !== '') {
+    imageSrc = LinkImage;
+  } else {
+    imageSrc = SpeechBubble;
+  }
 
   return (
     <div className="my-6 media">
@@ -41,7 +51,7 @@ const PostMedia = ({
         <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
           <figure className="image is-128x128 center-image border-image">
             <img
-              src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
+              src={imageSrc}
               alt=""
             />
           </figure>

@@ -193,6 +193,8 @@ export const deletePost = (post_id, vote_id) => async dispatch => {
         return batch.commit();
     })
 
+    // if fileRef exists, delete fileRef from storage
+
     // delete the Post doc associated with the id
     await db.collection('posts').doc(post_id).delete();
     dispatch({

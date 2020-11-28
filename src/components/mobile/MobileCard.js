@@ -24,13 +24,24 @@ const MobileCard = ({
   const subreddit = getDocById(subreddits, post.subreddit_id);
   let vote = getDocById(votes, post.id);
 
+  let imageSrc;
+  if (post.image !== '') {
+    imageSrc = post.image;
+  } else if (post.fileRef !== '') {
+    imageSrc = post.fileRef;
+  } else if (post.url !== '') {
+    imageSrc = LinkImage;
+  } else {
+    imageSrc = SpeechBubble;
+  }
+
   return (
     <div className="my-6 card mobile-card">
       <div className="card-image">
         <figure className="image is-4by3">
           <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
             <img
-              src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
+              src={imageSrc}
               alt=""
             />
           </a>

@@ -4,7 +4,7 @@ TODOS:
 = Consistent margins and paddings
 = Comments throughout app
 = Reorganize components (!!!)
-= Markdown Previewer
+= Clicking on an image should send you somewhere
 
 */
 

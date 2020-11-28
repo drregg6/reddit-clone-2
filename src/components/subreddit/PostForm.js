@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import storage from '../../storage';
+import getFileName from '../../utils/getFileName';
 
 import isImage from '../../utils/isImage';
 import MarkedText from '../layout/MarkedText';
+import ProgressBar from './ProgressBar';
 
 import { connect } from 'react-redux';
 import { createPost } from '../../actions/posts';
@@ -12,14 +15,17 @@ const PostForm = ({
   toggleShowForm,
   subreddit
 }) => {
-  const [input, setInput] = useState({
+  const [ input, setInput ] = useState({
     title: '',
     desc: '',
     image: '',
-    url: ''
+    url: '',
+    fileRef: ''
   });
-  const { title, desc, image, url } = input;
-  const [previewMarkdown, togglePreviewMarkdown] = useState(false);
+  const { title, desc, image, url, fileRef } = input;
+  const [ imageFile, setImageFile ] = useState(null);
+  const [ uploadFile, toggleUploadFile ] = useState(false);
+  const [ previewMarkdown, togglePreviewMarkdown ] = useState(false);
 
   const handleChange = event => {
     setInput({
@@ -27,26 +33,69 @@ const PostForm = ({
       [event.target.name]: event.target.value
     });
   }
+  const fileChange = event => {
+    // uploads the file to firebase storage
+    let newFile = event.target.files[0];
+    
+    if (newFile && isImage(newFile.type)) {
+      setImageFile(newFile);
+    }
+  }
 
   const handleSubmit = event => {
     event.preventDefault();
     let newImage = image;
     let newUrl = url;
+    let newFileRef = fileRef;
+    const fileName = getFileName(fileRef);
+    const storageRef = storage.ref();
+    const imageRef = storageRef.child(fileName);
+
     if (newImage !== '') {
       if (isImage(newImage)) {
         newUrl = '';
+
+        // delete file and fileRef        
+        newFileRef = '';
+        imageRef.delete().then(() => {
+          console.log('image deleted from storage')
+        }).catch(err => {
+          console.error(err.message);
+        })
       } else {
         newUrl = newImage;
+
+        // delete file and fileRef
+        newFileRef = '';
+        imageRef.delete().then(() => {
+          console.log('image deleted from storage')
+        }).catch(err => {
+          console.error(err.message);
+        })
       }
     }
+
     if (newUrl !== '') {
+      newFileRef = '';
       newImage = '';
+      imageRef.delete().then(() => {
+        console.log('image deleted from storage')
+      }).catch(err => {
+        console.error(err.message);
+      })
     }
+
+    if (newFileRef !== '') {
+      newImage = '';
+      newUrl = '';
+    }
+
     let newPost = {
       title,
       desc,
       image: newImage,
       url: newUrl,
+      fileRef: newFileRef,
       subreddit_id: subreddit.id
     }
     
@@ -55,7 +104,8 @@ const PostForm = ({
       title: '',
       desc: '',
       url: '',
-      image: ''
+      image: '',
+      file: null
     });
     toggleShowForm(false);
   }
@@ -103,36 +153,72 @@ const PostForm = ({
           }
         </div>
       </div>
-      <div className="field">
-        <div className="control">
-          <input
-            className="input"
-            placeholder="URL"
-            type="text"
-            value={url}
-            name="url"
-            onChange={event => handleChange(event)}
-            disabled={image.length !== 0}
-          />
-        </div>
-        <p className="help">You may only link to an image <span className="has-text-weight-bold">or</span> a website</p>
-      </div>
-      <div className="field">
-        <div className="control">
-          <input
-            className="input"
-            placeholder="Image"
-            type="text"
-            value={image}
-            name="image"
-            onChange={event => handleChange(event)}
-            disabled={url.length !== 0}
-          />
-        </div>
-        <p className="help">You may only link to an image <span className="has-text-weight-bold">or</span> a website</p>
-      </div>
+      <button
+        type="button"
+        className="button is-small mb-3 is-link"
+        onClick={() => toggleUploadFile(!uploadFile)}
+      >
+        { uploadFile ? 'Add URL' : 'Upload Image' }
+      </button>
+      {
+        uploadFile ? (
+          <div className="field">
+            <div className="control">
+              <input
+                disabled={url.length !== 0 || image.length !== 0}
+                type="file"
+                onChange={event => fileChange(event)}
+              />
+              <div>
+                {
+                  imageFile && (
+                    <ProgressBar
+                      file={imageFile}
+                      setImageFile={setImageFile}
+                      input={input}
+                      setInput={setInput}
+                    />
+                  )
+                }
+              </div>
+            </div>
+            <p className="help">You will <span className="has-text-weight-bold">delete</span> your upload if you add a URL.</p>
+          </div>
+        ) : (
+          <>
+            <div className="field">
+              <div className="control">
+                <input
+                  className="input"
+                  placeholder="URL"
+                  type="text"
+                  value={url}
+                  name="url"
+                  onChange={event => handleChange(event)}
+                  disabled={image.length !== 0}
+                />
+              </div>
+              <p className="help">You may only link to an image <span className="has-text-weight-bold">or</span> a website</p>
+            </div>
+            <div className="field">
+              <div className="control">
+                <input
+                  className="input"
+                  placeholder="Image"
+                  type="text"
+                  value={image}
+                  name="image"
+                  onChange={event => handleChange(event)}
+                  disabled={url.length !== 0}
+                />
+              </div>
+              <p className="help">You may only link to an image <span className="has-text-weight-bold">or</span> a website</p>
+            </div>
+          </>
+        )
+      }
       <div className="control">
-        <button className="button is-primary">Create Post</button>
+        <button className="button is-primary" disabled={imageFile}>Create Post</button>
       </div>
     </form>
   )

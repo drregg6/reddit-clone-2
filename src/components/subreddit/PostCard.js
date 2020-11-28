@@ -25,6 +25,16 @@ const PostCard = ({
   } = postVotes;
   const vote_id = voteId;
   const post_id = post.id;
+  let imageSrc;
+  if (post.image !== '') {
+    imageSrc = post.image;
+  } else if (post.fileRef !== '') {
+    imageSrc = post.fileRef;
+  } else if (post.url !== '') {
+    imageSrc = LinkImage;
+  } else {
+    imageSrc = SpeechBubble;
+  }
 
   return (
     <div className="media" key={post_id}>
@@ -42,7 +52,7 @@ const PostCard = ({
         <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
           <figure className="image is-128x128 center-image border-image">
             <img
-              src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
+              src={imageSrc}
               alt=""
             />
           </figure>

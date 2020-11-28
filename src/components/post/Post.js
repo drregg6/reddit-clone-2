@@ -78,6 +78,19 @@ const Post = ({
     author = getDocById(users, post.user_id);
   }
 
+  let imageSrc;
+  if (post !== null) {
+    if (post.image !== '') {
+      imageSrc = post.image;
+    } else if (post.fileRef !== '') {
+      imageSrc = post.fileRef;
+    } else if (post.url !== '') {
+      imageSrc = LinkImage;
+    } else {
+      imageSrc = SpeechBubble;
+    }
+  }
+
   return (
     <section>
       <Hero medium color='light'>
@@ -104,7 +117,7 @@ const Post = ({
                 <figure className="image post-image">
                 <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
                   <img
-                    src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
+                    src={imageSrc}
                     alt=""
                   />
                 </a>
