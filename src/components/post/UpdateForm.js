@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import isImage from '../../utils/isImage';
+import MarkedText from '../layout/MarkedText';
 
 import { connect } from 'react-redux';
 import { updatePost } from '../../actions/posts';
@@ -14,6 +15,7 @@ const UpdateForm = ({
   oldImage,
   post_id
 }) => {
+  const [ previewMarkdown, togglePreviewMarkdown ] = useState(false);
   const [ input, setInput ] = useState({
     title: oldTitle,
     desc: oldDesc,
@@ -51,7 +53,6 @@ const UpdateForm = ({
       title,
       desc
     }
-    console.log(updatedPost)
     updatePost(post_id, updatedPost);
     toggleShowForm(false);
   }
@@ -70,17 +71,33 @@ const UpdateForm = ({
           />
         </div>
       </div>
+      <button
+        type="button"
+        className="button is-info is-small mb-3"
+        onClick={() => togglePreviewMarkdown(!previewMarkdown)}
+      >
+        {previewMarkdown ? 'Hide Preview' : 'Preview Desc'}
+      </button>
+
       <div className="field">
         <div className="control">
-          <textarea
-            className="textarea"
-            placeholder="Desc"
-            type="text"
-            value={desc}
-            name="desc"
-            onChange={event => handleChange(event)}
-          >
-          </textarea>
+          {
+            previewMarkdown ? (
+              <div className="preview-markdown">
+                <MarkedText>{desc}</MarkedText>
+              </div>
+            ) : (
+              <textarea
+                className="textarea"
+                placeholder="Desc"
+                type="text"
+                value={desc}
+                name="desc"
+                onChange={event => handleChange(event)}
+              >
+              </textarea>
+            )
+          }
         </div>
       </div>
       <div className="field">

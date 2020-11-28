@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import MarkedText from '../layout/MarkedText';
 
 const CommentForm = ({
   addComment,
@@ -7,6 +8,7 @@ const CommentForm = ({
   subreddit_id,
   post_id
 }) => {
+  const [ previewMarkdown, togglePreviewMarkdown ] = useState(false);
   const [ input, setInput ] = useState({
     content: ''
   });
@@ -33,16 +35,33 @@ const CommentForm = ({
   }
   return (
     <form className="post-form" onSubmit={event => handleSubmit(event)}>
+      <button
+        type="button"
+        className="button is-info is-small mb-3"
+        onClick={() => togglePreviewMarkdown(!previewMarkdown)}
+      >
+        {previewMarkdown ? 'Hide Preview' : 'Preview Desc'}
+      </button>
+
       <div className="field">
         <div className="control">
-          <textarea
-            className="textarea"
-            placeholder="Comment"
-            value={content}
-            name="content"
-            onChange={event => handleChange(event)}
-          >
-          </textarea>
+          {
+            previewMarkdown ? (
+              <div className="preview-markdown">
+                <MarkedText>{content}</MarkedText>
+              </div>
+            ) : (
+              <textarea
+                className="textarea"
+                placeholder="Comment"
+                type="text"
+                value={content}
+                name="content"
+                onChange={event => handleChange(event)}
+              >
+              </textarea>
+            )
+          }
         </div>
       </div>
       <div className="control">

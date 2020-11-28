@@ -129,6 +129,15 @@
 .border-image {
   border: 1px solid black;
   padding: .25rem;
+  border-radius: 5px;
+}
+
+.preview-markdown {
+  max-height: 40em;
+  min-height: 8em;
+  padding: calc(.75em - 1px);
+  border: 1px solid black;
+  border-radius: 4px;
 }
 
 @media only screen and (max-width: 600px) {

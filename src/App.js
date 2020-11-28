@@ -4,9 +4,6 @@ TODOS:
 = Consistent margins and paddings
 = Comments throughout app
 = Reorganize components (!!!)
-= Limit preview text on Subreddit
-= MarkedText on Subreddit
-= Author on comment should Link to author user page
 = Markdown Previewer
 
 */

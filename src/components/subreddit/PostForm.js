@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import isImage from '../../utils/isImage';
+import MarkedText from '../layout/MarkedText';
 
 import { connect } from 'react-redux';
 import { createPost } from '../../actions/posts';
@@ -17,6 +19,7 @@ const PostForm = ({
     url: ''
   });
   const { title, desc, image, url } = input;
+  const [previewMarkdown, togglePreviewMarkdown] = useState(false);
 
   const handleChange = event => {
     setInput({
@@ -71,17 +74,33 @@ const PostForm = ({
           />
         </div>
       </div>
+      <button
+        type="button"
+        className="button is-info is-small mb-3"
+        onClick={() => togglePreviewMarkdown(!previewMarkdown)}
+      >
+        {previewMarkdown ? 'Hide Preview' : 'Preview Desc'}
+      </button>
+
       <div className="field">
         <div className="control">
-          <textarea
-            className="textarea"
-            placeholder="Desc"
-            type="text"
-            value={desc}
-            name="desc"
-            onChange={event => handleChange(event)}
-          >
-          </textarea>
+          {
+            previewMarkdown ? (
+              <div className="preview-markdown">
+                <MarkedText>{desc}</MarkedText>
+              </div>
+            ) : (
+              <textarea
+                className="textarea"
+                placeholder="Desc"
+                type="text"
+                value={desc}
+                name="desc"
+                onChange={event => handleChange(event)}
+              >
+              </textarea>
+            )
+          }
         </div>
       </div>
       <div className="field">

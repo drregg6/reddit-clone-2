@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
+import MarkedText from '../layout/MarkedText';
 import Container from '../layout/Container';
 
 import { connect } from 'react-redux';
@@ -11,6 +12,7 @@ const CreateSubreddit = ({
   createSubreddit,
   auth: { currentUser }
 }) => {
+  const [ previewMarkdown, togglePreviewMarkdown ] = useState(false);
   const [ input, setInput ] = useState({
     name: '',
     desc: '',
@@ -65,21 +67,36 @@ const CreateSubreddit = ({
             />
           </div>
         </div>
-        <div className="field">
-          <div className="control">
-            <label className="label">Description</label>
-            <textarea
-              className="textarea"
-              type="textarea"
-              name="desc"
-              value={desc}
-              placeholder="Describe the Subreddit"
-              onChange={event => handleChange(event)}
-              maxLength="140"
-            >
-            </textarea>
-          </div>
+        <button
+        type="button"
+        className="button is-info is-small mb-3"
+        onClick={() => togglePreviewMarkdown(!previewMarkdown)}
+      >
+        {previewMarkdown ? 'Hide Preview' : 'Preview Desc'}
+      </button>
+
+      <div className="field">
+        <div className="control">
+          <label className="label">Description</label>
+          {
+            previewMarkdown ? (
+              <div className="preview-markdown">
+                <MarkedText>{desc}</MarkedText>
+              </div>
+            ) : (
+              <textarea
+                className="textarea"
+                placeholder="Desc"
+                type="text"
+                value={desc}
+                name="desc"
+                onChange={event => handleChange(event)}
+              >
+              </textarea>
+            )
+          }
         </div>
+      </div>
         <div className="field">
           <div className="control">
             <label className="label">Color</label>
