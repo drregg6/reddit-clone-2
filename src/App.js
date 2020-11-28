@@ -5,6 +5,11 @@ TODOS:
 = Comments throughout app
 = Reorganize components (!!!)
 = Clicking on an image should send you somewhere
+  - specifically, fileRef in image a href
+= deleting a post should delete fileRef
+= updateForm should include fileRef
+= clean up PostForm
+= User Component post order is not by createdAt
 
 */
 
