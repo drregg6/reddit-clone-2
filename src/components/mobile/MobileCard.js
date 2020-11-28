@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
 import getDocById from '../../utils/getDocById';
+import getTextPreview from '../../utils/getTextPreview';
 import LinkImage from '../../images/defaults/link.png';
+import SpeechBubble from '../../images/defaults/speech-bubble.jpg';
+
+import MarkedText from '../layout/MarkedText';
 
 import { connect } from 'react-redux';
 import { upvote, downvote } from '../../actions/votes';
@@ -26,7 +30,7 @@ const MobileCard = ({
         <figure className="image is-4by3">
           <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
             <img
-              src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+              src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
               alt=""
             />
           </a>
@@ -54,9 +58,13 @@ const MobileCard = ({
         </div>
 
         <div className="content">
-          <p>
-            {post.desc}
-          </p>
+          {
+            post.desc && (
+              <div className="mb-3">
+                <MarkedText>{getTextPreview(post.desc)}</MarkedText>
+              </div>
+            )
+          }
           <p className="is-size-7 mb-0">
             { subreddit && <Link to={`/r/${subreddit.name}`}>{subreddit.name}</Link> }
           </p>

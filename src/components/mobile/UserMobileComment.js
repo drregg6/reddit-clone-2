@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
+import MarkedText from '../layout/MarkedText';
+
 const UserMobileComment = ({
   comment,
   user,
@@ -28,7 +30,7 @@ const UserMobileComment = ({
       }
       <div className="card-content">
         <div className="content">
-          { comment.content }
+          <MarkedText>{ comment.content }</MarkedText>
           <p className="is-size-7 mt-3 mb-0">
             <span className="is-italic">Created</span> {commentTimeFormatter(comment.created_at.seconds)}
           </p>

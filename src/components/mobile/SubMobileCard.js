@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import getTextPreview from '../../utils/getTextPreview';
+
+import MarkedText from '../layout/MarkedText';
 import LinkImage from '../../images/defaults/link.png';
+import SpeechBubble from '../../images/defaults/speech-bubble.jpg';
 
 const SubMobileCard = ({
   subreddit,
@@ -19,7 +23,7 @@ const SubMobileCard = ({
           <figure className="image is-4by3">
             <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
               <img
-                src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
                 alt=""
               />
             </a>
@@ -34,9 +38,9 @@ const SubMobileCard = ({
             </p>
             {
               post.desc && (
-                <p>
-                  {post.desc}
-                </p>
+                <div className="mb-3">
+                  <MarkedText>{getTextPreview(post.desc)}</MarkedText>
+                </div>
               )
             }
           </div>

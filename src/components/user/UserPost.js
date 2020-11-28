@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import getTextPreview from '../../utils/getTextPreview';
+
+import MarkedText from '../layout/MarkedText';
 import LinkImage from '../../images/defaults/link.png';
+import SpeechBubble from '../../images/defaults/speech-bubble.jpg';
 
 const UserPost = ({
   post,
@@ -14,11 +18,11 @@ const UserPost = ({
   return (
     <div className="box">
       <div className="media">
-        <div className="media-left">
+        <div className="media-left align-center">
           <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
-            <figure className="image is-128x128 center-image">
+            <figure className="image is-128x128 center-image border-image">
               <img
-                src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
                 alt=""
               />
             </figure>
@@ -30,9 +34,9 @@ const UserPost = ({
           </p>
           {
             post.desc && (
-              <p>
-                {post.desc}
-              </p>
+              <div className="mb-3">
+                <MarkedText>{getTextPreview(post.desc)}</MarkedText>
+              </div>
             )
           }
           <div className="level">

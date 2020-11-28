@@ -6,6 +6,7 @@ import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
 import ReplyForm from '../post/ReplyForm';
 import MobileCommentReply from './MobileCommentReply';
+import MarkedText from '../layout/MarkedText';
 
 import { connect } from 'react-redux';
 import {
@@ -68,7 +69,7 @@ const MobileComment = ({
       }
       <div className="card-content">
         <div className="content">
-          { comment.content }
+          <MarkedText>{ comment.content }</MarkedText>
           <p className="is-size-7 mt-3 mb-0">
             <span className="is-italic">Created</span> {commentTimeFormatter(comment.created_at.seconds)}
           </p>

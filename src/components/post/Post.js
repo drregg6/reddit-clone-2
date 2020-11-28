@@ -5,6 +5,7 @@ import { isMobile } from 'react-device-detect';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 import getDocById from '../../utils/getDocById';
 import LinkImage from '../../images/defaults/link.png';
+import SpeechBubble from '../../images/defaults/speech-bubble.jpg';
 
 import Container from '../layout/Container';
 import Hero from '../layout/Hero';
@@ -103,7 +104,7 @@ const Post = ({
                 <figure className="image post-image">
                 <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
                   <img
-                    src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+                    src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
                     alt=""
                   />
                 </a>
@@ -115,9 +116,9 @@ const Post = ({
           </h1>
           {
             (post !== null && post.desc) && (
-              <p className="subtitle is-size-5 post-content">
-                <MarkedText>{ post.desc }</MarkedText>
-              </p>
+              <div className="subtitle is-size-5 post-content">
+                <MarkedText>{post.desc}</MarkedText>
+              </div>
             )
           }
         </div>

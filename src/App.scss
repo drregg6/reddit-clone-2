@@ -8,6 +8,10 @@
 }
 .content {
   flex: 2 1 auto;
+
+  ul {
+    margin-left: 1rem;
+  }
 }
 
 .section {
@@ -86,8 +90,11 @@
 
   .post-content,
   figure {
-    text-align: center;
     margin: 0 auto;
+  }
+
+  .post-content {
+    width: 75vw;
   }
 }
 
@@ -119,6 +126,11 @@
   justify-content: center;
 }
 
+.border-image {
+  border: 1px solid black;
+  padding: .25rem;
+}
+
 @media only screen and (max-width: 600px) {
   .buttons {
     flex-wrap: nowrap;
@@ -131,5 +143,20 @@
 
   .post-image {
     width: 80vw;
+  }
+
+  .post-hero-body {
+    margin-left: auto;
+    margin-right: auto;
+  
+    .post-content,
+    figure {
+      text-align: left;
+      margin: 0 auto;
+    }
+  }
+
+  .post-content {
+    font-size: .7rem;
   }
 }

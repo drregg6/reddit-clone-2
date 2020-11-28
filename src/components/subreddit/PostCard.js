@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
-import LinkImage from '../../images/defaults/link.png';
+import getPreviewText from '../../utils/getTextPreview';
 
+import LinkImage from '../../images/defaults/link.png';
+import SpeechBubble from '../../images/defaults/speech-bubble.jpg';
+import MarkedText from '../layout/MarkedText';
 import Votes from './Votes';
 
 const PostCard = ({
@@ -37,9 +40,9 @@ const PostCard = ({
       </div>
       <div className="media-left align-center">
         <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
-          <figure className="image is-128x128 center-image">
+          <figure className="image is-128x128 center-image border-image">
             <img
-              src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+              src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
               alt=""
             />
           </figure>
@@ -51,7 +54,9 @@ const PostCard = ({
         </p>
         {
           post.desc !== '' && (
-            <p>{post.desc}</p>
+            <div className="mb-3">
+              <MarkedText>{getPreviewText(post.desc)}</MarkedText>
+            </div>
           )
         }
         <div className="level is-size-7">

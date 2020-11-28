@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import dateFormatter from '../../utils/dateFormatter';
 import getDocById from '../../utils/getDocById';
+import getTextPreview from '../../utils/getTextPreview';
 import LinkImage from '../../images/defaults/link.png';
+import SpeechBubble from '../../images/defaults/speech-bubble.jpg';
 
+import MarkedText from '../layout/MarkedText';
 import Votes from '../subreddit/Votes';
 
 const PostMedia = ({
@@ -36,9 +39,9 @@ const PostMedia = ({
       }
       <div className="media-image media-left align-center">
         <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
-          <figure className="image is-128x128 center-image">
+          <figure className="image is-128x128 center-image border-image">
             <img
-              src={(post.image !== undefined && post.image !== '') ? post.image : LinkImage}
+              src={(post.image !== undefined && post.image !== '') ? post.image : (post.url !== undefined && post.url !== '') ? LinkImage : SpeechBubble}
               alt=""
             />
           </figure>
@@ -48,9 +51,13 @@ const PostMedia = ({
         <p>
           {subreddit && <Link to={`/r/${subreddit.name}/${post.id}`}>{post.title}</Link>}
         </p>
-        <p>
-          {post.desc}
-        </p>
+        {
+          post.desc && (
+            <div className="mb-3">
+              <MarkedText>{getTextPreview(post.desc)}</MarkedText>
+            </div>
+          )
+        }
         <div className="level">
           <div className="level-item has-text-centered is-size-7">
             Created { dateFormatter(post.created_at.seconds) }

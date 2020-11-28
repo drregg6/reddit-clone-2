@@ -3,10 +3,11 @@
 TODOS:
 = Consistent margins and paddings
 = Comments throughout app
-= Reorganize components
-= Limit preview text on Subreddit / Subreddits / Homepage
-= MarkedText on Subreddit / Subreddits / Homepage / Comments
-= If no URL or image SRC, but there is a desc, post no image
+= Reorganize components (!!!)
+= Limit preview text on Subreddit
+= MarkedText on Subreddit
+= Author on comment should Link to author user page
+= Markdown Previewer
 
 */
 
