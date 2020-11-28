@@ -11,6 +11,7 @@ import Hero from '../layout/Hero';
 import UpdateForm from './UpdateForm';
 import CommentForm from './CommentForm';
 import PostComment from './PostComment';
+import MarkedText from '../layout/MarkedText';
 import MobileComment from '../mobile/MobileComment';
 
 import { connect } from 'react-redux';
@@ -114,9 +115,9 @@ const Post = ({
           </h1>
           {
             (post !== null && post.desc) && (
-              <h2 className="subtitle is-size-5">
-                { post.desc }
-              </h2>
+              <p className="subtitle is-size-5 post-content">
+                <MarkedText>{ post.desc }</MarkedText>
+              </p>
             )
           }
         </div>

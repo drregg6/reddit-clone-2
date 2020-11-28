@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 
+import MarkedText from '../layout/MarkedText';
 import ReplyForm from './ReplyForm';
 import CommentReply from './CommentReply';
 import UpdateCommentForm from '../updateComment/UpdateCommentForm';
@@ -67,9 +68,7 @@ const PostComment = ({
           <p className="has-text-weight-bold">
             { author !== undefined && author.name }
           </p>
-          <p>
-            { comment.content }
-          </p>
+          <MarkedText>{comment.content}</MarkedText>
           <div className="level">
             <div className="level-left">
               <div className="level-item is-size-7">
