@@ -111,12 +111,12 @@ const Post = ({
               </figure>
             )
           }
-          <h1 className="title has-text-centered">
+          <h1 className="title has-text-centered mb-5">
             { post !== null && post.title }
           </h1>
           {
             (post !== null && post.desc) && (
-              <div className="subtitle is-size-5 post-content">
+              <div className="subtitle post-content mt-5">
                 <MarkedText>{post.desc}</MarkedText>
               </div>
             )

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
+import MarkedText from '../layout/MarkedText';
 
 const UserComment = ({
   comment,
@@ -11,8 +12,8 @@ const UserComment = ({
   return (
     <div className="box">
       <div className="media">
-        <div className="media-left">
-          <figure className="image is-64x64">
+        <div className="media-left align-center">
+          <figure className="image is-64x64 center-image">
             <img
               src={ user.image }
               alt='user avatar'
@@ -23,9 +24,9 @@ const UserComment = ({
           <p className="has-text-weight-bold">
             { user.name }
           </p>
-          <p>
-            { comment.content }
-          </p>
+          <div className="mb-3">
+            <MarkedText>{ comment.content }</MarkedText>
+          </div>
           <div className="level">
             <div className="level-left">
               <div className="level-item is-size-7">
