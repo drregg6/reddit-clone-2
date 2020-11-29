@@ -48,9 +48,12 @@ const PostForm = ({
     let newImage = image;
     let newUrl = url;
     let newFileRef = fileRef;
-    const fileName = getFileName(fileRef);
-    const storageRef = storage.ref();
-    const imageRef = storageRef.child(fileName);
+    let imageRef;
+    if (fileRef !== '') {
+      const fileName = getFileName(fileRef);
+      const storageRef = storage.ref();
+      imageRef = storageRef.child(fileName);
+    }
 
     if (newImage !== '') {
       if (isImage(newImage)) {
@@ -58,20 +61,20 @@ const PostForm = ({
 
         // delete file and fileRef        
         newFileRef = '';
-        imageRef.delete()
+        if (fileRef !== '') imageRef.delete();
       } else {
         newUrl = newImage;
 
         // delete file and fileRef
         newFileRef = '';
-        imageRef.delete();
+        if (fileRef !== '') imageRef.delete();
       }
     }
 
     if (newUrl !== '') {
       newFileRef = '';
       newImage = '';
-      imageRef.delete();
+      if (fileRef !== '') imageRef.delete();
     }
 
     if (newFileRef !== '') {
@@ -109,6 +112,7 @@ const PostForm = ({
             type="text"
             value={title}
             name="title"
+            required
             onChange={event => handleChange(event)}
           />
         </div>

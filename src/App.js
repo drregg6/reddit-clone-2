@@ -4,8 +4,9 @@ TODOS:
 = Consistent margins and paddings
 = Comments throughout app
 = Reorganize components (!!!)
-= clean up PostForm
-= Flatten boxes in User Component
+= Clean up PostForm / UpdatePostForm
+= Include signup by email / password
+= Rename Reggit
 
 */
 

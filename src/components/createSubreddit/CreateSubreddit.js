@@ -16,7 +16,7 @@ const CreateSubreddit = ({
   const [ input, setInput ] = useState({
     name: '',
     desc: '',
-    color: 'red'
+    color: 'yellow'
   });
   const { name, desc, color } = input;
   let history = useHistory();
@@ -102,7 +102,7 @@ const CreateSubreddit = ({
             <label className="label">Color</label>
             <div className="select">
               <select name="color" onChange={event => handleChange(event)}>
-                <option value="yellow">Yellow</option>
+                <option selected value="yellow">Yellow</option>
                 <option value="dark">Black</option>
                 <option value="light">Light gray</option>
                 <option value="lightblue">Light blue</option>

@@ -23,7 +23,7 @@ const Nav = ({
     <nav className="navbar is-light" role="navigation" aria-label="dropdown navigation">
       <div className="navbar-brand">
         <Link className="navbar-item" to="/">
-          Dave Regg's Personal Reddit
+          Reggit
         </Link>
 
         <button

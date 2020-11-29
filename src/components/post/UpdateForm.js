@@ -54,10 +54,13 @@ const UpdateForm = ({
     let newUrl = url;
     let newImage = image;
     let newFileRef = fileRef;
-
-    const fileName = getFileName(fileRef);
-    const storageRef = storage.ref();
-    const imageRef = storageRef.child(fileName);
+    let imageRef;
+    
+    if (fileRef !== '') {
+      const fileName = getFileName(fileRef);
+      const storageRef = storage.ref();
+      imageRef = storageRef.child(fileName);
+    }
 
     if (newImage !== '') {
       if (isImage(newImage)) {
@@ -65,20 +68,20 @@ const UpdateForm = ({
 
         // delete file and fileRef
         newFileRef = '';
-        imageRef.delete()
+        if (fileRef !== '') imageRef.delete();
       } else {
         newUrl = newImage;
 
         // delete file and fileRef
         newFileRef = '';
-        imageRef.delete();
+        if (fileRef !== '') imageRef.delete();
       }
     }
 
     if (newUrl !== '') {
       newFileRef = '';
       newImage = '';
-      imageRef.delete();
+      if (fileRef !== '') imageRef.delete();
     }
 
     if (newFileRef !== '') {
@@ -108,6 +111,7 @@ const UpdateForm = ({
             type="text"
             value={title}
             name="title"
+            required
             onChange={event => handleChange(event)}
           />
         </div>

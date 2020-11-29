@@ -40,10 +40,10 @@ const Index = ({
         <div className="hero-body">
           <div className="container">
             <h1 className="title">
-              Dave Regg's Personal Reddit
+              Reggit
             </h1>
             <h2 className="subtitle">
-              Welcome to the best Reddit clone you'll ever see!
+              Welcome to the front page of Dave Regg's internet!
             </h2>
             { !isLoggedIn && <button className="button is-outlined" onClick={() => login()}>Login</button> }
           </div>
