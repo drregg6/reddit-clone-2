@@ -12,14 +12,19 @@ const SubMobileCard = ({
   post
 }) => {
   let imageSrc;
+  let aHref;
   if (post.image !== '') {
     imageSrc = post.image;
+    aHref = post.image;
   } else if (post.fileRef !== '') {
     imageSrc = post.fileRef;
+    aHref = post.fileRef;
   } else if (post.url !== '') {
     imageSrc = LinkImage;
+    aHref = post.url;
   } else {
     imageSrc = SpeechBubble;
+    aHref = `/r/${subreddit.name}/${post.id}`;
   }
   return (
     <div className="column post-column">
@@ -31,7 +36,7 @@ const SubMobileCard = ({
         </div>
         <div className="card-image">
           <figure className="image is-4by3">
-            <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+            <a href={aHref} rel="noopener noreferrer" target="_blank">
               <img
                 src={imageSrc}
                 alt=""

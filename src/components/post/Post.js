@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
 import commentTimeFormatter from '../../utils/commentTimeFormatter';
 import getDocById from '../../utils/getDocById';
@@ -46,6 +46,7 @@ const Post = ({
   subreddits: { subreddits },
   comments: { comments }
 }) => {
+  const history = useHistory();
   const { post_id, name } = useParams();
   useEffect(() => {
     fetchPost(post_id);
@@ -79,15 +80,20 @@ const Post = ({
   }
 
   let imageSrc;
+  let aHref;
   if (post !== null) {
     if (post.image !== '') {
       imageSrc = post.image;
+      aHref = post.image;
     } else if (post.fileRef !== '') {
       imageSrc = post.fileRef;
+      aHref = post.fileRef;
     } else if (post.url !== '') {
       imageSrc = LinkImage;
+      aHref = post.url;
     } else {
       imageSrc = SpeechBubble;
+      aHref = '#!';
     }
   }
 
@@ -115,7 +121,7 @@ const Post = ({
           {
             post !== null && (
                 <figure className="image post-image">
-                <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+                <a href={aHref} rel="noopener noreferrer" target="_blank">
                   <img
                     src={imageSrc}
                     alt=""
@@ -164,7 +170,7 @@ const Post = ({
             {
               (post !== null && currentUser.id === post.user_id) && (
                 <div className="level-item has-text-centered mb-0">
-                  <button className="button is-small is-danger" onClick={() => deletePost(post.id, vote.id)}>Delete Post</button>
+                  <button className="button is-small is-danger" onClick={() => {deletePost(post.id, vote.id); history.push('/')}}>Delete Post</button>
                 </div>
               )
             }

@@ -26,14 +26,19 @@ const PostCard = ({
   const vote_id = voteId;
   const post_id = post.id;
   let imageSrc;
+  let aHref;
   if (post.image !== '') {
     imageSrc = post.image;
+    aHref = post.image;
   } else if (post.fileRef !== '') {
     imageSrc = post.fileRef;
+    aHref = post.fileRef;
   } else if (post.url !== '') {
     imageSrc = LinkImage;
+    aHref = post.url;
   } else {
     imageSrc = SpeechBubble;
+    aHref = `/r/${subreddit}/${post.id}`;
   }
 
   return (
@@ -49,7 +54,7 @@ const PostCard = ({
         />
       </div>
       <div className="media-left align-center">
-        <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+        <a href={aHref} rel="noopener noreferrer" target="_blank">
           <figure className="image is-128x128 center-image border-image">
             <img
               src={imageSrc}

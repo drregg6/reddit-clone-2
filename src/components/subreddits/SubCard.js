@@ -12,14 +12,19 @@ const SubCard = ({
   post
 }) => {
   let imageSrc;
+  let aHref;
   if (post.image !== '') {
     imageSrc = post.image;
+    aHref = post.image;
   } else if (post.fileRef !== '') {
     imageSrc = post.fileRef;
+    aHref = post.fileRef;
   } else if (post.url !== '') {
     imageSrc = LinkImage;
+    aHref = post.url;
   } else {
     imageSrc = SpeechBubble;
+    aHref = `/r/${subreddit.name}/${post.id}`;
   }
   return (
     <div className="column is-4 post-column">
@@ -31,15 +36,15 @@ const SubCard = ({
         </div>
         <div className="card-content">
           <div className="media">
-            <div className="media-left">
-              <figure className="image is-96x96">
-                <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
-                  <img
-                    src={imageSrc}
-                    alt=""
-                  />
-                </a>
-              </figure>
+            <div className="media-left align-center">
+              <a href={aHref} rel="noopener noreferrer" target="_blank">
+                <figure className="image is-128x128 center-image border-image">
+                    <img
+                      src={imageSrc}
+                      alt=""
+                    />
+                </figure>
+              </a>
             </div>
             <div className="media-content">
               <p className="title is-4">

@@ -10,7 +10,9 @@ import {
   DELETE_VOTE
 } from './types';
 import db from '../db';
+import getFileName from '../utils/getFileName';
 import firebase from '../firebase';
+import storage from '../storage';
 
 
 export const fetchAllPosts = () => async dispatch => {
@@ -43,6 +45,9 @@ export const fetchUserPosts = (user_id) => async dispatch => {
     const res = await db.collection('posts').where('user_id', '==', user_id).get()
     res.forEach(doc => {
       payload.push(doc.data());
+    });
+    payload = payload.sort((obj1, obj2) => {
+      return obj2.created_at - obj1.created_at
     });
     dispatch({
       type: GET_POSTS,
@@ -193,7 +198,18 @@ export const deletePost = (post_id, vote_id) => async dispatch => {
         return batch.commit();
     })
 
+    let fileRef;
+    await db.collection('posts').doc(post_id).get().then(doc => {
+      fileRef = doc.data().fileRef;
+    });
     // if fileRef exists, delete fileRef from storage
+    if (fileRef !== '') {
+      const storageRef = storage.ref();
+      // get post.fileRef
+      const imageName = getFileName(fileRef);
+      const imageRef = storageRef.child(imageName)
+      await imageRef.delete();
+    }
 
     // delete the Post doc associated with the id
     await db.collection('posts').doc(post_id).delete();

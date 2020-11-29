@@ -16,20 +16,25 @@ const UserPost = ({
   deletePost
 }) => {
   let imageSrc;
+  let aHref;
   if (post.image !== '') {
     imageSrc = post.image;
+    aHref = post.image;
   } else if (post.fileRef !== '') {
     imageSrc = post.fileRef;
+    aHref = post.fileRef;
   } else if (post.url !== '') {
     imageSrc = LinkImage;
+    aHref = post.url;
   } else {
     imageSrc = SpeechBubble;
+    aHref = `/r/${subreddit.name}/${post.id}`;
   }
   return (
     <div className="box">
       <div className="media">
         <div className="media-left align-center">
-          <a href={(post.image !== undefined && post.image !== '') ? post.image : post.url} rel="noopener noreferrer" target="_blank">
+          <a href={aHref} rel="noopener noreferrer" target="_blank">
             <figure className="image is-128x128 center-image border-image">
               <img
                 src={imageSrc}
