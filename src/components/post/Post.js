@@ -195,6 +195,7 @@ const Post = ({
               oldTitle={post.title}
               oldDesc={post.desc}
               oldUrl={post.url}
+              oldFileRef={post.fileRef}
               post_id={post.id}
               toggleShowForm={toggleShowForm}
             />

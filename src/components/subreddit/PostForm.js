@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import storage from '../../storage';
 import getFileName from '../../utils/getFileName';
-
 import isImage from '../../utils/isImage';
+
 import MarkedText from '../layout/MarkedText';
 import ProgressBar from './ProgressBar';
 
@@ -33,6 +33,7 @@ const PostForm = ({
       [event.target.name]: event.target.value
     });
   }
+
   const fileChange = event => {
     // uploads the file to firebase storage
     let newFile = event.target.files[0];
@@ -57,32 +58,20 @@ const PostForm = ({
 
         // delete file and fileRef        
         newFileRef = '';
-        imageRef.delete().then(() => {
-          console.log('image deleted from storage')
-        }).catch(err => {
-          console.error(err.message);
-        })
+        imageRef.delete()
       } else {
         newUrl = newImage;
 
         // delete file and fileRef
         newFileRef = '';
-        imageRef.delete().then(() => {
-          console.log('image deleted from storage')
-        }).catch(err => {
-          console.error(err.message);
-        })
+        imageRef.delete();
       }
     }
 
     if (newUrl !== '') {
       newFileRef = '';
       newImage = '';
-      imageRef.delete().then(() => {
-        console.log('image deleted from storage')
-      }).catch(err => {
-        console.error(err.message);
-      })
+      imageRef.delete();
     }
 
     if (newFileRef !== '') {

@@ -144,6 +144,11 @@
   max-height: 120px;
 }
 
+.box {
+  box-shadow: none;
+  border: 1px solid #a3a3a3;
+}
+
 @media only screen and (max-width: 600px) {
   .buttons {
     flex-wrap: nowrap;

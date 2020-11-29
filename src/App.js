@@ -4,7 +4,6 @@ TODOS:
 = Consistent margins and paddings
 = Comments throughout app
 = Reorganize components (!!!)
-= updateForm should include fileRef
 = clean up PostForm
 = Flatten boxes in User Component
 
